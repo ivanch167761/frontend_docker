@@ -4,19 +4,21 @@ on:
   workflow_call:
   workflow_dispatch:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 jobs:
   build_docker:
     runs-on: ubuntu-latest
+    env:
+      CLUSTER_NAME: deep-test
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
-          token: ${{ secrets.DO_API_TOKEN_KEY }}
+          token: ${{ secrets.FRONTEND_TOKEN_KEY }}
       - name: Login to DO with short-live creds
         run: doctl registry login --expiry-seconds 1200
       - name: build container image
