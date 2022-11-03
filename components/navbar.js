@@ -1,4 +1,5 @@
 import { Disclosure } from "@headlessui/react";
+import Image from 'next/image'
 
 import {
   MenuIcon,
@@ -15,13 +16,13 @@ export default function Navbar() {
   const router = useRouter();
   const current_url = router.pathname;
   const navigation = [
-    { name: "Dashboard", href: "/", current: function(){return this.href===current_url} },
-    { name: "Team", href: "/f", current: function(){return this.href===current_url}},
-    { name: "Projects", href: "/g", current: function(){return this.href===current_url}},
-    { name: "Projects 2", href: "/h", current: function(){return this.href===current_url}},
-    { name: "Projects 3", href: "/j", current:  function(){return this.href===current_url} },
-    { name: "Projects 4", href: "/jj", current: function(){return this.href===current_url}},
-    { name: "Calendar", href: "/kk", current: function(){return this.href===current_url} },
+    { name: "Dashboard", key:"3", href: "/", current: function(){return this.href===current_url} },
+    { name: "Team", key:"4", href: "/f", current: function(){return this.href===current_url}},
+    { name: "Projects", key:"5", href: "/g", current: function(){return this.href===current_url}},
+    { name: "Projects 2", key:"6", href: "/h", current: function(){return this.href===current_url}},
+    { name: "Projects 3", key:"7", href: "/j", current:  function(){return this.href===current_url} },
+    { name: "Projects 4", key:"8", href: "/jj", current: function(){return this.href===current_url}},
+    { name: "Calendar", key:"9", href: "/kk", current: function(){return this.href===current_url} },
   ];
 
 
@@ -38,7 +39,7 @@ export default function Navbar() {
             >
               {navigation.map((item) => 
                 (
-                  <Link href={item.href}>
+                  <Link key={item.name} href={item.href}>
                 < a
                   key={item.name}
                   className={classNames(
@@ -56,7 +57,7 @@ export default function Navbar() {
             </nav>
               <Link href="/" className="relative z-10 px-2 flex lg:px-0">
                 <div className="flex-shrink-0 flex items-center">
-                  <img
+                  <Image
                     className="block h-14 w-auto"
                     src="./ciervo.svg"
                     alt="Workflow"
