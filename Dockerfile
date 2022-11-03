@@ -13,6 +13,8 @@ COPY public ./public
 COPY reducers ./reducers
 COPY screens ./screens
 COPY styles ./styles
-
-CMD ["npm", "dev"]
+COPY store.js ./store.js
+COPY tailwind.config.js ./tailwind.config.js
+COPY postcss.config.js ./postcss.config.js
+CMD ["npm", "run", "dev"]
 
