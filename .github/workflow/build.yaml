@@ -1,0 +1,40 @@
+name: Build Docker Container & push to DO Registory
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+jobs:
+  build_docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN_KEY }}
+      - name: Login to DO with short-live creds
+        run: doctl registry login --expiry-seconds 1200
+      - name: build container image
+        working-directory: .
+        run: |
+          docker build -f Dockerfile \
+            -t registry.digitalocean.com/deeptest/frontend:latest \
+            -t registry.digitalocean.com/deeptest/frontend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5} \
+            .
+      - name: Push image
+        run: |
+          docker push registry.digitalocean.com/deeptest/frontend --all-tags
+      - name: cluster kubeconfig file
+        run: |
+          doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
+      - name: Update Deploy image
+        run: |
+          kubectl set image deployment/frontend-deployment frontend=registry.digitalocean.com/deeptest/frontend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
+      - name: wait for rollout to finish
+        run: |
+          kubectl rollout status deployment/frontend-deployment
