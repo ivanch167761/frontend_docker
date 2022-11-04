@@ -24,10 +24,10 @@ COPY . .
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
-
+ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_IMAGE_ALLOWED_DOMAINS https://deeptest.ams3.digitaloceanspaces.com
 #RUN yarn build
-
+RUN npm install -g npm@8.19.3
 # If using npm comment out above and use below instead
 RUN npm run build
 
@@ -35,7 +35,9 @@ RUN npm run build
 FROM node:16-alpine AS runner
 WORKDIR /app
 
+RUN npm install -g npm@8.19.3
 ENV NODE_ENV production
+ENV NEXT_IMAGE_ALLOWED_DOMAINS https://deeptest.ams3.digitaloceanspaces.com
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
