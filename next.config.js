@@ -5,9 +5,9 @@ const nextConfig = {
       remotePatterns: [
             {
         protocol: "https",
-        hostname: ["deeptest.ams3.digitaloceanspaces.com"],
-        pathname: '/media/**',
+        hostname: "deeptest.ams3.digitaloceanspaces.com",
         port: '',
+        pathname: '/media/**',
             },
       ],
   },
