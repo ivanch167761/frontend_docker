@@ -2,14 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-      remotePatterns: [
-            {
-        protocol: "https",
-        hostname: "deeptest.ams3.digitaloceanspaces.com",
-        port: '',
-        pathname: '/media/**',
-            },
-      ],
+      domains: ['deeptest.ams3.digitaloceanspaces.com']
   },
   swcMinify: true,
   output: 'standalone',
