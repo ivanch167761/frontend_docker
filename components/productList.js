@@ -13,7 +13,8 @@ export const ProductList = ({
     <>
       <div className="w-full md:w-1/2 xl:w-1/4 px-4 ">
         <div className="bg-white rounded-lg overflow-hidden mb-10 border border-slate-500">
-          <Image src={productListImg} alt="a" position="relative" layout="fill" objectFit="contain"/>
+        <div className="w-1/2 h-full bg-red relative">
+          <Image src={productListImg} alt="a" position="relative" layout="fill" objectFit="contain"/></div>
           <div className="p-8 sm:p-9 md:p-7 xl:p-9 text-center">
             <h3>
       <Link href={productLink}>
