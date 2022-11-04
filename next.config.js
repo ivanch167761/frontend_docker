@@ -8,6 +8,7 @@ const nextConfig = {
         hostname: '**.digitaloceanspaces.com',
       },
     ],
+      },
   swcMinify: true,
   output: 'standalone',
 }
