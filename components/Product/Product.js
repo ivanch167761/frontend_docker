@@ -51,15 +51,13 @@ export const Product = ({
             </button>
           </div>
           <div className="mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8">
-            <div className="lg:w-1/3 flex justify-between items-strech bg-gray-50  px-2 py-20 md:py-6 md:px-6 lg:py-24">
-              <div className="w-full bg-black">
+            <div className="lg:w-1/3 flex justify-between items-strech bg-gray-50  px-2 py-20 md:py-6 md:px-6 lg:py-24"
                 <Image
                   src={productImg}
                   alt={productImgAlt}
                   priority
                   width="100%" height="100%" layout="responsive" objectFit="contain"
                 />
-              </div>
             </div>
             <div className="lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0">
               <h1 className="text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white">
