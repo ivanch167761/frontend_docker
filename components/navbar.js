@@ -59,8 +59,9 @@ export default function Navbar() {
                 <div className="flex-shrink-0 flex items-center">
                   <Image
                     className="block h-14 w-auto"
-                    src="./ciervo.svg"
+                    src="/ciervo.svg"
                     alt="Workflow"
+                    layout='fill'
                   />
                 </div>
               </Link>
