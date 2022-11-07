@@ -52,7 +52,7 @@ export const Product = ({
           </div>
           <div className="mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8">
             <div className="lg:w-1/3 flex justify-between items-strech bg-gray-50  px-2 py-20 md:py-6 md:px-6 lg:py-24">
-              <div className="flex ">
+              <div className="w-full bg-black">
                 <Image
                   src={productImg}
                   alt={productImgAlt}
