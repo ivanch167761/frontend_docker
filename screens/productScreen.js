@@ -10,7 +10,7 @@ function ProductScreen(props) {
     console.log("Add to cart:", props.id);
     console.log("QTY:", props.counter);
   };
-  console.log("productDetails from screen:")
+  console.log("productDetails from screen:");
   console.log(productDetails);
   return (
     <>
