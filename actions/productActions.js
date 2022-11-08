@@ -21,7 +21,9 @@ export const listProduct = () => async (dispatch) => {
 export const listProductDetail = (id) => async (dispatch) => {
   try {
     dispatch({ type: pdConstants.PRODUCT_DETAILS_REQUEST });
+    console.log(`http://134.209.135.168:80/api/products/${id}`);
     const { data } = await axios.get(`http://134.209.135.168:80/api/products/${id}`);
+    console.log(data);
     dispatch({
       type: pdConstants.PRODUCT_DETAILS_SUCCESS,
       payload: data,
