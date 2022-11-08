@@ -10,8 +10,15 @@ function ProductScreen(props) {
     console.log("Add to cart:", props.id);
     console.log("QTY:", props.counter);
   };
+  console.log("productDetails from screen:")
+  console.log(productDetails);
   return (
     <>
+      {loading ? (
+        <h2> loading</h2>
+      ) : error ? (
+        <h3>{error}</h3>
+      ) : (
       <div>
         <Product
           productImg={product.image}
@@ -23,6 +30,7 @@ function ProductScreen(props) {
           addToCartHandler={addToCartHandler}
         />
       </div>
+      )}
     </>
   );
 }

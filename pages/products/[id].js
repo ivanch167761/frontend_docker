@@ -14,11 +14,13 @@ function DetailContainer() {
   const { id } = router.query;
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
-  const { loading, error, product } = productDetails;  
-
+  console.log("id before dispatch")
+  console.log({id})
   useEffect(() => {
     dispatch(listProductDetail(id));
   }, [dispatch, id]);
+  console.log("productDetails from page:")
+  console.log(productDetails);
 
   return (
      <ProductScreen id={id} productDetails={productDetails} /> 
