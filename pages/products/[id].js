@@ -15,7 +15,7 @@ function DetailContainer() {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   console.log("id before dispatch")
-  console.log({id})
+  console.log(id)
   useEffect(() => {
     dispatch(listProductDetail(id));
   }, [dispatch, id]);
