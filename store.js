@@ -1,7 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { productListReducer, productDetailsReducer, } from "./reducers/productReducer";
 import { useMemo } from 'react';
-import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunkMiddleware from 'redux-thunk';
 let store;
