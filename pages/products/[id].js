@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import ProductScreen from "../../screens/productScreen";
 import { useRouter } from 'next/router';
-import { getProductsId, getProductData } from "../../lib/getProductsId";
+import { GetProductsId, GetProductData } from "../../lib/getProductsId";
 import { listProductDetail } from "../../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 /*import { reset } from "../actions/counterActiond";*/
@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 export async function getStaticPaths(){
-  const paths = getProductsId();
+  const paths = GetProductsId();
   return {
     paths,
     fallback: false,
@@ -22,7 +22,7 @@ export async function getStaticPaths(){
 
 
 export async function getStaticProps({ params }){
-  const productData = getProductData(params.id);
+  const productData = GetProductData(params.id);
   return {
     props: {
       productData,
