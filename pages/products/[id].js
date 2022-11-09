@@ -21,14 +21,22 @@ export async function getStaticPaths(){
 
 
 
+export async function getStaticProps({ params }){
+  const productData = getProductData(params.id);
+  return {
+    props: {
+      productData,
+    },
+  };
+};
 
 
 
-function DetailContainer() {
+function DetailContainer(productData) {
   
   
   return (
-     <ProductScreen id={id} productDetails={productDetails} /> 
+     <ProductScreen id={1} productDetails={productData} /> 
   );
 }
 
