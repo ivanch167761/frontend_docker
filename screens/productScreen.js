@@ -4,27 +4,29 @@ import Product from "../components/Product/Product";
 
 
 function ProductScreen(props) {
-  const { loading, error, product } = props.productDetails;
+  const productDetail = props.productDetails;
+  console.log(props.productDetails)
+  console.log(productDetail);
+
 
   const addToCartHandler = () => {
     console.log("Add to cart:", props.id);
-    console.log("QTY:", props.counter);
+    console.log(productDetail);
   };
-  console.log("productDetails from screen:");
-  console.log(productDetails);
+
   return (
     <>
-      {loading ? (
+      {productDetail.loading ? (
         <h2> loading</h2>
-      ) : error ? (
+      ) : productDetail.error ? (
         <h3>{error}</h3>
       ) : (
       <div>
         <Product
-          productImg={product.image}
-          productText={product.description}
-          productTitle={product.name}
-          productCountInStok={product.countInStock}
+          productImg={productDetail.productD.image}
+          productText={productDetail.productD.description}
+          productTitle={productDetail.productD.name}
+          productCountInStok={productDetail.productD.countInStock}
           counter={props.counter}
           dispatch={5}
           addToCartHandler={addToCartHandler}
