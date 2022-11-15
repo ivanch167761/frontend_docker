@@ -5,7 +5,6 @@ import {
   configureStore,
   ThunkAction,
 } from "@reduxjs/toolkit";
-import { productListReducer, productDetailsReducer, } from "./reducers/productReducer";
 
 
 /*
