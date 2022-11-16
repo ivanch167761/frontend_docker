@@ -16,7 +16,7 @@ working producrt list:
         "category": "Keyboards",
         "user": "ik",
         "name": "ErgoDox",
-        "image": "https://ams3.digitaloceanspaces.com/deeptest/media/ergodox_ez-scaled.jpg?AWSAccessKeyId=DO00BHUJL9NGGENRF63V&Signature=%2Feq2t2Vj6MxffPSfzoSGSWO8dJ4%3D&Expires=1668175004",
+        "image": "https://ams3...668175004",
         "brand": "ErgoDox",
         "description": "To edit later",
         "price": "322.00",
@@ -28,7 +28,7 @@ working producrt list:
         "category": "Keyboards",
         "user": "ik",
         "name": "Nokia T21",
-        "image": "https://ams3.digitaloceanspaces.com/deeptest/media/a.webp?AWSAccessKeyId=DO00BHUJL9NGGENRF63V&Signature=nE%2Bp2i6X6eIm1B1Om51gDWYNT3o%3D&Expires=1668175004",
+        "image": "https://a......1668175004",
         "brand": "Nokia",
         "description": "test",
         "price": "1300.00",
@@ -39,6 +39,9 @@ working producrt list:
 
 */
 
+/********************** TYPE DEFINITION  **********************/
+/***
+***/
 interface Product {
   _id: number;
   category: string;
@@ -61,6 +64,21 @@ export type ProductListState = {
   error: boolean;
 };
 
+export type ProductDetailtState = {
+  productD: Product;
+  available: boolean;
+  error: boolean;
+  loading: boolean;
+  qty:number;
+};
+/***
+***/
+/********************* TYPE DEFINITION END ********************/
+
+
+/********************** INITIAL STATE DEFINITION  **********************/
+/***
+***/
 const initialState: ProductListState = {
   productList: [],
   filteredProduct: [],
@@ -69,13 +87,6 @@ const initialState: ProductListState = {
   error: false,
 };
 
-export type ProductDetailtState = {
-  productD: Product;
-  available: boolean;
-  error: boolean;
-  loading: boolean;
-  qty:number;
-};
 
 const initialDetailState: ProductDetailtState = {
   productD: {
@@ -93,11 +104,19 @@ const initialDetailState: ProductDetailtState = {
   available: false,
   error: false,
   loading: false,
-  qty:0,
+  qty:1,
 };
+/***
+***/
+/********************* INITIAL STATE DEFINITION END ********************/
 
 
 
+
+
+/*********************** GET ACTIONS **********************/
+/***
+***/
 export const getProductList = createAsyncThunk("products/getProducts", async () => {
   const response = await await fetch(
     "http://134.209.135.168/api/products"
@@ -112,9 +131,15 @@ export const getProductDetail = createAsyncThunk("products/getDetail", async (id
   );
   return await response.json();
 });
+/***
+***/
+/********************** GET ACTIONS END ********************/
 
 
 
+/*********************** SEARCH REDUCER **********************/
+/***
+***/
 export const productListSlice = createSlice({
   name: "productList",
   initialState,
@@ -142,14 +167,28 @@ export const productListSlice = createSlice({
       });
   },
 });
+/***
+***/
+/*********************** END SEARCH REDUCER **********************/
 
+
+
+/*********************** QTY REDUCER **********************/
+/***
+***/
 export const productDetailSlice = createSlice({
   name: "productDetail",
   initialState: initialDetailState,
   reducers: {
-    setDetail(state, action: PayloadAction<string>) {
-    state.productD.description = "AAAAA";
-    }
+    setQty(state, action: PayloadAction<number>) {
+      if (action.payload < 0){
+        state.qty = 0;
+      } else if (action.payload > state.productD.countInStock){
+        state.qty = state.productD.countInStock;
+      }else{
+        state.qty = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -166,8 +205,9 @@ export const productDetailSlice = createSlice({
       });
   },
 });
-
-
+/***
+***/
+/*********************** END QTY REDUCER **********************/
 
 
 
@@ -181,17 +221,36 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-
+/*********************** EXPORT REDUCERS **********************/
+/***
+***/                                        
 export const { setSearch } = productListSlice.actions;
-export const { setDetail } = productDetailSlice.actions;
+export const { setQty } = productDetailSlice.actions;
+/***
+***/
+/*********************** ENDEXPORT REDUCERS **********************/
 
+
+
+/*********************** EXPORT DATA FROM STATE **********************/
+/***
+***/
 export const selectSearch = (state: RootState) => state.productList.search;
 export const selectProductDetail = (state: RootState) => state.product;
+export const selectProductQty = (state: RootState) => state.product.qty;
 export const  selectFilteredProduct = (state: RootState) =>
   state.productList.filteredProduct;
+/***
+***/
+/*********************** EXPORT DATA FROM STATE **********************/
 
+
+
+
+/*********************** GET STORE **********************/
+/***
+***/
 export let store = null;
-
 export default function getStore(incomingPreloadState?: RootState) {
   store = configureStore({
     reducer: {
@@ -202,8 +261,9 @@ export default function getStore(incomingPreloadState?: RootState) {
   });
   return store;
 }
-
-
+/***
+***/
+/*********************** GET STORE **********************/
 
 
 

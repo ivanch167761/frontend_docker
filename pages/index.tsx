@@ -6,7 +6,6 @@ import getStore, {
   selectFilteredProduct,
   selectSearch,
   setSearch,
-  setDetail,
 } from "../store";
 
 
@@ -31,7 +30,6 @@ function HomeContainer() {
           value={search}
           onChange={(e) => {
             dispatch(setSearch(e.target.value));
-            dispatch(setDetail(e.target.value));
           }}
         />
       </div>

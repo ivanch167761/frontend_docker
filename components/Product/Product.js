@@ -2,6 +2,7 @@ import React from "react";
 import Link from 'next/link';
 import Image from 'next/image'
 import { useRouter } from 'next/router';
+import { useDispatch } from "react-redux";
 /*import { decrement, increment } from "../../actions/counterActiond";*/
 
 export const Product = ({
@@ -11,11 +12,14 @@ export const Product = ({
   productText,
   productCountInStok,
   counter,
-  dispatch,
   addToCartHandler,
+  qtyUp,
+  qtyDown,
 }) => {
-  const router = useRouter()
+  const router = useRouter();
   const { id } = router.query;
+  const dispatch = useDispatch();
+
 
   return (
     <>
@@ -67,6 +71,25 @@ export const Product = ({
                 {productText}
               </p>
               <div className="flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 mt-20 md:mt-15">
+                
+              <div className="lg:w-1/6 py-4">
+                  <button
+                    onClick={qtyUp}
+                    className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-l cursor-pointer outline-none"
+                  >
+                    +
+                  </button>
+                  <span className="outline-none text-center bg-gray-300 inline-block w-10 font-semibold hover:text-black items-center text-gray-700">
+                    {counter}
+                  </span>
+                  <button
+                    onClick={qtyDown}
+                    className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-r cursor-pointer"
+                  >
+                    -
+                  </button>
+                </div>
+                
                 <Link href={`/cart/${id}?qty=${counter}`} className="w-full">
                   <button
                     onClick={addToCartHandler}
