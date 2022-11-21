@@ -11,7 +11,7 @@ jobs:
   build_docker:
     runs-on: ubuntu-latest
     env:
-      CLUSTER_NAME: deep-test
+      CLUSTER_NAME: prod-dot
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
