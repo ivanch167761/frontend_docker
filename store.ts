@@ -119,7 +119,7 @@ const initialDetailState: ProductDetailtState = {
 ***/
 export const getProductList = createAsyncThunk("products/getProducts", async () => {
   const response = await await fetch(
-    "http://134.209.135.168/api/products"
+    "deeptest-deployment/api/products"
   );
   return await response.json();
 });
@@ -127,7 +127,7 @@ export const getProductList = createAsyncThunk("products/getProducts", async () 
 
 export const getProductDetail = createAsyncThunk("products/getDetail", async (id:number) => {
   const response = await await fetch(
-    `http://134.209.135.168:80/api/products/${id}`
+    `deeptest-deployment/api/products/${id}`
   );
   return await response.json();
 });
