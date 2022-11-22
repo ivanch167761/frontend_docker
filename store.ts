@@ -118,16 +118,18 @@ const initialDetailState: ProductDetailtState = {
 /***
 ***/
 export const getProductList = createAsyncThunk("products/getProducts", async () => {
+  console.log("http://backend.deepintersection.com/api/products")
   const response = await await fetch(
-    "backend.deepintersection.com/api/products"
+    "http://backend.deepintersection.com/api/products"
   );
+  console.log(response)
   return await response.json();
 });
 
 
 export const getProductDetail = createAsyncThunk("products/getDetail", async (id:number) => {
   const response = await await fetch(
-    `backend.deepintersection.com/api/products/${id}`
+    `http://backend.deepintersection.com/api/products/${id}`
   );
   return await response.json();
 });
