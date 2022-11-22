@@ -36,7 +36,7 @@ jobs:
           doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
       - name: Update Deploy image
         run: |
-          kubectl apply -f frontend-k8s.yaml
+          
           kubectl set image deployment/frontend-deployment frontend=registry.digitalocean.com/deeptest/frontend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
       - name: wait for rollout to finish
         run: |
