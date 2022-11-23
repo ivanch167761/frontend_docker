@@ -18,8 +18,9 @@ function HomeContainer() {
   const dispatch = useDispatch();
   const search = useSelector(selectSearch);
   const productList = useSelector(selectFilteredProduct);
-
-
+  const host = process.env.BACKEND_HOST
+  console.log('host:')
+  console.log(host)
 
 
     return (

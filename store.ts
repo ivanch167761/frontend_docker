@@ -79,10 +79,11 @@ export type ProductDetailtState = {
 /********************** INITIAL STATE DEFINITION  **********************/
 /***
 ***/
+const host=process.env.BACKEND_HOST
 const initialState: ProductListState = {
   productList: [],
   filteredProduct: [],
-  search: "Nokia",
+  search: host,
   loading: false,
   error: false,
 };
@@ -118,19 +119,16 @@ const initialDetailState: ProductDetailtState = {
 /***
 ***/
 export const getProductList = createAsyncThunk("products/getProducts", async () => {
-  console.log("http://backend.deepintersection.com/api/products")
-  const response = await await fetch(
-    "http://backend.deepintersection.com/api/products"
-  );
+  const host=process.env.BACKEND_HOST
+  const response = await fetch(`${host}/api/products`);
   console.log(response)
   return await response.json();
 });
 
 
 export const getProductDetail = createAsyncThunk("products/getDetail", async (id:number) => {
-  const response = await await fetch(
-    `http://backend.deepintersection.com/api/products/${id}`
-  );
+  const host=process.env.BACKEND_HOST
+  const response = await fetch(`${host}/backend.deepintersection.com/api/products/${id}`);
   return await response.json();
 });
 /***
