@@ -135,10 +135,6 @@ const item:cartItem = {
     name:'HOLA',
 }
 
-export const GetInitialCartState = ():cartItem[] =>{
-
-}
-
 const initialCartState: cartItemsListState = {
     cartItemsList:[],
     loading: false,
