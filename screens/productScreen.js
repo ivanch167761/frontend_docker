@@ -7,11 +7,7 @@ function ProductScreen(props) {
 
 
   const productDetail = props.productDetails;
-  const addToCartHandler = () => {
-    console.log("Add to cart:", productDetail.productD._id);
-    console.log(productDetail);
-  };
-
+  const addToCartHandler =  props.addToCart;
   return (
     <>
       {productDetail.loading ? (
@@ -26,9 +22,11 @@ function ProductScreen(props) {
           productTitle={productDetail.productD.name}
           productCountInStok={productDetail.productD.countInStock}
           counter={props.counter}
-          addToCartHandler={addToCartHandler}
+          addToCartHandler={props.addToCart}
           qtyDown={props.qtyDown}
           qtyUp={props.qtyUp}
+          addToCart={props.addToCart}
+          cart={props.cart}
         />
       </div>
       )}

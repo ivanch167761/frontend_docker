@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useEffect } from "react";
 import {
   Action,
   PayloadAction,
@@ -64,6 +65,7 @@ export type ProductListState = {
   error: boolean;
 };
 
+
 export type ProductDetailtState = {
   productD: Product;
   available: boolean;
@@ -71,6 +73,22 @@ export type ProductDetailtState = {
   loading: boolean;
   qty:number;
 };
+
+interface cartItem  {
+    product_ID:Product["_id"];
+    qty:number;   
+    name: Product["name"];
+    price: Product["price"];
+    countInStock: Product["countInStock"];
+};
+
+export type cartItemsListState = {
+    cartItemsList: cartItem[];
+    error: boolean;
+    loading: boolean;
+}
+
+
 /***
 ***/
 /********************* TYPE DEFINITION END ********************/
@@ -106,6 +124,31 @@ const initialDetailState: ProductDetailtState = {
   loading: false,
   qty:1,
 };
+
+
+
+const item:cartItem = {
+    product_ID:2,
+    countInStock:22,
+    qty:2,
+    price:'22',
+    name:'HOLA',
+}
+
+export const GetInitialCartState = ():cartItem[] =>{
+
+}
+
+const initialCartState: cartItemsListState = {
+    cartItemsList:[],
+    loading: false,
+    error: false,
+};
+
+
+
+
+
 /***
 ***/
 /********************* INITIAL STATE DEFINITION END ********************/
@@ -123,7 +166,6 @@ export const getProductList = createAsyncThunk("products/getProducts", async () 
   console.log(response)
   return await response.json();
 });
-
 
 export const getProductDetail = createAsyncThunk("products/getDetail", async (id:number) => {
   const host=process.env.BACKEND_HOST
@@ -171,6 +213,50 @@ export const productListSlice = createSlice({
 /*********************** END SEARCH REDUCER **********************/
 
 
+/*********************** CART REDUCER **********************/
+/***
+***/
+export const addToCartSlice = createSlice({
+    name: "addToCartSlice",
+    initialState: initialCartState,
+    reducers:{
+        setCart(state, action: PayloadAction<string>){
+
+            const cartStateString=action.payload?JSON.parse(action.payload):[];
+            state.cartItemsList=cartStateString;
+            
+        },
+        addToCart(state, action: PayloadAction<{item:Product, qty:number}>) {
+            const item = action.payload['item'];
+            const itemId = item._id
+            const itemQty = action.payload['qty'];
+            const existItem = state.cartItemsList.find(x => x.product_ID === itemId)
+            const newItem:cartItem = {
+                    product_ID:itemId,
+                    countInStock:item.countInStock,
+                    qty:itemQty,
+                    price:item.price,
+                    name:item.name,
+            }
+            if (existItem) {
+                state.cartItemsList=state.cartItemsList.map(x => x.product_ID === itemId?newItem:x)
+            } else {
+                
+                   
+                state.cartItemsList=[...state.cartItemsList, newItem]
+               }
+            localStorage.setItem('cartItemsList', JSON.stringify(state.cartItemsList))
+            }
+
+        
+    },  
+})
+
+
+
+/***
+***/
+/*********************** END CART REDUCER **********************/
 
 /*********************** QTY REDUCER **********************/
 /***
@@ -225,6 +311,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 ***/                                        
 export const { setSearch } = productListSlice.actions;
 export const { setQty } = productDetailSlice.actions;
+export const { addToCart, setCart } = addToCartSlice.actions;
 /***
 ***/
 /*********************** ENDEXPORT REDUCERS **********************/
@@ -235,6 +322,7 @@ export const { setQty } = productDetailSlice.actions;
 /***
 ***/
 export const selectSearch = (state: RootState) => state.productList.search;
+export const selectCart = (state: RootState) => state.cartItemsListState;
 export const selectProductDetail = (state: RootState) => state.product;
 export const selectProductQty = (state: RootState) => state.product.qty;
 export const  selectFilteredProduct = (state: RootState) =>
@@ -255,6 +343,7 @@ export default function getStore(incomingPreloadState?: RootState) {
     reducer: {
       productList: productListSlice.reducer,
       product: productDetailSlice.reducer,
+      cart: addToCartSlice.reducer,
     },
     preloadedState: incomingPreloadState,
   });

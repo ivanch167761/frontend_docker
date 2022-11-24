@@ -90,7 +90,6 @@ export const Product = ({
                   </button>
                 </div>
                 
-                <Link href={`/cart/${id}?qty=${counter}`} className="w-full">
                   <button
                     onClick={addToCartHandler}
                     className={
@@ -101,7 +100,6 @@ export const Product = ({
                   >
                     {productCountInStok > 0 ? "Add To Cart" : "OUT OF STOCK"}
                   </button>
-                </Link>
                 <button className="w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 ">
                   View Details
                 </button>
