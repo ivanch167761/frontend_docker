@@ -1,12 +1,16 @@
 // components/layout.js
-
-import Navbar from "./navbar";
-
-export default function Layout({ children }) {
+import React from 'react'
+import Navbar from './navbar'
+import PropTypes from 'prop-types'
+export default function Layout ({ children }) {
   return (
     <>
       <Navbar />
       <main>{children}</main>
     </>
-  );
+  )
+}
+
+Layout.propTypes = {
+  children: PropTypes.func
 }

@@ -6,8 +6,6 @@ import { useRouter } from 'next/router'
 
 export const Product = ({ productImg, productImgAlt, productTitle, productText, productCountInStok, counter, addToCartHandler, qtyUp, qtyDown }) => {
   const router = useRouter()
-  const { id } = router.query
-
   return (
     <>
       <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
