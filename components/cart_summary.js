@@ -119,9 +119,6 @@ export default function Example ({ cartItems }) {
   )
 }
 
-
-
-
 Example.propTypes = {
   cartItems: PropTypes.array
 }
