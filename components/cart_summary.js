@@ -1,7 +1,7 @@
 import React from 'react'
 /* This example requires Tailwind CSS v2.0+ */
-import Image from 'next/image'
-import Link from 'next/link'
+/*  import Image from 'next/image'  */
+/*  import Link from 'next/link'  */
 import PropTypes from 'prop-types'
 
 export default function Example ({ cartItems }) {
