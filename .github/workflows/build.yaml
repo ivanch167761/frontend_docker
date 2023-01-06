@@ -37,7 +37,7 @@ jobs:
       - name: Update Deploy image
         run: |
           
-          kubectl set image deployment/frontend-deployment frontend=registry.digitalocean.com/deeptest/frontend:latest
+          kubectl set image deployment/frontend-deployment frontend=registry.digitalocean.com/deeptest/frontend:${GITHUB_SHA::7}-${GITHUB_RUN_ID::5}
       - name: wait for rollout to finish
         run: |
           kubectl rollout status deployment/frontend-deployment
