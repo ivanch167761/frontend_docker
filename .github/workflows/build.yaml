@@ -11,7 +11,7 @@ jobs:
   build_docker:
     runs-on: ubuntu-latest
     env:
-      CLUSTER_NAME: k8s-1-24-4-do-0-ams3-1669080686160
+      CLUSTER_NAME: k8s-1-25-4-do-0-ams3-1672906371804
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

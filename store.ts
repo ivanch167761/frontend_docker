@@ -119,7 +119,7 @@ const initialDetailState: ProductDetailtState = {
   available: false,
   error: false,
   loading: false,
-  qty: 1
+  qty: 10
 }
 
 export const defaultItem: cartItem = {
