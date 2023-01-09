@@ -135,14 +135,9 @@ const initialDetailState: ProductDetailtState = {
 
 export const defaultItem: cartItem = {
   product_ID: 2,
-  countInStock: 22,
-  qty: 2,
-  price: '22',
-  name: 'HOLA',
-  img: 'image',
-  imgAlt: 'imgAlt',
-  description: 'text'
+  qty: 2
 }
+
 
 export const initialCartItemsState: cartItemsState = {
   cartItemsList: [defaultItem],
@@ -150,6 +145,27 @@ export const initialCartItemsState: cartItemsState = {
   loading: false,
   error: null
 }
+export const defaultItemDetail: cartItemDetail = {
+  cartProductDetail: {
+    _id: 1,
+    category: 'category',
+    user: 'string',
+    name: 'string',
+    image: 'string',
+    brand: 'string',
+    description: 'string',
+    price: 'string',
+    countInStock: 1000,
+    createdAt: 'string'
+  },
+  qty: 0,
+  error: false,
+  loading: false
+}
+
+
+
+
 
 
 
