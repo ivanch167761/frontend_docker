@@ -132,13 +132,6 @@ export const defaultItem: cartItem = {
   qty: 2
 }
 
-
-export const initialCartItemsState: cartItemsState = {
-  cartItemsList: [defaultItem],
-  cartItemsDetailList: [defaultItemDetail],
-  loading: false,
-  error: null
-}
 export const defaultItemDetail: cartItemDetail = {
   cartProductDetail: {
     _id: 1,
@@ -157,7 +150,12 @@ export const defaultItemDetail: cartItemDetail = {
   loading: false
 }
 
-
+export const initialCartItemsState: cartItemsState = {
+  cartItemsList: [defaultItem],
+  cartItemsDetailList: [defaultItemDetail],
+  loading: false,
+  error: null
+}
 
 
 
