@@ -229,7 +229,7 @@ export const productListSlice = createSlice({
 
 export const getCartProductsDetail = createAsyncThunk('urlData/get', async (cartItemsList:cartItem[]) => {
   const requests = cartItemsList.map(async (cartItem) =>
-    await axios.get(`https://${process.env.BACKEND_HOST}/api/products/${cartItem.product_ID}`))
+    await axios.get(`https://backend.deepintersection.com/api/products/${cartItem.product_ID}`))
   const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
   const data = await getData()
   return data
