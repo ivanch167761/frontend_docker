@@ -75,12 +75,6 @@ export type ProductDetailtState = {
 interface cartItem {
   product_ID: Product['_id'];
   qty: number;
-  name: Product['name'];
-  price: Product['price'];
-  countInStock: Product['countInStock'];
-  img: Product['image'];
-  imgAlt: Product['name'];
-  description: Product['description'];
 }
 
 export type cartItemDetail = {
@@ -89,13 +83,13 @@ export type cartItemDetail = {
   error: boolean,
   loading: boolean,
 }
-
 export type cartItemsState = {
   cartItemsDetailList: any,
   cartItemsList: cartItem[],
   loading: boolean,
   error: any
 };
+
 
 
 
