@@ -83,11 +83,21 @@ interface cartItem {
   description: Product['description'];
 }
 
-export type cartItemsListState = {
-  cartItemsList: cartItem[];
-  error: boolean;
-  loading: boolean;
+export type cartItemDetail = {
+  cartProductDetail: any,
+  qty: number,
+  error: boolean,
+  loading: boolean,
+}
+
+export type cartItemsState = {
+  cartItemsDetailList: any,
+  cartItemsList: cartItem[],
+  loading: boolean,
+  error: any
 };
+
+
 
 /***
  ***/
@@ -120,7 +130,7 @@ const initialDetailState: ProductDetailtState = {
   available: false,
   error: false,
   loading: false,
-  qty: 10
+  qty: 1
 }
 
 export const defaultItem: cartItem = {
@@ -134,11 +144,14 @@ export const defaultItem: cartItem = {
   description: 'text'
 }
 
-const initialCartState: cartItemsListState = {
+export const initialCartItemsState: cartItemsState = {
   cartItemsList: [defaultItem],
+  cartItemsDetailList: [defaultItemDetail],
   loading: false,
-  error: false
+  error: null
 }
+
+
 
 /***
  ***/
