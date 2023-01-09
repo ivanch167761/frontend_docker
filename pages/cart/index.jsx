@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
 import getStore, {
   selectCart,
+  getCartProductsDetail,
   setCart
 } from '../../store'
 
