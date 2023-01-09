@@ -15,8 +15,8 @@ export default function Example ({ cartItems }) {
           {products.map((product) => (
             <div key={product.product_ID} className="py-10 border-b border-gray-200 flex space-x-6">
               <img
-                src={product.img}
-                alt={product.imgAlt}
+                src={product.image}
+                alt={product.name}
                 className="flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40"
               />
               <div className="flex-auto flex flex-col">
@@ -34,7 +34,7 @@ export default function Example ({ cartItems }) {
                     </div>
                     <div className="pl-4 flex sm:pl-6">
                       <dt className="font-medium text-gray-900">Price</dt>
-                      <dd className="ml-2 text-gray-700">{product.price * product.qty}</dd>
+                      <dd className="ml-2 text-gray-700">{(product.price * product.qty).toFixed(2)}</dd>
                     </div>
                   </dl>
                 </div>

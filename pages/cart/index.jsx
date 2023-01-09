@@ -11,19 +11,28 @@ function CartContainer () {
   useEffect(() => {
   // Perform localStorage action
     const cartStorage = localStorage.getItem('cartItemsList')
+    const cartStorageString = cartStorage ? JSON.parse(cartStorage) : []
+    const setCartDetails = async (cartStorage) => await dispatch(getCartProductsDetail(cartStorage))
     const setInitialCart = () => dispatch(setCart(cartStorage))
     setInitialCart()
+    setCartDetails(cartStorageString)
   }, [dispatch])
+
   const cartData = useSelector(selectCart)
-  console.log(cartData)
+  const cartDataDetails = useSelector(selectCartProducts)
+  const cartDataForShow = cartDataDetails.map((obj1, index) => {
+    const obj2 = cartData.filter(obj => obj.product_ID === obj1._id)[0] || {}
+    return Object.assign({}, obj1, obj2)
+  })
   return (
-     <CartScreen cartData={cartData}/>
+     <CartScreen cartData={cartDataForShow}/>
   )
 }
 
 export async function getServerSideProps () {
+  const a = [{ product_ID: 1, qty: 0 }]
   const store = getStore()
-  await store.dispatch(setCart())
+  await store.dispatch(getCartProductsDetail(a))
   return {
     props: {
       initialState: store.getState()

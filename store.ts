@@ -205,9 +205,18 @@ export const productListSlice = createSlice({
 /** ********************* CART REDUCER **********************/
 /***
  ***/
+
+export const getCartProductsDetail = createAsyncThunk('urlData/get', async (cartItemsList:cartItem[]) => {
+  const requests = cartItemsList.map(async (cartItem) =>
+    await axios.get(`https://${process.env.BACKEND_HOST}/api/products/${cartItem.product_ID}`))
+  const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
+  const data = await getData()
+  return data
+})
+
 export const addToCartSlice = createSlice({
   name: 'addToCart',
-  initialState: initialCartState,
+  initialState: initialCartItemsState,
   reducers: {
     setCart (state, action: PayloadAction<string>) {
       const cartStateString = action.payload ? JSON.parse(action.payload) : []
@@ -222,13 +231,7 @@ export const addToCartSlice = createSlice({
       )
       const newItem: cartItem = {
         product_ID: itemId,
-        countInStock: item.countInStock,
-        qty: itemQty,
-        price: item.price,
-        name: item.name,
-        img: item.image,
-        imgAlt: item.name,
-        description: item.description
+        qty: itemQty
       }
       if (existItem) {
         state.cartItemsList = state.cartItemsList.map((x) =>
@@ -242,8 +245,25 @@ export const addToCartSlice = createSlice({
         JSON.stringify(state.cartItemsList)
       )
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCartProductsDetail.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getCartProductsDetail.fulfilled, (state, { payload }) => {
+        state.loading = false
+        state.cartItemsDetailList = payload
+        state.error = null
+      })
+      .addCase(getCartProductsDetail.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
   }
 })
+
+
 
 /***
  ***/
@@ -309,6 +329,7 @@ export const { addToCart, setCart } = addToCartSlice.actions
  ***/
 export const selectSearch = (state: RootState) => state.productList.search
 export const selectCart = (state: RootState) => state.cart.cartItemsList
+export const selectCartProducts = (state: RootState) => state.cart.cartItemsDetailList
 export const selectProductDetail = (state: RootState) => state.product
 export const selectProductQty = (state: RootState) => state.product.qty
 export const selectFilteredProduct = (state: RootState) =>
