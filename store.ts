@@ -6,6 +6,7 @@ import {
   configureStore,
   ThunkAction
 } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 /*
 working producrt list:
@@ -150,9 +151,8 @@ export const getProductList = createAsyncThunk(
   'products/getProducts',
   async () => {
     const host = process.env.BACKEND_HOST
-    const response = await fetch(`https://${host}/api/products`)
-    console.log(response)
-    return await response.json()
+    const response = await axios.get(`https://${host}/api/products`)
+    return await response.data
   }
 )
 
@@ -160,8 +160,8 @@ export const getProductDetail = createAsyncThunk(
   'products/getDetail',
   async (id: number) => {
     const host = process.env.BACKEND_HOST
-    const response = await fetch(`https://${host}/api/products/${id}`)
-    return await response.json()
+    const response = await axios.get(`https://${host}/api/products/${id}`)
+    return await response.data
   }
 )
 /***
