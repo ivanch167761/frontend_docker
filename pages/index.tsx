@@ -15,7 +15,7 @@ function HomeContainer () {
   const search = useSelector(selectSearch)
   const productList = useSelector(selectFilteredProduct)
   useEffect(() => {
-    dispatch(checkLoginStatus())
+    dispatch(checkLoginStatus() as any)
   }, [])
   return (
       <>
