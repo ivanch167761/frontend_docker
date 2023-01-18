@@ -47,4 +47,3 @@ export default function errorMessage (message, show, setShow) {
     </>
   )
 }
-
