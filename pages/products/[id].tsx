@@ -8,7 +8,8 @@ import getStore, {
   setQty,
   addToCart,
   selectCart,
-  setCart
+  setCart,
+  checkLoginStatus
 
 } from '../../store'
 
@@ -20,13 +21,15 @@ function DetailContainer (context) {
     const setInitialCart = () => dispatch(setCart(cartStorage))
     setInitialCart()
   }, [dispatch])
-
   const qtyUp = () => dispatch(setQty(qtyProduct + 1))
   const qtyDown = () => dispatch(setQty(qtyProduct - 1))
   const toCart = () => dispatch(addToCart({ item: productData.productD, qty: qtyProduct }))
   const cart = useSelector(selectCart)
   const qtyProduct = useSelector(selectProductQty)
   const productData = useSelector(selectProductDetail)
+  useEffect(() => {
+    dispatch(checkLoginStatus())
+  }, [])
   return (
      <ProductScreen
      productDetails={productData}

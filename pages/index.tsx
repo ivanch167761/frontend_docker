@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import getStore, {
   getProductList,
   selectFilteredProduct,
   selectSearch,
-  setSearch
+  setSearch,
+  checkLoginStatus
 } from '../store'
 
 import HomeScreen from '../screens/homeScreen'
@@ -13,9 +14,9 @@ function HomeContainer () {
   const dispatch = useDispatch()
   const search = useSelector(selectSearch)
   const productList = useSelector(selectFilteredProduct)
-  const host = process.env.BACKEND_HOST
-  console.log('host:')
-  console.log(host)
+  useEffect(() => {
+    dispatch(checkLoginStatus())
+  }, [])
   return (
       <>
       <div>

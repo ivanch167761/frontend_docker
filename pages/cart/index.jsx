@@ -5,7 +5,8 @@ import getStore, {
   selectCart,
   selectCartProducts,
   getCartProductsDetail,
-  setCart
+  setCart,
+  checkLoginStatus
 } from '../../store'
 
 function CartContainer () {
@@ -19,6 +20,9 @@ function CartContainer () {
     setInitialCart()
     setCartDetails(cartStorageString)
   }, [dispatch])
+  useEffect(() => {
+    dispatch(checkLoginStatus())
+  }, [])
 
   const cartData = useSelector(selectCart)
   const cartDataDetails = useSelector(selectCartProducts)

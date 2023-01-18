@@ -7,6 +7,7 @@ import {
   ThunkAction
 } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { userInfo } from 'os';
 
 /*
 working producrt list:
@@ -90,8 +91,19 @@ export type cartItemsState = {
   error: any
 };
 
+interface User {
+    _id: number,
+    username: string,
+    email: string,
+    name: string,
+    isAdmin: boolean,
+};
 
-
+interface LoginState {
+  loading: boolean;
+  error: string | null;
+  user: User | null;
+}
 
 /***
  ***/
@@ -157,9 +169,11 @@ export const initialCartItemsState: cartItemsState = {
   error: null
 }
 
-
-
-
+export const initialLoginState: LoginState = {
+  loading: false,
+  error: null,
+  user: null
+}
 
 /***
  ***/
@@ -228,8 +242,9 @@ export const productListSlice = createSlice({
  ***/
 
 export const getCartProductsDetail = createAsyncThunk('urlData/get', async (cartItemsList:cartItem[]) => {
+  const host = process.env.BACKEND_HOST
   const requests = cartItemsList.map(async (cartItem) =>
-    await axios.get(`https://backend.deepintersection.com/api/products/${cartItem.product_ID}`))
+    await axios.get(`https://${host}/api/products/${cartItem.product_ID}`))
   const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
   const data = await getData()
   return data
@@ -261,6 +276,7 @@ export const addToCartSlice = createSlice({
       } else {
         state.cartItemsList = [...state.cartItemsList, newItem]
       }
+      state.cartItemsList = state.cartItemsList.filter(obj => obj.qty !== 0)
       localStorage.setItem(
         'cartItemsList',
         JSON.stringify(state.cartItemsList)
@@ -283,8 +299,6 @@ export const addToCartSlice = createSlice({
       })
   }
 })
-
-
 
 /***
  ***/
@@ -326,6 +340,112 @@ export const productDetailSlice = createSlice({
  ***/
 /** ********************* END QTY REDUCER **********************/
 
+/** ********************* LOGIN REDUCER **********************/
+/***
+ ***/
+const loginSlice = createSlice({
+  name: 'login',
+  initialState: initialLoginState,
+  reducers: {
+    setLoading: (state) => {
+      state.loading = true
+      state.error = null
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.loading = false
+      state.error = action.payload
+    },
+    setUser: (state, action: PayloadAction<User>) => {
+      state.loading = false
+      state.error = null
+      state.user = action.payload
+    },
+    logout: (state) => {
+      state.user = null
+      localStorage.removeItem('user')
+    }
+  }
+})
+
+export const login = (email: string, password: string) => async (dispatch: any) => {
+  dispatch(setLoading())
+  const host = process.env.BACKEND_HOST
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+    const { data } = await axios.post<User>(`https://${host}/api/users/login/`,
+      { username: email, password: password }, config)
+    localStorage.setItem('user', JSON.stringify(data))
+    dispatch(setUser(data))
+  } catch (error) {
+    dispatch(setError(error.message))
+  }
+}
+
+export const checkLoginStatus = () => (dispatch: any) => {
+  const user = localStorage.getItem('user')
+  if (user) {
+    dispatch(setUser(JSON.parse(user)))
+  }
+}
+
+/***
+ ***/
+/** ********************* END LOGIN REDUCER **********************/
+
+/* ********************REGISTRATION********************* */
+
+export const register = (name: string, email: string, password: string) => async (dispatch: any) => {
+  dispatch(setLoading())
+  const host = process.env.BACKEND_HOST
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+    const { data } = await axios.post<User>(`https://${host}/api/users/register/`,
+      { name: name, email: email, password: password }, config)
+    localStorage.setItem('user', JSON.stringify(data))
+    dispatch(setUser(data))
+  } catch (error) {
+    dispatch(setError(error.message))
+  }
+}
+
+/* **************************END REGISTRATION ******************* */
+
+/* **********************************UPDATE PROFILE************************ */
+export const updateUserProfile = (name: string, email: string, password: string) => async (dispatch: any) => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  name ? user.name = name : console.log("name wasn't change")
+  email ? user.email = email : console.log("email wasn't change")
+  password ? user.password = password : console.log("password wasn't change")
+  dispatch(setLoading())
+  const host = process.env.BACKEND_HOST
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${user.token}`
+      }
+    }
+    localStorage.setItem('headers', JSON.stringify(config))
+    localStorage.setItem('updatedUser', JSON.stringify(user))
+    const { data } = await axios.put(`https://${host}/api/users/profile/update/`,
+      user, config)
+    localStorage.setItem('user', JSON.stringify(data))
+    dispatch(setUser(data))
+  } catch (error) {
+    dispatch(setError(error.message))
+  }
+}
+
+/* **********************************END UPDATE PROFILE************************ */
+
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
@@ -341,6 +461,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 export const { setSearch } = productListSlice.actions
 export const { setQty } = productDetailSlice.actions
 export const { addToCart, setCart } = addToCartSlice.actions
+export const { setLoading, setError, setUser, logout } = loginSlice.actions
 /***
  ***/
 /** ********************* ENDEXPORT REDUCERS **********************/
@@ -352,6 +473,9 @@ export const selectSearch = (state: RootState) => state.productList.search
 export const selectCart = (state: RootState) => state.cart.cartItemsList
 export const selectCartProducts = (state: RootState) => state.cart.cartItemsDetailList
 export const selectProductDetail = (state: RootState) => state.product
+export const selectUserDetail = (state: RootState) => state.login.user
+export const selectError = (state: RootState) => state.login.error
+
 export const selectProductQty = (state: RootState) => state.product.qty
 export const selectFilteredProduct = (state: RootState) =>
   state.productList.filteredProduct
@@ -368,7 +492,8 @@ export default function getStore (incomingPreloadState?: RootState) {
     reducer: {
       productList: productListSlice.reducer,
       product: productDetailSlice.reducer,
-      cart: addToCartSlice.reducer
+      cart: addToCartSlice.reducer,
+      login: loginSlice.reducer
     },
     preloadedState: incomingPreloadState
   })
