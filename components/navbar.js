@@ -5,8 +5,8 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { logout, selectUserDetail } from '../store'
-import { useSelector, useDispatch } from 'react-redux'
+import { selectUserDetail } from '../store'
+import { useSelector } from 'react-redux'
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -19,7 +19,6 @@ function classNames (...classes) {
 }
 
 export default function Example () {
-  const dispatch = useDispatch()
   const router = useRouter()
   const [currentPage, setCurrentPage] = useState(router.pathname)
   useEffect(() => {
