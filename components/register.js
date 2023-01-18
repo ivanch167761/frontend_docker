@@ -1,7 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
 import PropTypes from 'prop-types'
-import { LockClosedIcon } from '@heroicons/react/solid'
 import { Disclosure } from '@headlessui/react'
 /*
   This example requires Tailwind CSS v2.0+
