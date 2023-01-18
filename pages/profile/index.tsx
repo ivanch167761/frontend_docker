@@ -24,12 +24,12 @@ function ProfileContainer () {
   const [password, setPassword] = useState('')
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(updateUserProfile(name, email, password))
+    dispatch(updateUserProfile(name, email, password) as any)
     router.push('/')
   }
   useEffect(() => {
     console.log('set user')
-    dispatch(checkLoginStatus())
+    dispatch(checkLoginStatus() as any)
   }, [])
 
   useEffect(() => {

@@ -18,10 +18,10 @@ function loginContainer () {
   const [password, setPassword] = useState('')
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(login(email, password))
+    dispatch(login(email, password) as any)
   }
   useEffect(() => {
-    dispatch(checkLoginStatus())
+    dispatch(checkLoginStatus() as any)
   }, [])
 
   useEffect(() => {

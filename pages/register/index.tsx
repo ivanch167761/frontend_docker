@@ -23,10 +23,10 @@ function RegisterContainer () {
   const [password, setPassword] = useState('')
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(register(name, email, password))
+    dispatch(register(name, email, password) as any)
   }
   useEffect(() => {
-    dispatch(checkLoginStatus())
+    dispatch(checkLoginStatus() as any)
   }, [])
 
   useEffect(() => {
