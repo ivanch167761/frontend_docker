@@ -28,7 +28,7 @@ function DetailContainer (context) {
   const qtyProduct = useSelector(selectProductQty)
   const productData = useSelector(selectProductDetail)
   useEffect(() => {
-    dispatch(checkLoginStatus())
+    dispatch(checkLoginStatus() as any)
   }, [])
   return (
      <ProductScreen
