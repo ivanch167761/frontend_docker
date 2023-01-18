@@ -25,6 +25,7 @@ function ProfileContainer () {
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(updateUserProfile(name, email, password))
+    router.push('/')
   }
   useEffect(() => {
     console.log('set user')

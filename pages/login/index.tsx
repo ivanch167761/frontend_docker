@@ -13,7 +13,6 @@ import LoginScreen from '../../screens/loginScreen'
 function loginContainer () {
   const user = useSelector(selectUserDetail)
   const router = useRouter()
-  const [route, setRoute] = useState()
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

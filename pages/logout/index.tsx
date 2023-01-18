@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import getStore, {
   logout,
   selectUserDetail
 } from '../../store'
-
 
 function logoutContainer () {
   const router = useRouter()

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import errorMessage from '../../components/errorMessage'
 import getStore, {
-  login,
   register,
   checkLoginStatus,
   selectUserDetail,
