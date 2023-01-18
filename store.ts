@@ -185,8 +185,8 @@ export const initialLoginState: LoginState = {
 export const getProductList = createAsyncThunk(
   'products/getProducts',
   async () => {
-    const host = 'backend.deepintersection.com'
-    const response = await axios.get(`https://${host}/api/products`)
+    const host = 'deeptest-deployment'
+    const response = await axios.get(`${host}/api/products`)
     return await response.data
   }
 )
@@ -194,8 +194,8 @@ export const getProductList = createAsyncThunk(
 export const getProductDetail = createAsyncThunk(
   'products/getDetail',
   async (id: number) => {
-    const host = 'backend.deepintersection.com'
-    const response = await axios.get(`https://${host}/api/products/${id}`)
+    const host = 'deeptest-deployment'
+    const response = await axios.get(`${host}/api/products/${id}`)
     return await response.data
   }
 )
@@ -242,9 +242,9 @@ export const productListSlice = createSlice({
  ***/
 
 export const getCartProductsDetail = createAsyncThunk('urlData/get', async (cartItemsList:cartItem[]) => {
-  const host = 'backend.deepintersection.com'
+  const host = 'deeptest-deployment'
   const requests = cartItemsList.map(async (cartItem) =>
-    await axios.get(`https://${host}/api/products/${cartItem.product_ID}`))
+    await axios.get(`${host}/api/products/${cartItem.product_ID}`))
   const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
   const data = await getData()
   return data
@@ -369,14 +369,14 @@ const loginSlice = createSlice({
 
 export const login = (email: string, password: string) => async (dispatch: any) => {
   dispatch(setLoading())
-  const host = 'backend.deepintersection.com'
+  const host = 'deeptest-deployment'
   try {
     const config = {
       headers: {
         'Content-type': 'application/json'
       }
     }
-    const { data } = await axios.post<User>(`https://${host}/api/users/login/`,
+    const { data } = await axios.post<User>(`${host}/api/users/login/`,
       { username: email, password: password }, config)
     localStorage.setItem('user', JSON.stringify(data))
     dispatch(setUser(data))
@@ -400,14 +400,14 @@ export const checkLoginStatus = () => (dispatch: any) => {
 
 export const register = (name: string, email: string, password: string) => async (dispatch: any) => {
   dispatch(setLoading())
-  const host = 'backend.deepintersection.com'
+  const host = 'deeptest-deployment'
   try {
     const config = {
       headers: {
         'Content-type': 'application/json'
       }
     }
-    const { data } = await axios.post<User>(`https://${host}/api/users/register/`,
+    const { data } = await axios.post<User>(`${host}/api/users/register/`,
       { name: name, email: email, password: password }, config)
     localStorage.setItem('user', JSON.stringify(data))
     dispatch(setUser(data))
@@ -425,7 +425,7 @@ export const updateUserProfile = (name: string, email: string, password: string)
   email ? user.email = email : console.log("email wasn't change")
   password ? user.password = password : console.log("password wasn't change")
   dispatch(setLoading())
-  const host = 'backend.deepintersection.com'
+  const host = 'deeptest-deployment'
   try {
     const config = {
       headers: {
@@ -435,7 +435,7 @@ export const updateUserProfile = (name: string, email: string, password: string)
     }
     localStorage.setItem('headers', JSON.stringify(config))
     localStorage.setItem('updatedUser', JSON.stringify(user))
-    const { data } = await axios.put(`https://${host}/api/users/profile/update/`,
+    const { data } = await axios.put(`${host}/api/users/profile/update/`,
       user, config)
     localStorage.setItem('user', JSON.stringify(data))
     dispatch(setUser(data))
