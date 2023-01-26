@@ -1,23 +1,26 @@
 import Example from '../components/cart_summary.js'
 import React from 'react'
 import propsTypes from 'prop-types'
-function CartScreen ({ cartData }) {
+import Link from 'next/link.js'
+function CartScreen ({ cartData, cartPrice, setChangeCart }) {
   return (
     <>
     <div className="bg-white">
       <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
         <div className="max-w-xl">
-          <h1 className="text-sm font-semibold uppercase tracking-wide text-indigo-600">Thank you!</h1>
-          <p className="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">It is on the way!</p>
-          <p className="mt-2 text-base text-gray-500">Your order #14034056 has shipped and will be with you soon.</p>
-
-          <dl className="mt-12 text-sm font-medium">
-            <dt className="text-gray-900">Tracking number</dt>
-            <dd className="text-indigo-600 mt-2">51547878755545848512</dd>
-          </dl>
+          <p className="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">CART SUMMARY</p>
         </div>
 
-                        <Example cartItems={cartData} />
+                        <Example cartItems={cartData} setChangeCart={setChangeCart} />
+                        <div>Total price: {cartPrice}</div>
+            <Link href='/order' className='py-20'>
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+               Make your order
+              </button>
+            </Link>
       </div>
     </div>
     </>
@@ -25,7 +28,9 @@ function CartScreen ({ cartData }) {
 }
 
 CartScreen.propTypes = {
-  cartData: propsTypes.object
+  cartData: propsTypes.array,
+  cartPrice: propsTypes.string,
+  setChangeCart: propsTypes.func
 
 }
 

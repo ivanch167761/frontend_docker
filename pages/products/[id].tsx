@@ -23,7 +23,7 @@ function DetailContainer (context) {
   }, [dispatch])
   const qtyUp = () => dispatch(setQty(qtyProduct + 1))
   const qtyDown = () => dispatch(setQty(qtyProduct - 1))
-  const toCart = () => dispatch(addToCart({ item: productData.productD, qty: qtyProduct }))
+  const toCart = () => dispatch(addToCart({ item: productData.productD._id, qty: qtyProduct }))
   const cart = useSelector(selectCart)
   const qtyProduct = useSelector(selectProductQty)
   const productData = useSelector(selectProductDetail)

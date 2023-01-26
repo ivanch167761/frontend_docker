@@ -1,16 +1,18 @@
 import CartScreen from '../../screens/cartScreen'
 import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import getStore, {
-  selectCart,
   selectCartProducts,
+  selectCartTotalPrice,
   getCartProductsDetail,
   setCart,
+  addToCart,
   checkLoginStatus
 } from '../../store'
 
 function CartContainer () {
   const dispatch = useDispatch()
+  const [changeCart, setChangeCart] = useState({ item: 0, qty: 0 })
   useEffect(() => {
   // Perform localStorage action
     const cartStorage = localStorage.getItem('cartItemsList')
@@ -19,19 +21,16 @@ function CartContainer () {
     const setInitialCart = () => dispatch(setCart(cartStorage))
     setInitialCart()
     setCartDetails(cartStorageString)
-  }, [dispatch])
+    dispatch(addToCart(changeCart))
+  }, [dispatch, changeCart])
   useEffect(() => {
     dispatch(checkLoginStatus())
   }, [])
 
-  const cartData = useSelector(selectCart)
   const cartDataDetails = useSelector(selectCartProducts)
-  const cartDataForShow = cartDataDetails.map((obj1, index) => {
-    const obj2 = cartData.filter(obj => obj.product_ID === obj1._id)[0] || {}
-    return Object.assign({}, obj1, obj2)
-  })
+  const cartTotalPrice = useSelector(selectCartTotalPrice)
   return (
-     <CartScreen cartData={cartDataForShow}/>
+     <CartScreen cartData={cartDataDetails} cartPrice={cartTotalPrice} setChangeCart={setChangeCart}/>
   )
 }
 

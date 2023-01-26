@@ -7,7 +7,6 @@ import {
   ThunkAction
 } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { userInfo } from 'os';
 
 /*
 working producrt list:
@@ -87,6 +86,7 @@ export type cartItemDetail = {
 export type cartItemsState = {
   cartItemsDetailList: any,
   cartItemsList: cartItem[],
+  cartTotalProductPrice: string,
   loading: boolean,
   error: any
 };
@@ -103,6 +103,23 @@ interface LoginState {
   loading: boolean;
   error: string | null;
   user: User | null;
+}
+
+interface orderItem{
+  name: string;
+  address: string;
+  city: string;
+  country: string;
+  postcode: string;
+  phoneNumber: string;
+  comment: string;
+  payment: string;
+  shippingOption: string;
+}
+interface Order {
+  orderDetail: orderItem;
+  error: any;
+  loading: boolean;
 }
 
 /***
@@ -140,7 +157,7 @@ const initialDetailState: ProductDetailtState = {
 }
 
 export const defaultItem: cartItem = {
-  product_ID: 2,
+  product_ID: 1,
   qty: 2
 }
 
@@ -163,8 +180,9 @@ export const defaultItemDetail: cartItemDetail = {
 }
 
 export const initialCartItemsState: cartItemsState = {
-  cartItemsList: [defaultItem],
-  cartItemsDetailList: [defaultItemDetail],
+  cartItemsList: [],
+  cartItemsDetailList: [],
+  cartTotalProductPrice: '0',
   loading: false,
   error: null
 }
@@ -173,6 +191,23 @@ export const initialLoginState: LoginState = {
   loading: false,
   error: null,
   user: null
+}
+
+export const initialOrderState: Order = {
+  orderDetail: {
+    name: '',
+    address: '',
+    city: '',
+    country: '',
+    postcode: '',
+    phoneNumber: '',
+    comment: '',
+    payment: 'PayPal',
+    shippingOption: 'standard'
+
+  },
+  error: null,
+  loading: false
 }
 
 /***
@@ -185,7 +220,7 @@ export const initialLoginState: LoginState = {
 export const getProductList = createAsyncThunk(
   'products/getProducts',
   async () => {
-    const host = 'backend.deepintersection.com'
+    const host = 'localhost:8000'
     const response = await axios.get(`https://${host}/api/products`)
     return await response.data
   }
@@ -194,7 +229,7 @@ export const getProductList = createAsyncThunk(
 export const getProductDetail = createAsyncThunk(
   'products/getDetail',
   async (id: number) => {
-    const host = 'backend.deepintersection.com'
+    const host = 'localhost:8000'
     const response = await axios.get(`https://${host}/api/products/${id}`)
     return await response.data
   }
@@ -242,12 +277,14 @@ export const productListSlice = createSlice({
  ***/
 
 export const getCartProductsDetail = createAsyncThunk('urlData/get', async (cartItemsList:cartItem[]) => {
-  const host = 'backend.deepintersection.com'
-  const requests = cartItemsList.map(async (cartItem) =>
-    await axios.get(`https://${host}/api/products/${cartItem.product_ID}`))
-  const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
-  const data = await getData()
-  return data
+  const host = 'localhost:8000'
+  if (cartItemsList.length > 0) {
+    const requests = cartItemsList.map(async (cartItem) =>
+      await axios.get(`https://${host}/api/products/${cartItem.product_ID}`))
+    const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
+    const data = await getData()
+    return data
+  } else { return null }
 })
 
 export const addToCartSlice = createSlice({
@@ -258,9 +295,8 @@ export const addToCartSlice = createSlice({
       const cartStateString = action.payload ? JSON.parse(action.payload) : []
       state.cartItemsList = cartStateString
     },
-    addToCart (state, action: PayloadAction<{ item: Product; qty: number }>) {
-      const item = action.payload.item
-      const itemId = item._id
+    addToCart (state, action: PayloadAction<{ item: Product['_id']; qty: number }>) {
+      const itemId = action.payload.item
       const itemQty = action.payload.qty
       const existItem = state.cartItemsList.find(
         (x) => x.product_ID === itemId
@@ -291,7 +327,15 @@ export const addToCartSlice = createSlice({
       .addCase(getCartProductsDetail.fulfilled, (state, { payload }) => {
         state.loading = false
         state.cartItemsDetailList = payload
-        state.error = null
+        if (state.cartItemsList.length > 0) {
+          state.cartItemsDetailList = state.cartItemsDetailList.map((obj1, index) => {
+            const obj2 = state.cartItemsList.filter(obj => obj.product_ID === obj1._id)[0] || {}
+            return Object.assign({}, obj1, obj2)
+          })
+          state.cartTotalProductPrice = state.cartItemsDetailList.map(item => item.qty * item.price).reduce((accumulator, currentValue) => accumulator + currentValue).toFixed(2)
+
+          state.error = null
+        } else { state.cartTotalProductPrice = 0 }
       })
       .addCase(getCartProductsDetail.rejected, (state) => {
         state.loading = false
@@ -369,7 +413,7 @@ const loginSlice = createSlice({
 
 export const login = (email: string, password: string) => async (dispatch: any) => {
   dispatch(setLoading())
-  const host = 'backend.deepintersection.com'
+  const host = 'localhost:8000'
   try {
     const config = {
       headers: {
@@ -400,7 +444,7 @@ export const checkLoginStatus = () => (dispatch: any) => {
 
 export const register = (name: string, email: string, password: string) => async (dispatch: any) => {
   dispatch(setLoading())
-  const host = 'backend.deepintersection.com'
+  const host = 'localhost:8000'
   try {
     const config = {
       headers: {
@@ -425,7 +469,7 @@ export const updateUserProfile = (name: string, email: string, password: string)
   email ? user.email = email : console.log("email wasn't change")
   password ? user.password = password : console.log("password wasn't change")
   dispatch(setLoading())
-  const host = 'backend.deepintersection.com'
+  const host = 'localhost:8000'
   try {
     const config = {
       headers: {
@@ -433,8 +477,6 @@ export const updateUserProfile = (name: string, email: string, password: string)
         Authorization: `Bearer ${user.token}`
       }
     }
-    localStorage.setItem('headers', JSON.stringify(config))
-    localStorage.setItem('updatedUser', JSON.stringify(user))
     const { data } = await axios.put(`https://${host}/api/users/profile/update/`,
       user, config)
     localStorage.setItem('user', JSON.stringify(data))
@@ -445,6 +487,76 @@ export const updateUserProfile = (name: string, email: string, password: string)
 }
 
 /* **********************************END UPDATE PROFILE************************ */
+
+/* **********************************  SET USER ORDER  ************************ */
+/***
+ ***/
+const orderSlice = createSlice({
+  name: 'order',
+  initialState: initialOrderState,
+  reducers: {
+    setLoading: (state) => {
+      state.loading = true
+      state.error = null
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.loading = false
+      state.error = action.payload
+    },
+    setOrder: (state, action: PayloadAction<orderItem>) => {
+      state.loading = false
+      state.error = null
+      state.orderDetail = action.payload
+    }
+  }
+})
+
+export const setUserOrder = (name: string, address: string, city: string, country: string, postcode: string, phoneNumber: string, comment: string, payment: string, shippingOption: string) => async (dispatch: any) => {
+  const orderItem = {
+    name: name,
+    address: address,
+    city: city,
+    country: country,
+    postcode: postcode,
+    phoneNumber: phoneNumber,
+    comment: comment,
+    payment: payment,
+    shippingOption: shippingOption
+  }
+  dispatch(setLoading())
+  const cartItemsList = JSON.parse(localStorage.getItem('cartItemsList'))
+  const host = 'localhost:8000'
+  try {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${user.token}`
+      }
+    }
+    dispatch(setOrder(orderItem))
+    const { data } = await axios.post(`https://${host}/api/orders/add/`,
+      {
+        paymentMethod: orderItem.payment,
+        itemsPrice: 200,
+        shippingPrice: 20,
+        taxPrice: 0.21,
+        totalPrice: 9999,
+        address: orderItem.address,
+        city: orderItem.city,
+        postalcode: orderItem.postcode,
+        country: orderItem.country,
+        orderItems: cartItemsList
+      }, config)
+    localStorage.setItem('responseOrder', JSON.stringify(data))
+    localStorage.removeItem('cartItemsList')
+    dispatch(setCart(''))
+  } catch (error) {
+    dispatch(setError(error.message))
+  }
+}
+
+/* **********************************  END SET USER ORDER  ************************ */
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
@@ -462,6 +574,7 @@ export const { setSearch } = productListSlice.actions
 export const { setQty } = productDetailSlice.actions
 export const { addToCart, setCart } = addToCartSlice.actions
 export const { setLoading, setError, setUser, logout } = loginSlice.actions
+export const { setOrder } = orderSlice.actions
 /***
  ***/
 /** ********************* ENDEXPORT REDUCERS **********************/
@@ -471,10 +584,12 @@ export const { setLoading, setError, setUser, logout } = loginSlice.actions
  ***/
 export const selectSearch = (state: RootState) => state.productList.search
 export const selectCart = (state: RootState) => state.cart.cartItemsList
+export const selectCartTotalPrice = (state: RootState) => state.cart.cartTotalProductPrice
 export const selectCartProducts = (state: RootState) => state.cart.cartItemsDetailList
 export const selectProductDetail = (state: RootState) => state.product
 export const selectUserDetail = (state: RootState) => state.login.user
 export const selectError = (state: RootState) => state.login.error
+export const selectOrder = (state: RootState) => state.orderReducer.orderDetail
 
 export const selectProductQty = (state: RootState) => state.product.qty
 export const selectFilteredProduct = (state: RootState) =>
@@ -493,7 +608,8 @@ export default function getStore (incomingPreloadState?: RootState) {
       productList: productListSlice.reducer,
       product: productDetailSlice.reducer,
       cart: addToCartSlice.reducer,
-      login: loginSlice.reducer
+      login: loginSlice.reducer,
+      orderReducer: orderSlice.reducer
     },
     preloadedState: incomingPreloadState
   })

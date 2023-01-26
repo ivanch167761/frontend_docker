@@ -28,10 +28,10 @@ export default function Example () {
   }, [router.events])
   const user = useSelector(selectUserDetail)
   const navigation = [
-    { name: 'Dashboard', href: '/', current: false },
+    { name: 'Наш ассортимент', href: '/', current: false },
     { name: 'Dashboard_2', href: '/', current: true },
     { name: 'Team', href: '#', current: false },
-    { name: 'Cart', href: '/cart', current: false }
+    { name: 'Корзина', href: '/cart', current: false }
   ]
   const loginBTN = (
                           <Link href={'/login'} key={'login'}>
