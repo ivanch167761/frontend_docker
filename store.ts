@@ -122,6 +122,42 @@ interface Order {
   loading: boolean;
 }
 
+interface orderItemDetail{
+  _id: number;
+  product: {
+      _id: number;
+      name: string;
+      qty: string;
+      price: string;
+      image: string;
+      product: number;
+      order: number;
+  }
+  shippingAddress: boolean;
+  user: {
+      id: number;
+      _id: number;
+      username: string;
+      email: string;
+      name: string;
+      isAdmin: boolean;
+  };
+  paymentMethod: string;
+  taxPrice: string;
+  shippingPrice: string;
+  totalPrice: string;
+  isPaid: boolean;
+  paidAt: null;
+  isDelivered: boolean;
+  deliveredAt: null;
+  createdAt: string;
+  }
+
+interface OrderDetail {
+  orderDetail: orderItemDetail;
+  error: any;
+  loading: boolean;
+}
 /***
  ***/
 /** ******************* TYPE DEFINITION END ********************/
@@ -210,6 +246,44 @@ export const initialOrderState: Order = {
   loading: false
 }
 
+const initialOrderItemDetail: orderItemDetail = {
+  _id: 0,
+  product: {
+    _id: 0,
+    name: '',
+    qty: '',
+    price: '',
+    image: '',
+    product: 0,
+    order: 0
+  },
+  shippingAddress: true,
+  user: {
+    id: 0,
+    _id: 0,
+    username: '',
+    email: '',
+    name: '',
+    isAdmin: false
+  },
+  paymentMethod: '',
+  taxPrice: '',
+  shippingPrice: '',
+  totalPrice: '',
+  isPaid: false,
+  paidAt: null,
+  isDelivered: false,
+  deliveredAt: null,
+  createdAt: ''
+}
+
+const initialOrderDetail: OrderDetail = {
+  orderDetail: initialOrderItemDetail,
+  error: false,
+  loading: false
+
+}
+
 /***
  ***/
 /** ******************* INITIAL STATE DEFINITION END ********************/
@@ -231,6 +305,15 @@ export const getProductDetail = createAsyncThunk(
   async (id: number) => {
     const host = 'localhost:8000'
     const response = await axios.get(`https://${host}/api/products/${id}`)
+    return await response.data
+  }
+)
+
+export const getOrderDetail = createAsyncThunk(
+  'order/getOrder',
+  async (id: number) => {
+    const host = 'localhost:8000'
+    const response = await axios.get(`https://${host}/api/orders/${id}`)
     return await response.data
   }
 )
@@ -335,7 +418,7 @@ export const addToCartSlice = createSlice({
           state.cartTotalProductPrice = state.cartItemsDetailList.map(item => item.qty * item.price).reduce((accumulator, currentValue) => accumulator + currentValue).toFixed(2)
 
           state.error = null
-        } else { state.cartTotalProductPrice = 0 }
+        } else { state.cartTotalProductPrice = '0' }
       })
       .addCase(getCartProductsDetail.rejected, (state) => {
         state.loading = false
@@ -347,6 +430,32 @@ export const addToCartSlice = createSlice({
 /***
  ***/
 /** ********************* END CART REDUCER **********************/
+
+/* ********************** ORDER DETAIL **************************/
+
+export const orderDetailSlice = createSlice({
+  name: 'orderDetail',
+  initialState: initialOrderDetail,
+  reducers: {
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getOrderDetail.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getOrderDetail.fulfilled, (state, { payload }) => {
+        state.loading = false
+        state.orderDetail = payload
+      })
+      .addCase(getOrderDetail.rejected, (state) => {
+        state.loading = false
+        state.error = true
+      })
+  }
+})
+
+/* ********************** END ORDER DETAIL **************************/
+
 
 /** ********************* QTY REDUCER **********************/
 /***
@@ -609,7 +718,8 @@ export default function getStore (incomingPreloadState?: RootState) {
       product: productDetailSlice.reducer,
       cart: addToCartSlice.reducer,
       login: loginSlice.reducer,
-      orderReducer: orderSlice.reducer
+      orderReducer: orderSlice.reducer,
+      orderById: orderDetailSlice.reducer
     },
     preloadedState: incomingPreloadState
   })
