@@ -20,7 +20,7 @@ jobs:
         with:
           token: ${{ secrets.FRONTEND_TOKEN_KEY }}
       - name: Login to DO with short-live creds
-        run: doctl registry login --expiry-seconds 1200
+        run: doctl registry login --expiry-seconds 2200
       - name: build container image
         working-directory: .
         run: |
@@ -33,7 +33,7 @@ jobs:
           docker push registry.digitalocean.com/deeptest/frontend --all-tags
       - name: cluster kubeconfig file
         run: |
-          doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ env.CLUSTER_NAME }}
+          doctl kubernetes cluster kubeconfig save --expiry-seconds 6000 ${{ env.CLUSTER_NAME }}
       - name: Update Deploy image
         run: |
           

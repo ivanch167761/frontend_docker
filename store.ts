@@ -24,28 +24,23 @@ import {
 import axios from "axios";
 
 /** ********************* GET ACTIONS **********************/
-export const getProductList = createAsyncThunk<
-  Product[],
-  undefined,
-  { rejectValue: string }
->("products/getProducts", async (_, { rejectWithValue }) => {
-  const host = "localhost:8000";
-  const response = await axios.get(`https://${host}/api/products`);
-  if (!response) {
-    return rejectWithValue("error");
+/***
+ ***/
+export const getProductList = createAsyncThunk(
+  'products/getProducts',
+  async () => {
+    const host = 'https://backend.deepintersection.com'
+    const response = await axios.get(`${host}/api/products`)
+    return await response.data
   }
-  return response.data;
-});
+)
 
-export const getProductDetail = createAsyncThunk<
-  Product,
-  number,
-  { rejectValue: string }
->("products/getDetail", async (id, { rejectWithValue }) => {
-  const host = "localhost:8000";
-  const response = await axios.get(`https://${host}/api/products/${id}`);
-  if (!response) {
-    return rejectWithValue("error");
+export const getProductDetail = createAsyncThunk(
+  'products/getDetail',
+  async (id: number) => {
+    const host = 'https://backend.deepintersection.com'
+    const response = await axios.get(`${host}/api/products/${id}`)
+    return await response.data
   }
   return response.data;
 });
@@ -151,6 +146,18 @@ export const productListSlice = createSlice({
 /** ********************* END SEARCH REDUCER **********************/
 
 /** ********************* CART REDUCER **********************/
+/***
+ ***/
+
+export const getCartProductsDetail = createAsyncThunk('urlData/get', async (cartItemsList:cartItem[]) => {
+  const host = 'https://backend.deepintersection.com'
+  const requests = cartItemsList.map(async (cartItem) =>
+    await axios.get(`${host}/api/products/${cartItem.product_ID}`))
+  const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
+  const data = await getData()
+  return data
+})
+
 export const addToCartSlice = createSlice({
   name: "addToCart",
   initialState: initialCartItemsState,
@@ -344,8 +351,26 @@ export const login =
     }
   };
 
-export const checkLoginStatus = () => (dispatch: AppDispatch) => {
-  const user = localStorage.getItem("user");
+export const login = (email: string, password: string) => async (dispatch: any) => {
+  dispatch(setLoading())
+  const host = 'https://backend.deepintersection.com'
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+    const { data } = await axios.post<User>(`${host}/api/users/login/`,
+      { username: email, password: password }, config)
+    localStorage.setItem('user', JSON.stringify(data))
+    dispatch(setUser(data))
+  } catch (error) {
+    dispatch(setError(error.message))
+  }
+}
+
+export const checkLoginStatus = () => (dispatch: any) => {
+  const user = localStorage.getItem('user')
   if (user) {
     dispatch(setUser(JSON.parse(user)));
   }
@@ -357,61 +382,51 @@ export const checkLoginStatus = () => (dispatch: AppDispatch) => {
 
 /* ********************REGISTRATION********************* */
 
-export const register =
-  (name: string, email: string, password: string) =>
-    async (dispatch: AppDispatch) => {
-      dispatch(setLoading());
-      const host = "localhost:8000";
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-        const { data } = await axios.post<User>(
-          `https://${host}/api/users/register/`,
-          { name: name, email: email, password: password },
-          config,
-        );
-        localStorage.setItem("user", JSON.stringify(data));
-        dispatch(setUser(data));
-      } catch (error) {
-        dispatch(setError(error.message));
+export const register = (name: string, email: string, password: string) => async (dispatch: any) => {
+  dispatch(setLoading())
+  const host = 'https://backend.deepintersection.com'
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json'
       }
-    };
+    }
+    const { data } = await axios.post<User>(`${host}/api/users/register/`,
+      { name: name, email: email, password: password }, config)
+    localStorage.setItem('user', JSON.stringify(data))
+    dispatch(setUser(data))
+  } catch (error) {
+    dispatch(setError(error.message))
+  }
+}
 
 /* **************************END REGISTRATION ******************* */
 
 /* **********************************UPDATE PROFILE************************ */
-export const updateUserProfile =
-  (name: string, email: string, password: string) =>
-    async (dispatch: AppDispatch) => {
-      const user = JSON.parse(localStorage.getItem("user"));
-      name ? (user.name = name) : console.log("name wasn't change");
-      email ? (user.email = email) : console.log("email wasn't change");
-      password
-        ? (user.password = password)
-        : console.log("password wasn't change");
-      dispatch(setLoading());
-      const host = "localhost:8000";
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-        const { data } = await axios.put(
-          `https://${host}/api/users/profile/update/`,
-          user,
-          config,
-        );
-        localStorage.setItem("user", JSON.stringify(data));
-        dispatch(setUser(data));
-      } catch (error) {
-        dispatch(setError(error.message));
+export const updateUserProfile = (name: string, email: string, password: string) => async (dispatch: any) => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  name ? user.name = name : console.log("name wasn't change")
+  email ? user.email = email : console.log("email wasn't change")
+  password ? user.password = password : console.log("password wasn't change")
+  dispatch(setLoading())
+  const host = 'https://backend.deepintersection.com'
+  try {
+    const config = {
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${user.token}`
       }
-    };
+    }
+    localStorage.setItem('headers', JSON.stringify(config))
+    localStorage.setItem('updatedUser', JSON.stringify(user))
+    const { data } = await axios.put(`${host}/api/users/profile/update/`,
+      user, config)
+    localStorage.setItem('user', JSON.stringify(data))
+    dispatch(setUser(data))
+  } catch (error) {
+    dispatch(setError(error.message))
+  }
+}
 
 /* **********************************END UPDATE PROFILE************************ */
 
