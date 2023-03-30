@@ -1,8 +1,14 @@
-import Example from '../components/cart_summary.js'
-import React from 'react'
-import propsTypes from 'prop-types'
+import Example from '../components/cart_summary'
+import React  from 'react'
 import Link from 'next/link.js'
-function CartScreen ({ cartData, cartPrice, setChangeCart }) {
+import { cartItemDetail, cartItem } from '../types/storeTypes'
+
+type propsType = {
+  cartData: cartItemDetail[],
+  cartPrice: number,
+  setChangeCart: React.Dispatch<React.SetStateAction<cartItem>>
+}
+function CartScreen (props: propsType) {
   return (
     <>
     <div className="bg-white">
@@ -11,8 +17,8 @@ function CartScreen ({ cartData, cartPrice, setChangeCart }) {
           <p className="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">CART SUMMARY</p>
         </div>
 
-                        <Example cartItems={cartData} setChangeCart={setChangeCart} />
-                        <div>Total price: {cartPrice}</div>
+                        <Example cartData={props.cartData} setChangeCart={props.setChangeCart} />
+                        <div>Total price: {props.cartPrice}</div>
             <Link href='/order' className='py-20'>
               <button
                 type="submit"
@@ -26,12 +32,4 @@ function CartScreen ({ cartData, cartPrice, setChangeCart }) {
     </>
   )
 }
-
-CartScreen.propTypes = {
-  cartData: propsTypes.array,
-  cartPrice: propsTypes.string,
-  setChangeCart: propsTypes.func
-
-}
-
 export default CartScreen

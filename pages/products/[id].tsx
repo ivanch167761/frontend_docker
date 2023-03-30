@@ -7,14 +7,14 @@ import getStore, {
   selectProductQty,
   setQty,
   addToCart,
-  selectCart,
   setCart,
-  checkLoginStatus
+  checkLoginStatus,
+  AppDispatch
 
 } from '../../store'
 
-function DetailContainer (context) {
-  const dispatch = useDispatch()
+function DetailContainer () {
+  const dispatch: AppDispatch = useDispatch();
   useEffect(() => {
   // Perform localStorage action
     const cartStorage = localStorage.getItem('cartItemsList')
@@ -23,12 +23,11 @@ function DetailContainer (context) {
   }, [dispatch])
   const qtyUp = () => dispatch(setQty(qtyProduct + 1))
   const qtyDown = () => dispatch(setQty(qtyProduct - 1))
-  const toCart = () => dispatch(addToCart({ item: productData.productD._id, qty: qtyProduct }))
-  const cart = useSelector(selectCart)
+  const toCart = () => dispatch(addToCart({ product_ID: productData.product._id, qty: qtyProduct }))
   const qtyProduct = useSelector(selectProductQty)
   const productData = useSelector(selectProductDetail)
   useEffect(() => {
-    dispatch(checkLoginStatus() as any)
+    dispatch(checkLoginStatus())
   }, [])
   return (
      <ProductScreen
@@ -36,7 +35,6 @@ function DetailContainer (context) {
      qtyUp={qtyUp}
      qtyDown={qtyDown}
      counter={qtyProduct}
-     cart={cart}
      addToCart={toCart}
      />
   )

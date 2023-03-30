@@ -6,35 +6,38 @@ import errorMessage from '../../components/errorMessage'
 import getStore, {
   checkLoginStatus,
   setUserOrder,
-  selectOrder,
-  selectError
+  selectError,
+  selectMakeOrder,
+  AppDispatch
 } from '../../store'
 
 import OrderScreen from '../../screens/orderScreen'
+type SubmitHandlerType = (e: React.FormEvent<HTMLFormElement>) => void;
+
+
 
 function ProfileContainer () {
-  const [show, setShow] = useState(false)
+  const dispatch: AppDispatch = useDispatch()
+
+  const [show, setShow] = useState<boolean>(false)
   const loginError = useSelector(selectError)
-  const order = useSelector(selectOrder)
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const [address, setAddress] = useState('')
-  const [payment, setPayment] = useState('PayPal')
-  const [shippingOption, setShippingOption] = useState('standard')
-  const [city, setCity] = useState('')
-  const [country, setCountry] = useState('')
-  const [postcode, setPostcode] = useState(null)
-  const [phoneNumber, setPhoneNumber] = useState(null)
-  const [comment, setComment] = useState('')
-  const [name, setName] = useState('')
-  const submitHandler = (e) => {
+  const order = useSelector(selectMakeOrder)
+  const [address, setAddress] = useState<string>('')
+  const [payment, setPayment] = useState<string>('PayPal')
+  const [shippingOption, setShippingOption] = useState<string>('standard')
+  const [city, setCity] = useState<string>('')
+  const [country, setCountry] = useState<string>('')
+  const [postcode, setPostcode] = useState<number|null>(null)
+  const [phoneNumber, setPhoneNumber] = useState<number|null>(null)
+  const [comment, setComment] = useState<string>('')
+  const [name, setName] = useState<string>('')
+  const submitHandler: SubmitHandlerType = (e) => {
     e.preventDefault()
-    dispatch(setUserOrder(name, address, city, country, postcode, phoneNumber, comment, payment, shippingOption) as any)
+    dispatch(setUserOrder(name, address, city, country, postcode, phoneNumber, comment, payment, shippingOption) )
     /* router.push('/') */
   }
   useEffect(() => {
-    console.log('set user')
-    dispatch(checkLoginStatus() as any)
+    dispatch(checkLoginStatus())
   }, [])
 
   useEffect(() => {

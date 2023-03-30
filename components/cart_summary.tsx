@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react'
 import Script from 'next/script'
+import Link from 'next/dist/client/link'
 /* This example requires Tailwind CSS v2.0+ */
 /*  import Image from 'next/image'  */
 /*  import Link from 'next/link'  */
-import PropTypes from 'prop-types'
-
-export default function Example ({ cartItems, setChangeCart }) {
-  const products = cartItems
+import { cartItem, cartItemDetail } from '../types/storeTypes'
+type propsType = {
+  cartData: cartItemDetail[],
+  setChangeCart: React.Dispatch<React.SetStateAction<cartItem>>
+}
+export default function Example (props:propsType) {
+  const products = props.cartData
   useEffect(() => {
     const script = document.createElement('script')
     script.src = 'https://securepay.tinkoff.ru/html/payForm/js/tinkoff_v2.js'
@@ -20,7 +24,7 @@ export default function Example ({ cartItems, setChangeCart }) {
           <h3 className="sr-only">Items</h3>
           {products
             ? products.map((product) => (
-            <div key={ product } className="py-10 border-b border-gray-200 flex space-x-6">
+            <div key={ product._id } className="py-10 border-b border-gray-200 flex space-x-6">
               <img
                 src={product.image}
                 alt={product.name}
@@ -29,7 +33,7 @@ export default function Example ({ cartItems, setChangeCart }) {
               <div className="flex-auto flex flex-col">
                 <div>
                   <h4 className="font-medium text-gray-900">
-                    <a href={'#'}>{product.name}</a>
+                   <Link href={'#'}>{product.name}</Link>
                   </h4>
                   <p className="mt-2 text-sm text-gray-600">{product.description}</p>
                 </div>
@@ -39,7 +43,7 @@ export default function Example ({ cartItems, setChangeCart }) {
                       <dt className="font-medium text-gray-900">Quantity</dt>
                 <div className='px-4'>
                   <button
-                    onClick={() => setChangeCart({ item: product.product_ID, qty: product.qty + 1 })}
+                    onClick={() => props.setChangeCart({ product_ID: product._id, qty: product.qty + 1 })}
                     className=' bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-l cursor-pointer outline-none'
                   >
                     +
@@ -48,7 +52,7 @@ export default function Example ({ cartItems, setChangeCart }) {
                     {product.qty}
                   </span>
                   <button
-                    onClick={() => setChangeCart({ item: product.product_ID, qty: product.qty - 1 })}
+                    onClick={() => props.setChangeCart({ product_ID: product._id, qty: product.qty - 1 })}
                     className='bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-r cursor-pointer'
                   >
                     -
@@ -84,7 +88,3 @@ export default function Example ({ cartItems, setChangeCart }) {
   )
 }
 
-Example.propTypes = {
-  cartItems: PropTypes.array,
-  setChangeCart: PropTypes.func
-}

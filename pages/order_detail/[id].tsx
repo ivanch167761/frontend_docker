@@ -1,51 +1,29 @@
-import ProductScreen from '../../screens/productScreen'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
+import { OrderDetailScreen } from '../../screens/orderDetailScreen'
 import getStore, {
-  getProductDetail,
-  selectProductDetail,
-  selectProductQty,
-  setQty,
-  addToCart,
-  selectCart,
-  setCart,
-  checkLoginStatus
-
+  checkLoginStatus, getOrderItemDetail, setOrderId, selectOrderDetail, AppDispatch, RootState 
 } from '../../store'
+import { orderByIdDetail } from '../../types/storeTypes'
 
-function DetailContainer (context) {
-  const dispatch = useDispatch()
+function OrderDetailContainer () {
+  type OrderDetail = ReturnType<typeof selectOrderDetail>;
+  const dispatch: AppDispatch = useDispatch();
+  const orderDetail:OrderDetail = useSelector(selectOrderDetail);
+
   useEffect(() => {
-  // Perform localStorage action
-    const cartStorage = localStorage.getItem('cartItemsList')
-    const setInitialCart = () => dispatch(setCart(cartStorage))
-    setInitialCart()
-  }, [dispatch])
-  const qtyUp = () => dispatch(setQty(qtyProduct + 1))
-  const qtyDown = () => dispatch(setQty(qtyProduct - 1))
-  const toCart = () => dispatch(addToCart({ item: productData.productD._id, qty: qtyProduct }))
-  const cart = useSelector(selectCart)
-  const qtyProduct = useSelector(selectProductQty)
-  const productData = useSelector(selectProductDetail)
-  useEffect(() => {
-    dispatch(checkLoginStatus() as any)
+    dispatch(checkLoginStatus())
+    dispatch(getOrderItemDetail(orderDetail._id))
   }, [])
-  return (
-     <ProductScreen
-     productDetails={productData}
-     qtyUp={qtyUp}
-     qtyDown={qtyDown}
-     counter={qtyProduct}
-     cart={cart}
-     addToCart={toCart}
-     />
-  )
+  return (<OrderDetailScreen detail={orderDetail as orderByIdDetail} />)
 }
 
 export async function getServerSideProps (context) {
   const { id } = context.query
   const store = getStore()
-  await store.dispatch(getProductDetail(id))
+  store.dispatch(setOrderId(id))
+  {/*await store.dispatch(getOrderItemDetail(id))*/}
+
   return {
     props: {
       initialState: store.getState()
@@ -53,4 +31,4 @@ export async function getServerSideProps (context) {
   }
 }
 
-export default DetailContainer
+export default OrderDetailContainer

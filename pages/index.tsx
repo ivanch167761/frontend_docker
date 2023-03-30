@@ -5,17 +5,18 @@ import getStore, {
   selectFilteredProduct,
   selectSearch,
   setSearch,
-  checkLoginStatus
+  checkLoginStatus,
+  AppDispatch
 } from '../store'
 
 import HomeScreen from '../screens/homeScreen'
 
 function HomeContainer () {
-  const dispatch = useDispatch()
+  const dispatch:AppDispatch = useDispatch()
   const search = useSelector(selectSearch)
   const productList = useSelector(selectFilteredProduct)
   useEffect(() => {
-    dispatch(checkLoginStatus() as any)
+    dispatch(checkLoginStatus())
   }, [])
   return (
       <>

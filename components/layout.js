@@ -12,5 +12,5 @@ export default function Layout ({ children }) {
 }
 
 Layout.propTypes = {
-  children: PropTypes.func
+  children: PropTypes.any
 }

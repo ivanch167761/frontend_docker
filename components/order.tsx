@@ -1,19 +1,19 @@
-import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-/*
-  This example requires Tailwind CSS v2.0+
-  This example requires some changes to your config:
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+import React from 'react'
+import { makeOrderItem } from '../types/storeTypes'
+type propsType = {
+  setName: React.Dispatch<React.SetStateAction<string>>,
+  setAddress: React.Dispatch<React.SetStateAction<string>>
+  setCity: React.Dispatch<React.SetStateAction<string>>
+  setCountry: React.Dispatch<React.SetStateAction<string>>
+  setPostcode: React.Dispatch<React.SetStateAction<number|null>>
+  setPhoneNumber: React.Dispatch<React.SetStateAction<number|null>>
+  setComment: React.Dispatch<React.SetStateAction<string>>
+  setShippingOption: React.Dispatch<React.SetStateAction<string>>
+  setPayment: React.Dispatch<React.SetStateAction<string>>
+  submitHandler: (e: React.FormEvent<HTMLFormElement>) => void
+  userOrder: makeOrderItem
+}
+
 const paymentMethods = [
   { id: 'PayPal', title: 'PayPal' },
   { id: 'transfer', title: 'Bank Transfer' },
@@ -26,7 +26,7 @@ const shippingMethods = [
   { id: 'dhlExpress', title: 'DHL Express' }
 ]
 
-export default function Example ({ setName, setAddress, setCity, setCountry, setPostcode, setPhoneNumber, setComment, setPayment, setShippingOption, submitHandler, userOrder }) {
+export default function Example (props: propsType) {
   return (
     <>
             {/*
@@ -39,7 +39,7 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
       */}
       <div className="min-h-full flex items-right justify-left py-12 px-16 sm:px-6 lg:px-16">
         <div className="max-w-md w-full space-y-8">
-      <form className="mt-8 space-y-6" onSubmit={submitHandler} >
+      <form className="mt-8 space-y-6" onSubmit={props.submitHandler} >
       <label className="text-base font-medium text-gray-900">Shipping Details</label>
       <p className="text-sm leading-5 text-gray-500">Where do you prefer to receiv your order?</p>
             <div className="rounded-md shadow-sm -space-y-px">
@@ -55,8 +55,8 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                   autoComplete="name"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={userOrder.name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder={props.userOrder.name}
+                  onChange={(e) => props.setName(e.target.value)}
                 />
               </div>
               <div className='pt-4 pb-2'>Address</div>
@@ -71,8 +71,8 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                   autoComplete="address"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={userOrder.address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder={props.userOrder.address}
+                  onChange={(e) => props.setAddress(e.target.value)}
                 />
               </div>
               <div className='pt-4 pb-2'>City</div>
@@ -86,8 +86,8 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                   type="city"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={userOrder.city}
-                  onChange={(e) => setCity(e.target.value)}
+                  placeholder={props.userOrder.city}
+                  onChange={(e) => props.setCity(e.target.value)}
                 />
               </div>
                     <div className='pt-4 pb-2'>Country</div>
@@ -101,8 +101,8 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                   type="country"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={userOrder.country}
-                  onChange={(e) => setCountry(e.target.value)}
+                  placeholder={props.userOrder.country}
+                  onChange={(e) => props.setCountry(e.target.value)}
                 />
               </div>
                     <div className='pt-4 pb-2'>Postcode</div>
@@ -116,8 +116,8 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                   type="postcode"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={userOrder.postcode}
-                  onChange={(e) => setPostcode(e.target.value)}
+                  placeholder={props.userOrder.postcode}
+                  onChange={(e) => props.setPostcode(Number(e.target.value))}
                 />
               </div>
                     <div className='pt-4 pb-2'>Phone number</div>
@@ -130,8 +130,8 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                   name="phoneNumber"
                   type="phoneNumber"
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={userOrder.phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder={props.userOrder.phoneNumber}
+                  onChange={(e) => props.setPhoneNumber(Number(e.target.value))}
                 />
               </div>
                     <div className='pt-4 pb-2'>Aditional comment</div>
@@ -144,8 +144,8 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                   name="comment"
                   type="comment"
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={userOrder.comment}
-                  onChange={(e) => setComment(e.target.value)}
+                  placeholder={props.userOrder.comment}
+                  onChange={(e) => props.setComment(e.target.value)}
                 />
               </div>
             </div>
@@ -166,7 +166,7 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                 id={paymentMethod.id}
                 name="payment-method"
                 type="radio"
-                onChange={ (e) => setPayment(e.target.id) }
+                onChange={ (e) => props.setPayment(e.target.id) }
                 defaultChecked={paymentMethod.id === 'PayPal'}
                 className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
               />
@@ -192,7 +192,7 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
                 id={shippingMethod.id}
                 name="shipping-method"
                 type="radio"
-                onChange={ (e) => setShippingOption(e.target.id) }
+                onChange={ (e) => props.setShippingOption(e.target.id) }
                 defaultChecked={shippingMethod.id === 'standard'}
                 className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
               />
@@ -222,18 +222,4 @@ export default function Example ({ setName, setAddress, setCity, setCountry, set
       </div>
     </>
   )
-}
-
-Example.propTypes = {
-  submitHandler: PropTypes.func,
-  setName: PropTypes.func,
-  setAddress: PropTypes.func,
-  setCity: PropTypes.func,
-  setCountry: PropTypes.func,
-  setPostcode: PropTypes.func,
-  setPhoneNumber: PropTypes.func,
-  setComment: PropTypes.func,
-  setPayment: PropTypes.func,
-  setShippingOption: PropTypes.func,
-  userOrder: PropTypes.object
 }
