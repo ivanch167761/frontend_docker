@@ -547,6 +547,8 @@ export const selectMakeOrder = (state: RootState) =>
 export const selectProductQty = (state: RootState) => state.product.qty;
 export const selectFilteredProduct = (state: RootState) =>
   state.productList.filteredProduct;
+export const selectProductList = (state: RootState) =>
+  state.productList;
 /***
  ***/
 /** ********************* EXPORT DATA FROM STATE **********************/
