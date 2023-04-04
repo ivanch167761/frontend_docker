@@ -19,7 +19,14 @@ import {
   initialLoginState,
   User,
   orderByIdDetail,
+  cartItemsState,
+  CategoryListState,
+  CategoryDetailtState,
+  Category,
   initialUserOrdersState,
+  initialCategoryListState,
+  initialCategoryDetailState,
+  initialCategoryProductListState,
 } from "./types/storeTypes";
 import axios from "axios";
 
@@ -37,6 +44,32 @@ export const getProductList = createAsyncThunk<
   return response.data;
 });
 
+export const getCategoryProductList = createAsyncThunk<
+  Product[],
+  number,
+  { rejectValue: string }
+>("products/getProducts", async (id, { rejectWithValue }) => {
+  const host = "localhost:8000";
+  const response = await axios.get(`https://${host}/api/categories/${id}`);
+  if (!response) {
+    return rejectWithValue("error");
+  }
+  return response.data;
+});
+
+export const getCategoryList = createAsyncThunk<
+  Category[],
+  undefined,
+  { rejectValue: string }
+>("categories/getCategory", async (_, { rejectWithValue }) => {
+  const host = "localhost:8000";
+  const response = await axios.get(`https://${host}/api/categories`);
+  if (!response) {
+    return rejectWithValue("error");
+  }
+  return response.data;
+});
+
 export const getProductDetail = createAsyncThunk<
   Product,
   number,
@@ -44,6 +77,19 @@ export const getProductDetail = createAsyncThunk<
 >("products/getDetail", async (id, { rejectWithValue }) => {
   const host = "localhost:8000";
   const response = await axios.get(`https://${host}/api/products/${id}`);
+  if (!response) {
+    return rejectWithValue("error");
+  }
+  return response.data;
+});
+
+export const getCategoryDetail = createAsyncThunk<
+  Category,
+  number,
+  { rejectValue: string }
+>("products/getDetail", async (id, { rejectWithValue }) => {
+  const host = "localhost:8000";
+  const response = await axios.get(`https://${host}/api/categories/detail/${id}`);
   if (!response) {
     return rejectWithValue("error");
   }
@@ -146,6 +192,62 @@ export const productListSlice = createSlice({
       });
   },
 });
+
+export const categoryProductListSlice = createSlice({
+  name: "categoryProductList",
+  initialState: initialCategoryProductListState,
+  reducers: {
+    setSearch(state, action: PayloadAction<string>) {
+      state.search = action.payload;
+      state.filteredProduct = state.productList.filter(({ name }) =>
+        name.toLowerCase().includes(state.search.toLowerCase()),
+      );
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCategoryProductList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCategoryProductList.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.productList = payload;
+        state.filteredProduct = payload;
+      })
+      .addCase(getCategoryProductList.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      });
+  },
+});
+
+export const categoryListSlice = createSlice({
+  name: "categoryList",
+  initialState: initialCategoryListState,
+  reducers: {
+    setCategorySearch(state, action: PayloadAction<string>) {
+      state.search = action.payload;
+      state.filteredCategory = state.categoryList.filter(({ category }) =>
+        category.toLowerCase().includes(state.search.toLowerCase()),
+      );
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCategoryList.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCategoryList.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.categoryList = payload;
+        state.filteredCategory = payload;
+      })
+      .addCase(getCategoryList.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      });
+  },
+});
 /***
  ***/
 /** ********************* END SEARCH REDUCER **********************/
@@ -238,6 +340,26 @@ export const orderDetailSlice = createSlice({
       });
   },
 });
+
+export const categoryDetailSlice = createSlice({
+  name: "CategoryDetail",
+  initialState: initialCategoryDetailState,
+  reducers: {
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCategoryDetail.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCategoryDetail.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.category = payload;
+      })
+      .addCase(getCategoryDetail.rejected, (state, { payload }) => {
+        (state.loading = false), (state.error = payload);
+      });
+  },
+});
 /* ********************** END ORDER DETAIL **************************/
 
 /* ********************** USER ORDERS **************************/
@@ -270,6 +392,19 @@ export const productDetailSlice = createSlice({
   name: "productDetail",
   initialState: initialProductDetailState,
   reducers: {
+    setLoadingProduct: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    setErrorProduct: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    setProduct: (state, action: PayloadAction<Product>) => {
+      state.loading = false;
+      state.error = null;
+      state.product = action.payload;
+    },
     setQty(state, action: PayloadAction<number>) {
       if (action.payload < 0) {
         state.qty = 0;
@@ -295,6 +430,29 @@ export const productDetailSlice = createSlice({
       });
   },
 });
+export const updateProduct =
+  (updatedProduct: Product) =>
+    async (dispatch: AppDispatch) => {
+      dispatch(setLoading());
+      const user = JSON.parse(localStorage.getItem("user"));
+      const host = "localhost:8000";
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.put(
+          `https://${host}/api/products/update/${updatedProduct._id}`,
+          updatedProduct,
+          config,
+        );
+        dispatch(setProduct(data));
+      } catch (error) {
+        dispatch(setErrorProduct(error.message));
+      }
+    };
 /** ********************* END QTY REDUCER **********************/
 
 /** ********************* LOGIN REDUCER **********************/
@@ -516,8 +674,9 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 /***
  ***/
 export const { setSearch } = productListSlice.actions;
+export const { setCategorySearch } = categoryListSlice.actions;
 export const { setOrderId } = orderDetailSlice.actions;
-export const { setQty } = productDetailSlice.actions;
+export const { setQty, setProduct, setErrorProduct, setLoadingProduct } = productDetailSlice.actions;
 export const { addToCart, setCart } = addToCartSlice.actions;
 export const { setLoading, setError, setUser, logout } = loginSlice.actions;
 export const { setOrder } = orderSlice.actions;
@@ -529,12 +688,14 @@ export const { setOrder } = orderSlice.actions;
 /***
  ***/
 export const selectSearch = (state: RootState) => state.productList.search;
+export const selectCategorySearch = (state: RootState) => state.categoryList.search;
 export const selectCart = (state: RootState) => state.cart.cartItemsList;
 export const selectCartTotalPrice = (state: RootState) =>
   state.cart.cartTotalProductPrice;
 export const selectCartProducts = (state: RootState) =>
   state.cart.cartItemsDetailList;
 export const selectProductDetail = (state: RootState) => state.product;
+export const selectCategoryDetail = (state: RootState) => state.categoryDetail;
 export const selectUserDetail = (state: RootState) => state.login.user;
 export const selectError = (state: RootState) => state.login.error;
 export const selectOrderDetail = (state: RootState) =>
@@ -543,12 +704,17 @@ export const selectUserOrders = (state: RootState) =>
   state.userOrders.userOrders;
 export const selectMakeOrder = (state: RootState) =>
   state.order.makeOrderDetail;
-
 export const selectProductQty = (state: RootState) => state.product.qty;
 export const selectFilteredProduct = (state: RootState) =>
   state.productList.filteredProduct;
+export const selectFilteredCategory = (state: RootState) =>
+  state.categoryList.filteredCategory;
+export const selectCategoryFilteredProduct = (state: RootState) =>
+  state.categoryProduct.filteredProduct;
 export const selectProductList = (state: RootState) =>
   state.productList;
+export const selectCategoryList = (state: RootState) =>
+  state.categoryList;
 /***
  ***/
 /** ********************* EXPORT DATA FROM STATE **********************/
@@ -567,6 +733,9 @@ export default function getStore(incomingPreloadState?: RootState) {
       order: orderSlice.reducer,
       orderById: orderDetailSlice.reducer,
       userOrders: userOrdersSlice.reducer,
+      categoryProduct: categoryProductListSlice.reducer,
+      categoryList: categoryListSlice.reducer,
+      categoryDetail: categoryDetailSlice.reducer,
     },
     preloadedState: incomingPreloadState,
   });

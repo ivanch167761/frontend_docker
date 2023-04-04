@@ -4,8 +4,13 @@ import { ProductDetailtState } from '../types/storeTypes'
 
 type propsType = {
   productDetails: ProductDetailtState,
+  handleChangeCountInStock: React.Dispatch<React.SetStateAction<number>>,
+  handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
+  handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
+  handleChangeName: React.Dispatch<React.SetStateAction<string>>,
+  handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
+  submitChanges: (e: React.FormEvent<HTMLFormElement>) => void
 }
-
 
 function ProductScreen(props: propsType) {
   return (
@@ -18,6 +23,12 @@ function ProductScreen(props: propsType) {
             <div>
               <EditProduct
                 productBeforeEdit={props.productDetails.product}
+                handleChangeName={props.handleChangeName}
+                handleChangeDescription={props.handleChangeDescription}
+                handleChangePrice={props.handleChangePrice}
+                handleChangeCategory={props.handleChangeCategory}
+                handleChangeCountInStock={props.handleChangeCountInStock}
+                submitChanges={props.submitChanges}
               />
             </div>
           )}

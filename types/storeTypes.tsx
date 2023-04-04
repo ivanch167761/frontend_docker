@@ -11,6 +11,13 @@ export interface Product {
   createdAt: string;
 }
 
+export interface Category {
+  _id: number;
+  category: string;
+  image: string;
+  description: string;
+}
+
 //__________PRODUCT LIST__________
 export type ProductListState = {
   productList: Product[] | null;
@@ -26,6 +33,27 @@ export const initialProductListState: ProductListState = {
   loading: false,
   error: null,
 };
+export const initialCategoryProductListState: ProductListState = {
+  productList: null,
+  filteredProduct: [],
+  search: "SEARCH PRODUCT IN CATEGORY",
+  loading: false,
+  error: null,
+};
+export type CategoryListState = {
+  categoryList: Category[] | null;
+  search: string;
+  filteredCategory: Category[];
+  loading: boolean;
+  error: string | null;
+};
+export const initialCategoryListState: CategoryListState = {
+  categoryList: null,
+  filteredCategory: [],
+  search: "SEARCH",
+  loading: false,
+  error: null,
+};
 //__________END PRODUCT LIST__________
 
 //______PRODUCT DETAIL______
@@ -35,6 +63,11 @@ export type ProductDetailtState = {
   error: string | null;
   loading: boolean;
   qty: number;
+};
+export type CategoryDetailtState = {
+  category: Category;
+  error: string | null;
+  loading: boolean;
 };
 export const initialProductDetailState: ProductDetailtState = {
   product: {
@@ -53,6 +86,16 @@ export const initialProductDetailState: ProductDetailtState = {
   error: null,
   loading: false,
   qty: 1,
+};
+export const initialCategoryDetailState: CategoryDetailtState = {
+  category: {
+    _id: 1,
+    category: "category",
+    image: "string",
+    description: "string",
+  },
+  error: null,
+  loading: false,
 };
 //______END PRODUCT DETAIL______
 

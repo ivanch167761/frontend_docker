@@ -3,9 +3,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Product } from '../../types/storeTypes'
+import ChoiceBox from '../choice_box'
 
 type propsType = {
-  productBeforeEdit: Product
+  productBeforeEdit: Product,
+  handleChangeCountInStock: React.Dispatch<React.SetStateAction<number>>,
+  handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
+  handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
+  handleChangeName: React.Dispatch<React.SetStateAction<string>>,
+  handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
+  submitChanges: (e: React.FormEvent<HTMLFormElement>) => void,
 }
 
 export const EditProduct = (props: propsType) => {
@@ -38,46 +45,68 @@ export const EditProduct = (props: propsType) => {
               </svg>
             </button>
           </div>
-          <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
-            <div className='lg:w-1/3  bg-gray-50 '>
-              <Image
-                src={props.productBeforeEdit.image}
-                alt={props.productBeforeEdit.name}
-                priority
-                width='100%'
-                height='100%'
-                layout='responsive'
-                objectFit='contain'
-              />
-            </div>
-            <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
-              <h1 className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'>
-                {props.productBeforeEdit.name}
-              </h1>
-              <textarea
-                className='text-base leading-normal text-gray-600 dark:text-white mt-2'
-                value={props.productBeforeEdit.description}
-              // onChange={handleChangeDescription}
-              />
-
-              <div className='mt-6'>
-                <button className='text-xl underline text-gray-800 dark:text-white dark:hover:text-gray-200 capitalize hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800'>
-                  add to wishlist
-                </button>
-                <button className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '>
-                  View Details
-                </button>
+          <form className="mt-8 space-y-6" onSubmit={props.submitChanges} >
+            <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
+              <div className='lg:w-1/3  bg-gray-50 '>
+                <Image
+                  src={props.productBeforeEdit.image}
+                  alt={props.productBeforeEdit.name}
+                  priority
+                  width='100%'
+                  height='100%'
+                  layout='responsive'
+                  objectFit='contain'
+                />
               </div>
-              <div className='pt-10'>
-                <button
-                  className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
-                  onClick={() => router.back()}
-                >
-                  Go Back
-                </button>
+              <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
+                <textarea
+                  className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'
+                  value={props.productBeforeEdit.name}
+                  onChange={(e) => props.handleChangeName(e.target.value)}
+                />
+                <textarea
+                  className='text-base leading-normal text-gray-600 dark:text-white mt-2'
+                  value={props.productBeforeEdit.description}
+                  onChange={(e) => props.handleChangeDescription(e.target.value)}
+                />
+                <div>
+                  <h5>Count In Stok:</h5>
+                  <input
+                    className='text-base leading-normal text-gray-600 dark:text-white mt-2'
+                    type='number'
+                    value={props.productBeforeEdit.countInStock}
+                    onChange={(e) => props.handleChangeCountInStock(Number(e.target.value))}
+                  />
+                </div>
+                <ChoiceBox inputChoices={['Teclados', 'Cars']} defaultChoice='Cars' setChoice={props.handleChangeCategory} />
+                <div>
+                  <h5>Price:</h5>
+                  <input
+                    className='text-base leading-normal text-gray-600 dark:text-white mt-2'
+                    type='number'
+                    value={props.productBeforeEdit.price}
+                    onChange={(e) => props.handleChangePrice(Number(e.target.value))}
+                  />
+                </div>
+                <div className='mt-6'>
+                  <button
+                    className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
+                    type='submit'
+                  >
+                    Save changes
+                  </button>
+                </div>
+                <div className='pt-10'>
+                  <button
+                    className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
+                    onClick={() => router.back()}
+                  >
+                    Go Back
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </>
