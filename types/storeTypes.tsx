@@ -58,7 +58,7 @@ export const initialCategoryListState: CategoryListState = {
 
 //______PRODUCT DETAIL______
 export type ProductDetailtState = {
-  product: Product;
+  product: Product | null;
   available: boolean;
   error: string | null;
   loading: boolean;
@@ -70,18 +70,7 @@ export type CategoryDetailtState = {
   loading: boolean;
 };
 export const initialProductDetailState: ProductDetailtState = {
-  product: {
-    _id: 1,
-    category: "category",
-    user: "string",
-    name: "string",
-    image: "string",
-    brand: "string",
-    description: "string",
-    price: 0,
-    countInStock: 1000,
-    createdAt: "string",
-  },
+  product: null,
   available: false,
   error: null,
   loading: false,

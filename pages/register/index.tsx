@@ -7,26 +7,27 @@ import getStore, {
   register,
   checkLoginStatus,
   selectUserDetail,
-  selectError
+  selectError,
+  AppDispatch,
 } from '../../store'
 
 import RegisterScreen from '../../screens/registerScreen'
 
-function RegisterContainer () {
+function RegisterContainer() {
   const user = useSelector(selectUserDetail)
   const [show, setShow] = useState(false)
   const loginError = useSelector(selectError)
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(register(name, email, password) as any)
+    dispatch(register(name, email, password))
   }
   useEffect(() => {
-    dispatch(checkLoginStatus() as any)
+    dispatch(checkLoginStatus())
   }, [])
 
   useEffect(() => {
@@ -37,19 +38,19 @@ function RegisterContainer () {
     user ? router.push('/') : console.log('noUser')
   }, [user])
   return (
-      <>
-    <RegisterScreen
-    redirectAfterLogin='/'
-    setEmail={setEmail}
-    setPassword={setPassword}
-    setName={setName}
-    submitHandler={submitHandler} />
-    {errorMessage('пользователь с таким адресом электронной почты уже зарегестрирован', show, setShow)}
+    <>
+      <RegisterScreen
+        redirectAfterLogin='/'
+        setEmail={setEmail}
+        setPassword={setPassword}
+        setName={setName}
+        submitHandler={submitHandler} />
+      {errorMessage('пользователь с таким адресом электронной почты уже зарегестрирован', show, setShow)}
     </>
   )
 }
 
-export async function getServerSideProps () {
+export async function getServerSideProps() {
   const store = getStore()
   return {
     props: {

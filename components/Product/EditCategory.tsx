@@ -2,20 +2,16 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { Product } from '../../types/storeTypes'
-import ChoiceBox from '../choice_box'
+import { Category } from '../../types/storeTypes'
 
 type propsType = {
-  productBeforeEdit: Product,
-  handleChangeCountInStock: React.Dispatch<React.SetStateAction<number>>,
-  handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
+  categoryBeforeEdit: Category,
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
-  handleChangeName: React.Dispatch<React.SetStateAction<string>>,
   handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
   submitChanges: (e: React.FormEvent<HTMLFormElement>) => void,
 }
 
-export const EditProduct = (props: propsType) => {
+export const EditCategory = (props: propsType) => {
   const router = useRouter()
   return (
     <>
@@ -49,8 +45,8 @@ export const EditProduct = (props: propsType) => {
             <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
               <div className='lg:w-1/3  bg-gray-50 '>
                 <Image
-                  src={props.productBeforeEdit.image}
-                  alt={props.productBeforeEdit.name}
+                  src={props.categoryBeforeEdit.image}
+                  alt={props.categoryBeforeEdit.category}
                   priority
                   width='100%'
                   height='100%'
@@ -61,33 +57,14 @@ export const EditProduct = (props: propsType) => {
               <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
                 <textarea
                   className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'
-                  value={props.productBeforeEdit.name}
-                  onChange={(e) => props.handleChangeName(e.target.value)}
+                  value={props.categoryBeforeEdit.category}
+                  onChange={(e) => props.handleChangeCategory(e.target.value)}
                 />
                 <textarea
                   className='text-base leading-normal text-gray-600 dark:text-white mt-2'
-                  value={props.productBeforeEdit.description}
+                  value={props.categoryBeforeEdit.description}
                   onChange={(e) => props.handleChangeDescription(e.target.value)}
                 />
-                <div>
-                  <h5>Count In Stok:</h5>
-                  <input
-                    className='text-base leading-normal text-gray-600 dark:text-white mt-2'
-                    type='number'
-                    value={props.productBeforeEdit.countInStock}
-                    onChange={(e) => props.handleChangeCountInStock(Number(e.target.value))}
-                  />
-                </div>
-                <ChoiceBox inputChoices={['Teclados', 'Cars']} defaultChoice={props.productBeforeEdit.category} setChoice={props.handleChangeCategory} />
-                <div>
-                  <h5>Price:</h5>
-                  <input
-                    className='text-base leading-normal text-gray-600 dark:text-white mt-2'
-                    type='number'
-                    value={props.productBeforeEdit.price}
-                    onChange={(e) => props.handleChangePrice(Number(e.target.value))}
-                  />
-                </div>
                 <div className='mt-6'>
                   <button
                     className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
@@ -112,4 +89,4 @@ export const EditProduct = (props: propsType) => {
     </>
   )
 }
-export default EditProduct
+export default EditCategory

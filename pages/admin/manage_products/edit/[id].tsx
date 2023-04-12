@@ -7,13 +7,17 @@ import getStore, {
   checkLoginStatus,
   AppDispatch,
   updateProduct,
+  deleteProduct,
 
 } from '../../../../store'
 import { ProductDetailtState } from '../../../../types/storeTypes';
-
 type submitCangesType = (e: React.FormEvent<HTMLFormElement>) => void;
 function DetailContainer() {
   const dispatch: AppDispatch = useDispatch();
+  const delProduct = () => {
+    dispatch(deleteProduct(productData.product._id))
+    console.log('HHHHHH')
+  }
   const productData: ProductDetailtState = useSelector(selectProductDetail)
   const [show, setShow] = useState<boolean>(false)
   const [price, setPrice] = useState<number>(productData.product.price)
@@ -56,6 +60,7 @@ function DetailContainer() {
       handleChangeCountInStock={setCountInStock}
       handleChangeDescription={setDescription}
       handleChangeName={setName}
+      delProduct={delProduct}
       submitChanges={submitCanges}
     />
   )

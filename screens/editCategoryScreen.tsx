@@ -1,32 +1,29 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import EditProduct from '../components/Product/EditProduct'
-import { ProductDetailtState } from '../types/storeTypes'
+import EditCategory from '../components/Product/EditCategory'
+import { CategoryDetailtState } from '../types/storeTypes'
 
 type propsType = {
-  productDetails: ProductDetailtState,
-  handleChangeCountInStock: React.Dispatch<React.SetStateAction<number>>,
-  handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
+  categoryDetails: CategoryDetailtState,
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
-  handleChangeName: React.Dispatch<React.SetStateAction<string>>,
   handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
-  delProduct: () => void,
+  delCategory: () => void,
   submitChanges: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-function ProductScreen(props: propsType) {
+function CategoryScreen(props: propsType) {
   const router = useRouter()
   return (
     <>
-      {props.productDetails.loading
+      {props.categoryDetails.loading
         ? (<h2> loading</h2>)
-        : props.productDetails.error
+        : props.categoryDetails.error
           ? (<h3>error</h3>)
           : (
             <div>
               <button
                 onClick={() => {
-                  props.delProduct()
+                  props.delCategory()
                   router.back()
 
                 }
@@ -46,13 +43,10 @@ function ProductScreen(props: propsType) {
               >
                 DELETE PRODUCT
               </button>
-              <EditProduct
-                productBeforeEdit={props.productDetails.product}
-                handleChangeName={props.handleChangeName}
+              <EditCategory
+                categoryBeforeEdit={props.categoryDetails.category}
                 handleChangeDescription={props.handleChangeDescription}
-                handleChangePrice={props.handleChangePrice}
                 handleChangeCategory={props.handleChangeCategory}
-                handleChangeCountInStock={props.handleChangeCountInStock}
                 submitChanges={props.submitChanges}
               />
             </div>
@@ -61,4 +55,4 @@ function ProductScreen(props: propsType) {
   )
 }
 
-export default ProductScreen
+export default CategoryScreen

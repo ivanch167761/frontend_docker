@@ -430,6 +430,31 @@ export const productDetailSlice = createSlice({
       });
   },
 });
+
+
+export const updateCategory =
+  (updatedCategory: Category) =>
+    async (dispatch: AppDispatch) => {
+      dispatch(setLoading());
+      const user = JSON.parse(localStorage.getItem("user"));
+      const host = "localhost:8000";
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.put(
+          `https://${host}/api/categories/update/${updatedCategory._id}`,
+          updatedCategory,
+          config,
+        );
+      } catch (error) {
+        dispatch(setError(error.message));
+      }
+    };
+
 export const updateProduct =
   (updatedProduct: Product) =>
     async (dispatch: AppDispatch) => {
@@ -572,6 +597,84 @@ export const updateUserProfile =
     };
 
 /* **********************************END UPDATE PROFILE************************ */
+
+/* **********************************  CREATE PRODUCT  ************************ */
+/***
+ ***/
+export const deleteProduct =
+  (id: number) =>
+    async (dispatch: AppDispatch) => {
+      dispatch(setLoading());
+      const host = "localhost:8000";
+      const user = JSON.parse(localStorage.getItem("user"));
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.delete(
+          `https://${host}/api/products/delete/${id}`,
+          config,
+        );
+        dispatch(setError("was deleted"))
+      } catch (error) {
+        dispatch(setError(error.message));
+      }
+    };
+
+export const deleteCategory =
+  (id: number) =>
+    async (dispatch: AppDispatch) => {
+      dispatch(setLoading());
+      const host = "localhost:8000";
+      const user = JSON.parse(localStorage.getItem("user"));
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.delete(
+          `https://${host}/api/category/delete/${id}`,
+          config,
+        );
+        dispatch(setError("was deleted"))
+      } catch (error) {
+        dispatch(setError(error.message));
+      }
+    };
+
+export const createProduct =
+  () =>
+    async (dispatch: AppDispatch) => {
+      dispatch(setLoading());
+      const host = "localhost:8000";
+      const user = JSON.parse(localStorage.getItem("user"));
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+        const { data } = await axios.post(
+          `https://${host}/api/products/create/`,
+          '',
+          config,
+        );
+        console.log(data)
+        dispatch(setProduct(data))
+      } catch (error) {
+        dispatch(setError(error.message));
+      }
+    };
+
+
+
+/* **********************************  END SET USER ORDER  ************************ */
 
 /* **********************************  SET USER ORDER  ************************ */
 /***

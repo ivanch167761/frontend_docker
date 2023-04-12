@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from "react-redux";
 import getStore, {
   getProductList,
@@ -6,7 +7,9 @@ import getStore, {
   setSearch,
   checkLoginStatus,
   selectProductList,
+  createProduct,
   AppDispatch,
+  selectProductDetail,
 } from "../../../store";
 import AdminProductsScreen from "../../../screens/adminProductsScreen";
 
@@ -14,9 +17,16 @@ function adminProductsContainer() {
   const dispatch: AppDispatch = useDispatch();
   const search = useSelector(selectSearch);
   const productList = useSelector(selectProductList);
+  const newProduct = useSelector(selectProductDetail);
+  const createNewProduct = () => dispatch(createProduct());
+  const router = useRouter()
   useEffect(() => {
     dispatch(checkLoginStatus());
+
   }, []);
+  useEffect(() => {
+    newProduct.product ? router.push(`/admin/manage_products/edit/${newProduct.product._id}`) : console.log('noProduct')
+  }, [newProduct.product])
   return (
     <>
       <div>
@@ -28,7 +38,7 @@ function adminProductsContainer() {
           }}
         />
       </div>
-      <AdminProductsScreen productList={productList} />
+      <AdminProductsScreen productList={productList} createProduct={createNewProduct} newProduct={newProduct} />
     </>
   );
 }

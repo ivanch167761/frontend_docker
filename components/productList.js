@@ -51,6 +51,7 @@ export const ProductList = ({
               </p>
               <Link href={productLink}>
                 <a
+                  href={productLink}
                   className='
                      inline-block
                      py-2
