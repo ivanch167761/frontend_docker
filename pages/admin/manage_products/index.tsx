@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux'
 import getStore, {
   getProductList,
   selectSearch,
@@ -9,24 +9,23 @@ import getStore, {
   selectProductList,
   createProduct,
   AppDispatch,
-  selectProductDetail,
-} from "../../../store";
-import AdminProductsScreen from "../../../screens/adminProductsScreen";
+  selectProductDetail
+} from '../../../store'
+import AdminProductsScreen from '../../../screens/adminProductsScreen'
 
-function adminProductsContainer() {
-  const dispatch: AppDispatch = useDispatch();
-  const search = useSelector(selectSearch);
-  const productList = useSelector(selectProductList);
-  const newProduct = useSelector(selectProductDetail);
-  const createNewProduct = () => dispatch(createProduct());
+function AdminProductsContainer () {
+  const dispatch: AppDispatch = useDispatch()
+  const search = useSelector(selectSearch)
+  const productList = useSelector(selectProductList)
+  const newProduct = useSelector(selectProductDetail)
+  const createNewProduct = () => dispatch(createProduct())
   const router = useRouter()
   useEffect(() => {
-    dispatch(checkLoginStatus());
-
-  }, []);
+    dispatch(checkLoginStatus())
+  })
   useEffect(() => {
     newProduct.product ? router.push(`/admin/manage_products/edit/${newProduct.product._id}`) : console.log('noProduct')
-  }, [newProduct.product])
+  }, [newProduct.product, router])
   return (
     <>
       <div>
@@ -34,23 +33,23 @@ function adminProductsContainer() {
           type='text'
           value={search}
           onChange={(e) => {
-            dispatch(setSearch(e.target.value));
+            dispatch(setSearch(e.target.value))
           }}
         />
       </div>
       <AdminProductsScreen productList={productList} createProduct={createNewProduct} newProduct={newProduct} />
     </>
-  );
+  )
 }
 
-export async function getServerSideProps() {
-  const store = getStore();
-  await store.dispatch(getProductList());
+export async function getServerSideProps () {
+  const store = getStore()
+  await store.dispatch(getProductList())
   return {
     props: {
-      initialState: store.getState(),
-    },
-  };
+      initialState: store.getState()
+    }
+  }
 }
 
-export default adminProductsContainer;
+export default AdminProductsContainer

@@ -1,16 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-      images: {
+  images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.digitaloceanspaces.com',
-      },
-    ],
-      },
+        hostname: '**.digitaloceanspaces.com'
+      }
+    ]
+  },
   swcMinify: true,
-  output: 'standalone',
+  output: 'standalone'
 }
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 module.exports = nextConfig

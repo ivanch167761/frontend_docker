@@ -10,7 +10,7 @@ import getStore, {
 
 import LoginScreen from '../../../screens/loginScreen'
 
-function loginContainer () {
+function LoginContainer () {
   const user = useSelector(selectUserDetail)
   const router = useRouter()
   const dispatch = useDispatch()
@@ -22,11 +22,11 @@ function loginContainer () {
   }
   useEffect(() => {
     dispatch(checkLoginStatus() as any)
-  }, [])
+  })
 
   useEffect(() => {
     user ? router.push('/') : console.log('noUser')
-  }, [user])
+  }, [user, router])
   return (
       <>
     <LoginScreen
@@ -47,4 +47,4 @@ export async function getServerSideProps () {
   }
 }
 
-export default loginContainer
+export default LoginContainer

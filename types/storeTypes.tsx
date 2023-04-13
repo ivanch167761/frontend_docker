@@ -18,7 +18,7 @@ export interface Category {
   description: string;
 }
 
-//__________PRODUCT LIST__________
+// __________PRODUCT LIST__________
 export type ProductListState = {
   productList: Product[] | null;
   search: string;
@@ -29,17 +29,17 @@ export type ProductListState = {
 export const initialProductListState: ProductListState = {
   productList: null,
   filteredProduct: [],
-  search: "SEARCH",
+  search: 'SEARCH',
   loading: false,
-  error: null,
-};
+  error: null
+}
 export const initialCategoryProductListState: ProductListState = {
   productList: null,
   filteredProduct: [],
-  search: "SEARCH PRODUCT IN CATEGORY",
+  search: 'SEARCH PRODUCT IN CATEGORY',
   loading: false,
-  error: null,
-};
+  error: null
+}
 export type CategoryListState = {
   categoryList: Category[] | null;
   search: string;
@@ -50,13 +50,13 @@ export type CategoryListState = {
 export const initialCategoryListState: CategoryListState = {
   categoryList: null,
   filteredCategory: [],
-  search: "SEARCH",
+  search: 'SEARCH',
   loading: false,
-  error: null,
-};
-//__________END PRODUCT LIST__________
+  error: null
+}
+// __________END PRODUCT LIST__________
 
-//______PRODUCT DETAIL______
+// ______PRODUCT DETAIL______
 export type ProductDetailtState = {
   product: Product | null;
   available: boolean;
@@ -74,23 +74,23 @@ export const initialProductDetailState: ProductDetailtState = {
   available: false,
   error: null,
   loading: false,
-  qty: 1,
-};
+  qty: 1
+}
 export const initialCategoryDetailState: CategoryDetailtState = {
   category: {
     _id: 1,
-    category: "category",
-    image: "string",
-    description: "string",
+    category: 'category',
+    image: 'string',
+    description: 'string'
   },
   error: null,
-  loading: false,
-};
-//______END PRODUCT DETAIL______
+  loading: false
+}
+// ______END PRODUCT DETAIL______
 
-//_______________CART_______________
+// _______________CART_______________
 export interface cartItem {
-  product_ID: Product["_id"];
+  product_ID: Product['_id'];
   qty: number;
 }
 export interface cartItemDetail extends Product {
@@ -109,8 +109,8 @@ export const initialCartItemsState: cartItemsState = {
   cartItemsList: [],
   cartTotalProductPrice: 0,
   loading: false,
-  error: null,
-};
+  error: null
+}
 
 /* export const defaultItemDetail: cartItemDetail = {
   cartProductDetail: {
@@ -135,9 +135,9 @@ export const initialCartItemsState: cartItemsState = {
 //   qty: 2
 // }
 
-//_______________END CART_______________
+// _______________END CART_______________
 
-//_______________USER LOGIN PROFILE_______________
+// _______________USER LOGIN PROFILE_______________
 export interface User {
   _id: number;
   username: string;
@@ -153,11 +153,11 @@ export interface LoginState {
 export const initialLoginState: LoginState = {
   loading: false,
   error: null,
-  user: null,
-};
-//_______________USER LOGIN PROFILE_______________
+  user: null
+}
+// _______________USER LOGIN PROFILE_______________
 
-//_______________MAKE ORDER______________________________
+// _______________MAKE ORDER______________________________
 export interface makeOrderItem {
   name: string;
   address: string;
@@ -176,23 +176,23 @@ export interface makeOrder {
 }
 export const initialMakeOrderState: makeOrder = {
   makeOrderDetail: {
-    name: "",
-    address: "",
-    city: "",
-    country: "",
+    name: '',
+    address: '',
+    city: '',
+    country: '',
     postcode: null,
     phoneNumber: null,
-    comment: "",
-    payment: "PayPal",
-    shippingOption: "standard",
+    comment: '',
+    payment: 'PayPal',
+    shippingOption: 'standard'
   },
   error: null,
-  loading: false,
-};
-//_______________END MAKE ORDER______________________________
+  loading: false
+}
+// _______________END MAKE ORDER______________________________
 //
 
-//_______________GET ORDER BY ID______________________________
+// _______________GET ORDER BY ID______________________________
 export type shippingAddressType =
   | {
     _id: number;
@@ -241,33 +241,33 @@ export const initialOrderByIdDetail: orderByIdDetail = {
   orderItems: [
     {
       _id: 0,
-      name: "",
-      qty: "",
-      price: "",
-      image: "",
+      name: '',
+      qty: '',
+      price: '',
+      image: '',
       product: 0,
-      order: 0,
-    },
+      order: 0
+    }
   ],
   shippingAddress: false,
   user: {
     id: 0,
     _id: 0,
-    username: "",
-    email: "",
-    name: "",
-    isAdmin: false,
+    username: '',
+    email: '',
+    name: '',
+    isAdmin: false
   },
-  paymentMethod: "",
-  taxPrice: "",
-  shippingPrice: "",
-  totalPrice: "",
+  paymentMethod: '',
+  taxPrice: '',
+  shippingPrice: '',
+  totalPrice: '',
   isPaid: false,
   paidAt: null,
   isDelivered: false,
   deliveredAt: null,
-  createdAt: "",
-};
+  createdAt: ''
+}
 export interface OrderByIdState {
   orderByIdDetail: orderByIdDetail;
   error: string | null;
@@ -276,8 +276,8 @@ export interface OrderByIdState {
 export const initialOrderByIdState: OrderByIdState = {
   orderByIdDetail: initialOrderByIdDetail,
   error: null,
-  loading: false,
-};
+  loading: false
+}
 export interface userOrdersState {
   userOrders: [orderByIdDetail];
   error: string | null;
@@ -286,5 +286,5 @@ export interface userOrdersState {
 export const initialUserOrdersState: userOrdersState = {
   userOrders: [initialOrderByIdDetail],
   error: null,
-  loading: false,
-};
+  loading: false
+}

@@ -10,11 +10,11 @@ import getStore, {
 } from '../../../store'
 
 function DetailContainer() {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch()
   const categoryData = useSelector(selectCategoryDetail)
   useEffect(() => {
     dispatch(checkLoginStatus())
-  }, [])
+  })
   console.log(categoryData)
   return (
     <ProductScreen

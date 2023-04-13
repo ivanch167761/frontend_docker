@@ -24,8 +24,7 @@ export const CategoryListComp = (props: propsType) => {
           <div className='p-8 sm:p-9 md:p-7 xl:p-9 text-center'>
             <h3>
               <Link href={`category/products/${props.category._id}`}>
-                <a
-                  href='/#'
+                <button
                   className='
                         font-semibold
                         text-dark text-xl
@@ -40,7 +39,7 @@ export const CategoryListComp = (props: propsType) => {
                         '
                 >
                   {props.category.category}
-                </a>
+                </button>
               </Link>
             </h3>
             <div>
@@ -48,8 +47,7 @@ export const CategoryListComp = (props: propsType) => {
                 {props.category.description}
               </p>
               <Link href={`category/products/${props.category._id}`}>
-                <a
-                  href='/#'
+                <button
                   className='
                      inline-block
                      py-2
@@ -64,7 +62,7 @@ export const CategoryListComp = (props: propsType) => {
                      '
                 >
                   {props.category.category}
-                </a>
+                </button>
               </Link>
             </div>
           </div>
@@ -73,6 +71,5 @@ export const CategoryListComp = (props: propsType) => {
     </>
   )
 }
-
 
 export default CategoryListComp

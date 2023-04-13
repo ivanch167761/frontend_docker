@@ -72,5 +72,4 @@ export const ProductList = (props: propsType) => {
   )
 }
 
-
 export default ProductList

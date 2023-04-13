@@ -1,6 +1,6 @@
 import AdminProductList from '../components/adminProductList'
 import React from 'react'
-import { Product, ProductDetailtState, ProductListState } from '../types/storeTypes'
+import { ProductDetailtState, ProductListState } from '../types/storeTypes'
 
 type propsType = {
   productList: ProductListState,
@@ -8,7 +8,6 @@ type propsType = {
   newProduct: ProductDetailtState,
 }
 function AdminProductScreen(props: propsType) {
-  props.createProduct
   return (
     <>
       {
@@ -37,7 +36,6 @@ function AdminProductScreen(props: propsType) {
                 </button>
                 <section className='pt-20 lg:pt-[120px] pb-10 lg:pb-20 bg-[#F3F4F6]'>
                   <div className='container'>
-
 
                     <div className='flex flex-wrap -mx-4 max-h-10'>
                       {props.productList.filteredProduct.map((product) => (

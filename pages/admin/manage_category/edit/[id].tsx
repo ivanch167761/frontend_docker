@@ -7,13 +7,13 @@ import getStore, {
   checkLoginStatus,
   AppDispatch,
   updateCategory,
-  deleteCategory,
+  deleteCategory
 
 } from '../../../../store'
-import { CategoryDetailtState } from '../../../../types/storeTypes';
+import { CategoryDetailtState } from '../../../../types/storeTypes'
 type submitCangesType = (e: React.FormEvent<HTMLFormElement>) => void;
 function DetailContainer() {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch()
   const delCategory = () => {
     dispatch(deleteCategory(categoryData.category._id))
   }
@@ -28,17 +28,17 @@ function DetailContainer() {
   }
   useEffect(() => {
     dispatch(checkLoginStatus())
-  }, [])
+  })
   const changingCategoryDetails: CategoryDetailtState = {
     category: {
       _id: categoryData.category._id,
-      category: category,
+      category,
       image: categoryData.category.image,
-      description: description,
+      description
     },
     error: categoryData.error,
-    loading: categoryData.loading,
-  };
+    loading: categoryData.loading
+  }
   return (
     <EditCategoryScreen
       categoryDetails={changingCategoryDetails}

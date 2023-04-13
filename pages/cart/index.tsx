@@ -12,14 +12,14 @@ import getStore, {
 } from '../../store'
 import { cartItem } from '../../types/storeTypes'
 
-function CartContainer () {
-  const dispatch: AppDispatch = useDispatch();
+function CartContainer() {
+  const dispatch: AppDispatch = useDispatch()
   const [changeCart, setChangeCart] = useState<cartItem>({ product_ID: 0, qty: 0 })
   useEffect(() => {
-  // Perform localStorage action
+    // Perform localStorage action
     const cartStorage = localStorage.getItem('cartItemsList')
-    const cartStorageString:cartItem[] = cartStorage ? JSON.parse(cartStorage) : []
-    const setCartDetails = async (cartStorage:cartItem[]) => await dispatch(getCartProductsDetail(cartStorage))
+    const cartStorageString: cartItem[] = cartStorage ? JSON.parse(cartStorage) : []
+    const setCartDetails = async (cartStorage: cartItem[]) => await dispatch(getCartProductsDetail(cartStorage))
     const setInitialCart = () => dispatch(setCart(cartStorage))
     setInitialCart()
     setCartDetails(cartStorageString)
@@ -27,17 +27,17 @@ function CartContainer () {
   }, [dispatch, changeCart])
   useEffect(() => {
     dispatch(checkLoginStatus())
-  }, [])
+  })
 
   const cartDataDetails = useSelector(selectCartProducts)
   const cartTotalPrice = useSelector(selectCartTotalPrice)
 
   return (
-     <CartScreen cartData={cartDataDetails} cartPrice={cartTotalPrice} setChangeCart={setChangeCart}/>
+    <CartScreen cartData={cartDataDetails} cartPrice={cartTotalPrice} setChangeCart={setChangeCart} />
   )
 }
 
-export async function getServerSideProps () {
+export async function getServerSideProps() {
   const a = []
   const store = getStore()
   await store.dispatch(getCartProductsDetail(a))

@@ -7,13 +7,13 @@ import getStore, {
   checkLoginStatus,
   AppDispatch,
   updateProduct,
-  deleteProduct,
+  deleteProduct
 
 } from '../../../../store'
-import { ProductDetailtState } from '../../../../types/storeTypes';
+import { ProductDetailtState } from '../../../../types/storeTypes'
 type submitCangesType = (e: React.FormEvent<HTMLFormElement>) => void;
-function DetailContainer() {
-  const dispatch: AppDispatch = useDispatch();
+function DetailContainer () {
+  const dispatch: AppDispatch = useDispatch()
   const delProduct = () => {
     dispatch(deleteProduct(productData.product._id))
     console.log('HHHHHH')
@@ -33,25 +33,25 @@ function DetailContainer() {
   }
   useEffect(() => {
     dispatch(checkLoginStatus())
-  }, [])
+  })
   const changingProductDetails: ProductDetailtState = {
     product: {
       _id: productData.product._id,
-      category: category,
+      category,
       user: productData.product.user,
-      name: name,
+      name,
       image: productData.product.image,
       brand: productData.product.brand,
       description: descriptoin,
-      price: price,
-      countInStock: countInStock,
-      createdAt: productData.product.createdAt,
+      price,
+      countInStock,
+      createdAt: productData.product.createdAt
     },
     available: productData.available,
     error: productData.error,
     loading: productData.loading,
-    qty: productData.qty,
-  };
+    qty: productData.qty
+  }
   return (
     <EditProductScreen
       productDetails={changingProductDetails}
@@ -66,7 +66,7 @@ function DetailContainer() {
   )
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps (context) {
   const { id } = context.query
   const store = getStore()
   await store.dispatch(getProductDetail(id))

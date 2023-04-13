@@ -28,7 +28,6 @@ function ProductScreen(props: propsType) {
                 onClick={() => {
                   props.delProduct()
                   router.back()
-
                 }
                 }
                 className='

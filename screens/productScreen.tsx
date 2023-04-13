@@ -3,16 +3,15 @@ import Product from '../components/Product/Product'
 import { ProductDetailtState } from '../types/storeTypes'
 
 type propsType = {
-  productDetails:ProductDetailtState,
-  qtyDown: ()=>void,
-  qtyUp: ()=>void,
+  productDetails: ProductDetailtState,
+  qtyDown: () => void,
+  qtyUp: () => void,
   counter: number,
-  addToCart: ()=>void,
+  addToCart: () => void,
 
 }
 
-
-function ProductScreen (props:propsType) {
+function ProductScreen(props: propsType) {
   const productDetail = props.productDetails
   return (
     <>
@@ -21,19 +20,19 @@ function ProductScreen (props:propsType) {
         : productDetail.error
           ? (<h3>error</h3>)
           : (
-              <div>
-                <Product
-                  productImg={productDetail.product.image}
-                  productText={productDetail.product.description}
-                  productTitle={productDetail.product.name}
-                  productCountInStok={productDetail.product.countInStock}
-                  counter={props.counter}
-                  addToCartHandler={props.addToCart}
-                  qtyDown={props.qtyDown}
-                  qtyUp={props.qtyUp}
-                />
-              </div>
-            )}
+            <div>
+              <Product
+                productImg={productDetail.product.image}
+                productText={productDetail.product.description}
+                productTitle={productDetail.product.name}
+                productCountInStok={productDetail.product.countInStock}
+                counter={props.counter}
+                addToCartHandler={props.addToCart}
+                qtyDown={props.qtyDown}
+                qtyUp={props.qtyUp}
+              />
+            </div>
+          )}
     </>
   )
 }

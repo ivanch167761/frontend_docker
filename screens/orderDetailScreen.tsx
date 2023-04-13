@@ -6,11 +6,10 @@ export type propsType = {
   detail: orderByIdDetail
 }
 
-export function OrderDetailScreen (props: propsType) {
+export function OrderDetailScreen(props: propsType) {
   return (
     <>
       <Example orderDetail={props.detail} />
     </>
   )
 }
-

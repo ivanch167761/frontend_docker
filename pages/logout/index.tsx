@@ -6,16 +6,16 @@ import getStore, {
   selectUserDetail
 } from '../../store'
 
-function logoutContainer () {
+function LogoutContainer () {
   const router = useRouter()
   const dispatch = useDispatch()
   const user = useSelector(selectUserDetail)
   useEffect(() => {
     dispatch(logout() as any)
-  }, [])
+  })
   useEffect(() => {
     user ? console.log('usssseeeeeerrrr') : router.push('/')
-  }, [user])
+  }, [user, router])
 }
 
 export async function getServerSideProps () {
@@ -27,4 +27,4 @@ export async function getServerSideProps () {
   }
 }
 
-export default logoutContainer
+export default LogoutContainer

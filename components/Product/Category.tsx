@@ -1,9 +1,8 @@
 import React from 'react'
-//import Link from 'next/link'
+// import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Category } from '../../types/storeTypes'
-
 
 type propsType = {
   categoryData: Category
@@ -60,7 +59,7 @@ export const CategoryDetail = (props: propsType) => {
               </p>
               <div className='pt-10'>
                 <button
-                  className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
+                  className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
                   onClick={() => router.back()}
                 >
                   Go Back

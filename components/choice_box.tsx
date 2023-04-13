@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
@@ -8,7 +8,6 @@ type propsType = {
   defaultChoice: string,
   setChoice: React.Dispatch<React.SetStateAction<string>>,
 }
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -52,16 +51,18 @@ function ChoiceBox(props: propsType) {
                           {choise}
                         </span>
 
-                        {selected ? (
-                          <span
-                            className={classNames(
-                              active ? 'text-white' : 'text-indigo-600',
-                              'absolute inset-y-0 left-0 flex items-center pl-1.5'
-                            )}
-                          >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                        ) : null}
+                        {selected
+                          ? (
+                            <span
+                              className={classNames(
+                                active ? 'text-white' : 'text-indigo-600',
+                                'absolute inset-y-0 left-0 flex items-center pl-1.5'
+                              )}
+                            >
+                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
+                          )
+                          : null}
                       </>
                     )}
                   </Listbox.Option>

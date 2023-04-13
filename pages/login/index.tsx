@@ -5,28 +5,29 @@ import { useDispatch, useSelector } from 'react-redux'
 import getStore, {
   login,
   checkLoginStatus,
-  selectUserDetail
+  selectUserDetail,
+  AppDispatch
 } from '../../store'
 
 import LoginScreen from '../../screens/loginScreen'
 
-function loginContainer () {
+function LoginContainer () {
   const user = useSelector(selectUserDetail)
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch:AppDispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const submitHandler = (e) => {
+  const submitHandler = (e:SubmitEvent) => {
     e.preventDefault()
-    dispatch(login(email, password) as any)
+    dispatch(login(email, password))
   }
   useEffect(() => {
-    dispatch(checkLoginStatus() as any)
-  }, [])
+    dispatch(checkLoginStatus())
+  })
 
   useEffect(() => {
     user ? router.push('/') : console.log('noUser')
-  }, [user])
+  }, [user, router])
   return (
       <>
     <LoginScreen
@@ -47,4 +48,4 @@ export async function getServerSideProps () {
   }
 }
 
-export default loginContainer
+export default LoginContainer

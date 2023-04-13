@@ -30,7 +30,7 @@ function ProfileContainer () {
   useEffect(() => {
     console.log('set user')
     dispatch(checkLoginStatus() as any)
-  }, [])
+  })
 
   useEffect(() => {
     setUser(userProfile)

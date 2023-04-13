@@ -5,8 +5,8 @@ type propsType = {
   setAddress: React.Dispatch<React.SetStateAction<string>>
   setCity: React.Dispatch<React.SetStateAction<string>>
   setCountry: React.Dispatch<React.SetStateAction<string>>
-  setPostcode: React.Dispatch<React.SetStateAction<number|null>>
-  setPhoneNumber: React.Dispatch<React.SetStateAction<number|null>>
+  setPostcode: React.Dispatch<React.SetStateAction<number | null>>
+  setPhoneNumber: React.Dispatch<React.SetStateAction<number | null>>
   setComment: React.Dispatch<React.SetStateAction<string>>
   setShippingOption: React.Dispatch<React.SetStateAction<string>>
   setPayment: React.Dispatch<React.SetStateAction<string>>
@@ -26,10 +26,10 @@ const shippingMethods = [
   { id: 'dhlExpress', title: 'DHL Express' }
 ]
 
-export default function Example (props: propsType) {
+export default function Example(props: propsType) {
   return (
     <>
-            {/*
+      {/*
         This example requires updating your template:
 
         ```
@@ -39,9 +39,9 @@ export default function Example (props: propsType) {
       */}
       <div className="min-h-full flex items-right justify-left py-12 px-16 sm:px-6 lg:px-16">
         <div className="max-w-md w-full space-y-8">
-      <form className="mt-8 space-y-6" onSubmit={props.submitHandler} >
-      <label className="text-base font-medium text-gray-900">Shipping Details</label>
-      <p className="text-sm leading-5 text-gray-500">Where do you prefer to receiv your order?</p>
+          <form className="mt-8 space-y-6" onSubmit={props.submitHandler} >
+            <label className="text-base font-medium text-gray-900">Shipping Details</label>
+            <p className="text-sm leading-5 text-gray-500">Where do you prefer to receiv your order?</p>
             <div className="rounded-md shadow-sm -space-y-px">
               <div className='pt-4 pb-2'>Name</div>
               <div>
@@ -90,7 +90,7 @@ export default function Example (props: propsType) {
                   onChange={(e) => props.setCity(e.target.value)}
                 />
               </div>
-                    <div className='pt-4 pb-2'>Country</div>
+              <div className='pt-4 pb-2'>Country</div>
               <div>
                 <label htmlFor="County" className="sr-only">
                   City
@@ -105,7 +105,7 @@ export default function Example (props: propsType) {
                   onChange={(e) => props.setCountry(e.target.value)}
                 />
               </div>
-                    <div className='pt-4 pb-2'>Postcode</div>
+              <div className='pt-4 pb-2'>Postcode</div>
               <div>
                 <label htmlFor="postcode" className="sr-only">
                   City
@@ -120,10 +120,10 @@ export default function Example (props: propsType) {
                   onChange={(e) => props.setPostcode(Number(e.target.value))}
                 />
               </div>
-                    <div className='pt-4 pb-2'>Phone number</div>
+              <div className='pt-4 pb-2'>Phone number</div>
               <div>
                 <label htmlFor="phoneNumber" className="sr-only">
-                    phoneNumber
+                  phoneNumber
                 </label>
                 <input
                   id="phoneNumber"
@@ -134,7 +134,7 @@ export default function Example (props: propsType) {
                   onChange={(e) => props.setPhoneNumber(Number(e.target.value))}
                 />
               </div>
-                    <div className='pt-4 pb-2'>Aditional comment</div>
+              <div className='pt-4 pb-2'>Aditional comment</div>
               <div>
                 <label htmlFor="comment" className="sr-only">
                   City
@@ -154,56 +154,55 @@ export default function Example (props: propsType) {
             </div>
 
             <div className="rounded-md shadow-sm -space-y-px">
-    <div>
-      <label className="text-base font-medium text-gray-900">Payment method</label>
-      <p className="text-sm leading-5 text-gray-500">How do you prefer to pay?</p>
-      <fieldset className="mt-4 pb-8">
-        <legend className="sr-only">Payment method</legend>
-        <div className="space-y-4">
-          {paymentMethods.map((paymentMethod) => (
-            <div key={paymentMethod.id} className="flex items-center">
-              <input
-                id={paymentMethod.id}
-                name="payment-method"
-                type="radio"
-                onChange={ (e) => props.setPayment(e.target.id) }
-                defaultChecked={paymentMethod.id === 'PayPal'}
-                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-              />
-              <label htmlFor={paymentMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
-                {paymentMethod.title}
-              </label>
-            </div>
-          ))}
-        </div>
-      </fieldset>
-      </div>
+              <div>
+                <label className="text-base font-medium text-gray-900">Payment method</label>
+                <p className="text-sm leading-5 text-gray-500">How do you prefer to pay?</p>
+                <fieldset className="mt-4 pb-8">
+                  <legend className="sr-only">Payment method</legend>
+                  <div className="space-y-4">
+                    {paymentMethods.map((paymentMethod) => (
+                      <div key={paymentMethod.id} className="flex items-center">
+                        <input
+                          id={paymentMethod.id}
+                          name="payment-method"
+                          type="radio"
+                          onChange={(e) => props.setPayment(e.target.id)}
+                          defaultChecked={paymentMethod.id === 'PayPal'}
+                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                        />
+                        <label htmlFor={paymentMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
+                          {paymentMethod.title}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </fieldset>
+              </div>
 
-
-        <div>
-      <label className="text-base font-medium text-gray-900 py-8">Shipping Method</label>
-      <p className="text-sm leading-5 text-gray-500">Shipping method</p>
-      <fieldset className="mt-4">
-        <legend className="sr-only">Shipping method</legend>
-        <div className="space-y-4">
-          {shippingMethods.map((shippingMethod) => (
-            <div key={shippingMethod.id} className="flex items-center">
-              <input
-                id={shippingMethod.id}
-                name="shipping-method"
-                type="radio"
-                onChange={ (e) => props.setShippingOption(e.target.id) }
-                defaultChecked={shippingMethod.id === 'standard'}
-                className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-              />
-              <label htmlFor={shippingMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
-                {shippingMethod.title}
-              </label>
-            </div>
-          ))}
-        </div>
-      </fieldset>
-    </div>
+              <div>
+                <label className="text-base font-medium text-gray-900 py-8">Shipping Method</label>
+                <p className="text-sm leading-5 text-gray-500">Shipping method</p>
+                <fieldset className="mt-4">
+                  <legend className="sr-only">Shipping method</legend>
+                  <div className="space-y-4">
+                    {shippingMethods.map((shippingMethod) => (
+                      <div key={shippingMethod.id} className="flex items-center">
+                        <input
+                          id={shippingMethod.id}
+                          name="shipping-method"
+                          type="radio"
+                          onChange={(e) => props.setShippingOption(e.target.id)}
+                          defaultChecked={shippingMethod.id === 'standard'}
+                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
+                        />
+                        <label htmlFor={shippingMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
+                          {shippingMethod.title}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </fieldset>
+              </div>
             </div>
 
             <div className="flex items-center justify-between">

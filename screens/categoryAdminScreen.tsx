@@ -1,5 +1,4 @@
 
-
 import CategoryListComp from '../components/categoryList'
 import React from 'react'
 import { CategoryListState } from '../types/storeTypes'
@@ -58,6 +57,5 @@ function CategoryScreen(props: propsType) {
     </>
   )
 }
-
 
 export default CategoryScreen

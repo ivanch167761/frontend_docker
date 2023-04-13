@@ -13,10 +13,10 @@ import getStore, {
 
 } from '../../store'
 
-function DetailContainer () {
-  const dispatch: AppDispatch = useDispatch();
+function DetailContainer() {
+  const dispatch: AppDispatch = useDispatch()
   useEffect(() => {
-  // Perform localStorage action
+    // Perform localStorage action
     const cartStorage = localStorage.getItem('cartItemsList')
     const setInitialCart = () => dispatch(setCart(cartStorage))
     setInitialCart()
@@ -28,19 +28,19 @@ function DetailContainer () {
   const productData = useSelector(selectProductDetail)
   useEffect(() => {
     dispatch(checkLoginStatus())
-  }, [])
+  })
   return (
-     <ProductScreen
-     productDetails={productData}
-     qtyUp={qtyUp}
-     qtyDown={qtyDown}
-     counter={qtyProduct}
-     addToCart={toCart}
-     />
+    <ProductScreen
+      productDetails={productData}
+      qtyUp={qtyUp}
+      qtyDown={qtyDown}
+      counter={qtyProduct}
+      addToCart={toCart}
+    />
   )
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   const { id } = context.query
   const store = getStore()
   await store.dispatch(getProductDetail(id))

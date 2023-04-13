@@ -3,13 +3,11 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
-type
-
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-function choiseBox(inputChoices, defaultChoice, readChoice) {
+export function ChoiseBox(inputChoices:string[], defaultChoice:string, readChoice:(selected:string)=>string) {
   const [selected, setSelected] = useState(defaultChoice)
   readChoice(selected)
   return (
@@ -50,16 +48,18 @@ function choiseBox(inputChoices, defaultChoice, readChoice) {
                           {choise}
                         </span>
 
-                        {selected ? (
-                          <span
-                            className={classNames(
-                              active ? 'text-white' : 'text-indigo-600',
-                              'absolute inset-y-0 left-0 flex items-center pl-1.5'
-                            )}
-                          >
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                          </span>
-                        ) : null}
+                        {selected
+                          ? (
+                            <span
+                              className={classNames(
+                                active ? 'text-white' : 'text-indigo-600',
+                                'absolute inset-y-0 left-0 flex items-center pl-1.5'
+                              )}
+                            >
+                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
+                          )
+                          : null}
                       </>
                     )}
                   </Listbox.Option>
@@ -72,5 +72,3 @@ function choiseBox(inputChoices, defaultChoice, readChoice) {
     </Listbox>
   )
 }
-
-export default () => choiseBox(['a', 'ddd', 'dddd', 'ddddd'])

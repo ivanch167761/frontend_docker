@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-//import Link from 'next/link'
+// import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
@@ -71,20 +71,20 @@ export const Product = ({ productImg, productImgAlt, productTitle, productText, 
                     -
                   </button>
                 </div>
-    {/*<Link href={'/cart'} className='w-full'>*/}
-                  <button
-                    onClick={addToCartHandler}
-                    className={
-                      productCountInStok === 0
-                        ? 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-100 text-black dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
-                        : 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 text-white dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
-                    }
-                  >
-                    {productCountInStok > 0 ? 'Add To Cart' : 'OUT OF STOCK'}
-                  </button>
-      {/*</Link>*/}
-                
-                <button className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '>
+                {/* <Link href={'/cart'} className='w-full'> */}
+                <button
+                  onClick={addToCartHandler}
+                  className={
+                    productCountInStok === 0
+                      ? 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-100 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
+                      : 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
+                  }
+                >
+                  {productCountInStok > 0 ? 'Add To Cart' : 'OUT OF STOCK'}
+                </button>
+                {/* </Link> */}
+
+                <button className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '>
                   View Details
                 </button>
               </div>
@@ -95,7 +95,7 @@ export const Product = ({ productImg, productImgAlt, productTitle, productText, 
               </div>
               <div className='pt-10'>
                 <button
-                  className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
+                  className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
                   onClick={() => router.back()}
                 >
                   Go Back

@@ -8,7 +8,7 @@ import getStore, {
   checkLoginStatus,
   selectUserDetail,
   selectError,
-  AppDispatch,
+  AppDispatch
 } from '../../store'
 
 import RegisterScreen from '../../screens/registerScreen'
@@ -28,7 +28,7 @@ function RegisterContainer() {
   }
   useEffect(() => {
     dispatch(checkLoginStatus())
-  }, [])
+  })
 
   useEffect(() => {
     loginError ? setShow(true) : console.log('NOOOOO')
@@ -36,7 +36,7 @@ function RegisterContainer() {
 
   useEffect(() => {
     user ? router.push('/') : console.log('noUser')
-  }, [user])
+  }, [user, router])
   return (
     <>
       <RegisterScreen

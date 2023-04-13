@@ -6,8 +6,7 @@ type propsType = {
   categoryDetails: CategoryDetailtState
 }
 
-
-function CategoryScreen(props: propsType) {
+function CategoryScreen (props: propsType) {
   const categoryDetail = props.categoryDetails
   return (
     <>
@@ -21,7 +20,7 @@ function CategoryScreen(props: propsType) {
                 categoryData={categoryDetail.category}
               />
             </div>
-          )}
+            )}
     </>
   )
 }

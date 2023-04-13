@@ -11,13 +11,13 @@ import getStore, {
 
 import CategoryScreen from '../../screens/categoryScreen'
 
-function categoryContainer() {
+function CategoryContainer() {
   const dispatch: AppDispatch = useDispatch()
   const search = useSelector(selectCategorySearch)
   const categoryList = useSelector(selectCategoryList)
   useEffect(() => {
     dispatch(checkLoginStatus())
-  }, [])
+  })
   return (
     <>
       <div>
@@ -44,4 +44,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default categoryContainer
+export default CategoryContainer

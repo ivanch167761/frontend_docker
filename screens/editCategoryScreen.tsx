@@ -25,7 +25,6 @@ function CategoryScreen(props: propsType) {
                 onClick={() => {
                   props.delCategory()
                   router.back()
-
                 }
                 }
                 className='

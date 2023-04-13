@@ -35,5 +35,4 @@ function CategoryScreen(props: propsType) {
   )
 }
 
-
 export default CategoryScreen

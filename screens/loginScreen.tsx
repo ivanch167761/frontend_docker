@@ -1,4 +1,4 @@
-import Example from '../components/login.js'
+import Example from '../components/login'
 import React from 'react'
 function loginScreen (props) {
   return (
