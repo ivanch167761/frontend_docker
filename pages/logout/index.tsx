@@ -12,7 +12,7 @@ function LogoutContainer () {
   const user = useSelector(selectUserDetail)
   useEffect(() => {
     dispatch(logout() as any)
-  })
+  }, [dispatch])
   useEffect(() => {
     user ? console.log('usssseeeeeerrrr') : router.push('/')
   }, [user, router])

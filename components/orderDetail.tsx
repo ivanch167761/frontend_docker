@@ -32,6 +32,8 @@ export default function Example(props: propsType) {
               <Image
                 src={product.image}
                 alt={product.name}
+                width={100}
+                height={100}
                 className="flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40"
               />
               <div className="flex-auto flex flex-col">

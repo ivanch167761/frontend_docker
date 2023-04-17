@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import React, { useEffect } from 'react'
 import Script from 'next/script'
 import Link from 'next/dist/client/link'
@@ -6,19 +7,60 @@ import Link from 'next/dist/client/link'
 /*  import Link from 'next/link'  */
 import { cartItem, cartItemDetail } from '../types/storeTypes'
 import Image from 'next/image'
+declare global {
+  interface Window { pay: any; }
+}
 type propsType = {
   cartData: cartItemDetail[],
   setChangeCart: React.Dispatch<React.SetStateAction<cartItem>>
 }
+
+interface MyFormProps extends React.FormHTMLAttributes<HTMLFormElement> {
+  allow?: string;
+}
+
+
+const setPrice = ()=>55.55
+
 export default function Example(props: propsType) {
+  const children = <>
+              <input type="hidden" name="terminalkey" value="TinkoffBankTest" />
+              <input type="hidden" name="frame" value="true" />
+              <input type="hidden" name='amount' value={setPrice()} />
+              <input type="hidden" name="language" value="ru" />
+              <input type="hidden" name="order" value="79000" />
+              <input type="hidden" name="description" value="eee" />
+              <input type="hidden" name="name" value="IU" />
+              <input type="hidden" name="email" value="iu@iu.es" />
+              <input type="hidden" name="phone" value='1654987' />
+              <input type="submit" value="Оплатить" />
+
+  </>
   const products = props.cartData
   useEffect(() => {
     const script = document.createElement('script')
     script.src = 'https://securepay.tinkoff.ru/html/payForm/js/tinkoff_v2.js'
     script.async = true
+    script.onload = () => {
+    }
     document.body.appendChild(script)
-  }, [])
+  })
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!window.pay) {
+      console.log('no pay loaded')
+    }
+    e.preventDefault(); console.log(e.target); window.pay(e.target) }
+
+function MyForm(props: MyFormProps) {
+  return (
+    <form {...props}>
+      {props.children}
+    </form>
+  );
+}
   return (
     <div className="mt-10 border-t border-gray-200">
       <h2 className="sr-only">Your order</h2>
@@ -29,6 +71,8 @@ export default function Example(props: propsType) {
             <Image
               src={product.image}
               alt={product.name}
+              width={100}
+              height={100}
               className="flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40"
             />
             <div className="flex-auto flex flex-col">
@@ -68,18 +112,7 @@ export default function Example(props: propsType) {
               </div>
             </div>
             <Script />
-            <form name="TinkoffPayForm" onSubmit={(e) => { e.preventDefault(); console.log(e.target); pay(e.target) }} allow='payment'>
-              <input type="hidden" name="terminalkey" value="TinkoffBankTest" />
-              <input type="hidden" name="frame" value="true" />
-              <input type="hidden" name='amount' value={4688} />
-              <input type="hidden" name="language" value="ru" />
-              <input type="hidden" name="order" value="79000" />
-              <input type="hidden" name="description" value="eee" />
-              <input type="hidden" name="name" value="IU" />
-              <input type="hidden" name="email" value="iu@iu.es" />
-              <input type="hidden" name="phone" value='1654987' />
-              <input type="submit" value="Оплатить" />
-            </form>
+            {MyForm({children:children, allow:"payment", name:"TinkoffPayForm", onSubmit:handleSubmit})}
           </div>
         ))
         : (<div> Cart is empty </div>)

@@ -17,7 +17,7 @@ function CategoryContainer() {
   const categoryList = useSelector(selectCategoryList)
   useEffect(() => {
     dispatch(checkLoginStatus())
-  })
+  }, [dispatch])
   return (
     <>
       <div>

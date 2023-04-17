@@ -7,7 +7,8 @@ import getStore, {
   checkLoginStatus,
   updateUserProfile,
   selectUserDetail,
-  selectError
+  selectError,
+  AppDispatch
 } from '../../store'
 
 import ProfileScreen from '../../screens/profileScreen'
@@ -18,7 +19,7 @@ function ProfileContainer () {
   const loginError = useSelector(selectError)
   const userProfile = useSelector(selectUserDetail)
   const router = useRouter()
-  const dispatch = useDispatch()
+  const dispatch:AppDispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
@@ -29,8 +30,8 @@ function ProfileContainer () {
   }
   useEffect(() => {
     console.log('set user')
-    dispatch(checkLoginStatus() as any)
-  })
+    dispatch(checkLoginStatus())
+  }, [dispatch])
 
   useEffect(() => {
     setUser(userProfile)
@@ -41,7 +42,7 @@ function ProfileContainer () {
   }, [loginError])
   return (
       <>
-    <ProfileScreen
+      <ProfileScreen
     userProfile={user}
     setEmail={setEmail}
     setPassword={setPassword}

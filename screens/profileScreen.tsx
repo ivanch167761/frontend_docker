@@ -1,4 +1,4 @@
-import Example from '../components/profile.js'
+import Example from '../components/profile'
 import React from 'react'
 import PropTypes from 'prop-types'
 function ProfileScreen (props) {

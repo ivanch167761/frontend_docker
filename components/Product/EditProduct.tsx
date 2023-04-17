@@ -10,6 +10,7 @@ type propsType = {
   handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
   handleChangeName: React.Dispatch<React.SetStateAction<string>>,
+  handleImage: React.ChangeEventHandler<HTMLInputElement>,
   handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
   submitChanges: (e: React.FormEvent<HTMLFormElement>) => void,
 }
@@ -56,6 +57,13 @@ export const EditProduct = (props: propsType) => {
                   layout='responsive'
                   objectFit='contain'
                 />
+
+                  <input
+                    className='text-base leading-normal text-gray-600 dark:text-white mt-2'
+                    type='file'
+                    value={props.productBeforeEdit.countInStock}
+                    onChange={props.handleImage}
+                  />
               </div>
               <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
                 <textarea

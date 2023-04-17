@@ -9,6 +9,7 @@ type propsType = {
   handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
   handleChangeName: React.Dispatch<React.SetStateAction<string>>,
+  handleImage: React.ChangeEventHandler<HTMLInputElement>,
   handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
   delProduct: () => void,
   submitChanges: (e: React.FormEvent<HTMLFormElement>) => void
@@ -52,6 +53,7 @@ function ProductScreen(props: propsType) {
                 handleChangePrice={props.handleChangePrice}
                 handleChangeCategory={props.handleChangeCategory}
                 handleChangeCountInStock={props.handleChangeCountInStock}
+                handleImage={props.handleImage}
                 submitChanges={props.submitChanges}
               />
             </div>

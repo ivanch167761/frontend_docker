@@ -6,7 +6,8 @@ import getStore, {
   checkLoginStatus,
   AppDispatch,
   selectCategoryList,
-  setCategorySearch
+  setCategorySearch,
+  createCategory
 } from '../../../store'
 
 import CategoryScreen from '../../../screens/categoryAdminScreen'
@@ -15,9 +16,10 @@ function CategoryContainer() {
   const dispatch: AppDispatch = useDispatch()
   const search = useSelector(selectCategorySearch)
   const categoryList = useSelector(selectCategoryList)
+  const createNewCategory = () => dispatch(createCategory())
   useEffect(() => {
     dispatch(checkLoginStatus())
-  })
+  }, [dispatch])
   return (
     <>
       <div>
@@ -29,7 +31,7 @@ function CategoryContainer() {
           }}
         />
       </div>
-      <CategoryScreen categories={categoryList} />
+      <CategoryScreen categories={categoryList} createNewCategory={createNewCategory} />
     </>
   )
 }

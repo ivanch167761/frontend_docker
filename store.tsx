@@ -23,7 +23,9 @@ import {
   initialUserOrdersState,
   initialCategoryListState,
   initialCategoryDetailState,
-  initialCategoryProductListState
+  initialCategoryProductListState,
+  initialUploadImageState,
+  UploadImagePayload
 } from './types/storeTypes'
 import axios from 'axios'
 
@@ -158,6 +160,28 @@ export const getCartProductsDetail = createAsyncThunk<
     return null
   }
 })
+
+export const uploadImage = createAsyncThunk(
+  'image/uploadImage',
+  async ({ product, imageFile }: UploadImagePayload, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append('product_id', String(product._id));
+      formData.append('image', imageFile);
+
+      const response = await axios.post<string>('/api/upload/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data ?? 'Failed to upload image');
+    }
+  }
+);
+
 /** ******************** GET ACTIONS END ********************/
 
 /** ********************* SEARCH REDUCER **********************/
@@ -629,7 +653,7 @@ export const deleteCategory =
           }
         }
         const { data } = await axios.delete(
-          `https://${host}/api/category/delete/${id}`,
+          `https://${host}/api/categories/delete/${id}`,
           config
         )
         dispatch(setError(`${data} was deleted`))
@@ -662,6 +686,28 @@ export const createProduct =
       }
     }
 
+export const createCategory =
+  () =>
+    async (dispatch: AppDispatch) => {
+      dispatch(setLoading())
+      const user = JSON.parse(localStorage.getItem('user'))
+      try {
+        const config = {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+        const { data } = await axios.post(
+          `https://${host}/api/categories/create/`,
+          '',
+          config
+        )
+        console.log(data)
+      } catch (error) {
+        dispatch(setError(error.message))
+      }
+    }
 /* **********************************  END SET USER ORDER  ************************ */
 
 /* **********************************  SET USER ORDER  ************************ */
@@ -751,6 +797,41 @@ export const setUserOrder =
 
 /* **********************************  END SET USER ORDER  ************************ */
 
+
+/* **********************************  UPLOAD IMAGE  ************************ */
+
+const imageSlice = createSlice({
+  name: 'image',
+  initialState: initialUploadImageState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(uploadImage.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = '';
+      })
+      .addCase(uploadImage.fulfilled, (state, action: PayloadAction<string>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.data = action.payload;
+      })
+      .addCase(uploadImage.rejected, (state, action: PayloadAction<string | undefined, string, any, any>) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.errorMessage = action.payload ?? 'Failed to upload image';
+      });
+  },
+});
+
+/* **********************************  END UPLOAD IMAGE  ************************ */
+
+
+
+
 export type RootState = ReturnType<typeof store.getState>
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -823,7 +904,8 @@ export default function getStore (incomingPreloadState?: RootState) {
       userOrders: userOrdersSlice.reducer,
       categoryProduct: categoryProductListSlice.reducer,
       categoryList: categoryListSlice.reducer,
-      categoryDetail: categoryDetailSlice.reducer
+      categoryDetail: categoryDetailSlice.reducer,
+      image: imageSlice.reducer
     },
     preloadedState: incomingPreloadState
   })

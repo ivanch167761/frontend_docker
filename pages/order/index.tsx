@@ -35,7 +35,7 @@ function ProfileContainer() {
   }
   useEffect(() => {
     dispatch(checkLoginStatus())
-  })
+  }, [dispatch])
 
   useEffect(() => {
     loginError ? setShow(true) : console.log('')

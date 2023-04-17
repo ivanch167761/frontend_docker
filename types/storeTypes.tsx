@@ -288,3 +288,29 @@ export const initialUserOrdersState: userOrdersState = {
   error: null,
   loading: false
 }
+
+// _________________ UPLOAD IMAGE TYPES ________________
+//
+//
+//
+export interface ImageState {
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  errorMessage: string;
+  data: string | null;
+}
+
+export interface UploadImagePayload {
+  product: Product; 
+  imageFile: File;
+}
+
+export const initialUploadImageState: ImageState = {
+  isLoading: false,
+  isSuccess: false,
+  isError: false,
+  errorMessage: '',
+  data: null,
+};
+

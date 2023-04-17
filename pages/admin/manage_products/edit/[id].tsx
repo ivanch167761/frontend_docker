@@ -7,8 +7,8 @@ import getStore, {
   checkLoginStatus,
   AppDispatch,
   updateProduct,
+  uploadImage,
   deleteProduct
-
 } from '../../../../store'
 import { ProductDetailtState } from '../../../../types/storeTypes'
 type submitCangesType = (e: React.FormEvent<HTMLFormElement>) => void;
@@ -18,6 +18,8 @@ function DetailContainer () {
     dispatch(deleteProduct(productData.product._id))
     console.log('HHHHHH')
   }
+  
+
   const productData: ProductDetailtState = useSelector(selectProductDetail)
   const [show, setShow] = useState<boolean>(false)
   const [price, setPrice] = useState<number>(productData.product.price)
@@ -25,7 +27,13 @@ function DetailContainer () {
   const [countInStock, setCountInStock] = useState<number>(productData.product.countInStock)
   const [name, setName] = useState<string>(productData.product.name)
   const [descriptoin, setDescription] = useState<string>(productData.product.description)
-
+  const pproduct = productData.product
+  const handleImageUpload = (e) => {
+    const imageFile:File = e.target.files[0];
+    console.log(imageFile)
+    console.log(pproduct._id)
+    dispatch(uploadImage({product: pproduct, imageFile: imageFile}));
+  }
   const submitCanges: submitCangesType = (e) => {
     e.preventDefault()
     dispatch(updateProduct(changingProductDetails.product))
@@ -60,6 +68,7 @@ function DetailContainer () {
       handleChangeCountInStock={setCountInStock}
       handleChangeDescription={setDescription}
       handleChangeName={setName}
+      handleImage={handleImageUpload}
       delProduct={delProduct}
       submitChanges={submitCanges}
     />

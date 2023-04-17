@@ -23,7 +23,7 @@ function LoginContainer () {
   }
   useEffect(() => {
     dispatch(checkLoginStatus())
-  })
+  }, [dispatch])
 
   useEffect(() => {
     user ? router.push('/') : console.log('noUser')

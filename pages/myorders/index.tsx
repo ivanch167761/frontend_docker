@@ -13,7 +13,7 @@ function UserOrdersContainer() {
   useEffect(() => {
     dispatch(checkLoginStatus());
     dispatch(getUserOrders());
-  });
+  }, [dispatch]);
 
   const userOrders = useSelector(selectUserOrders);
   return (

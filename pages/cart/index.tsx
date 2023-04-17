@@ -27,7 +27,7 @@ function CartContainer() {
   }, [dispatch, changeCart])
   useEffect(() => {
     dispatch(checkLoginStatus())
-  })
+  }, [dispatch])
 
   const cartDataDetails = useSelector(selectCartProducts)
   const cartTotalPrice = useSelector(selectCartTotalPrice)
