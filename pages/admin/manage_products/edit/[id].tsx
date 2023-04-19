@@ -36,13 +36,7 @@ function DetailContainer () {
   }
   const submitCanges: submitCangesType = (e) => {
     e.preventDefault()
-    dispatch(updateProduct(changingProductDetails.product))
-    /* router.push('/') */
-  }
-  useEffect(() => {
-    dispatch(checkLoginStatus())
-  }, [dispatch])
-  const changingProductDetails: ProductDetailtState = {
+    const changingProductDetails: ProductDetailtState = {
     product: {
       _id: productData.product._id,
       category: category_,
@@ -60,9 +54,15 @@ function DetailContainer () {
     loading: productData.loading,
     qty: productData.qty
   }
+    dispatch(updateProduct(changingProductDetails.product))
+    /* router.push('/') */
+  }
+  useEffect(() => {
+    dispatch(checkLoginStatus())
+  }, [dispatch])
   return (
     <EditProductScreen
-      productDetails={changingProductDetails}
+      productDetails={productData}
       handleChangePrice={setPrice}
       handleChangeCategory={setCategory}
       handleChangeCountInStock={setCountInStock}
