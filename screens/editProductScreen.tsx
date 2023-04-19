@@ -46,7 +46,6 @@ function ProductScreen(props: propsType) {
               >
                 DELETE PRODUCT
               </button>
-              {/*
               <EditProduct
                 productBeforeEdit={props.productDetails.product}
                 handleChangeName={props.handleChangeName}
@@ -57,7 +56,6 @@ function ProductScreen(props: propsType) {
                 handleImage={props.handleImage}
                 submitChanges={props.submitChanges}
               />
-              */}
             </div>
           )}
     </>
