@@ -20,6 +20,20 @@ function DetailContainer () {
   }
   
 
+/*
+    <EditProductScreen
+      productDetails={productData}
+      handleChangePrice={setPrice}
+      handleChangeCategory={setCategory}
+      handleChangeCountInStock={setCountInStock}
+      handleChangeDescription={setDescription}
+      handleChangeName={setName}
+      handleImage={handleImageUpload}
+      delProduct={delProduct}
+      submitChanges={submitCanges}
+    />
+*/
+
   const productData: ProductDetailtState = useSelector(selectProductDetail)
   const [show, setShow] = useState<boolean>(false)
   const [price, setPrice] = useState<number>(productData.product.price)
@@ -61,17 +75,9 @@ function DetailContainer () {
     dispatch(checkLoginStatus())
   }, [dispatch])
   return (
-    <EditProductScreen
-      productDetails={productData}
-      handleChangePrice={setPrice}
-      handleChangeCategory={setCategory}
-      handleChangeCountInStock={setCountInStock}
-      handleChangeDescription={setDescription}
-      handleChangeName={setName}
-      handleImage={handleImageUpload}
-      delProduct={delProduct}
-      submitChanges={submitCanges}
-    />
+    <>
+      HOLA
+    </>
   )
 }
 
