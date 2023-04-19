@@ -1,6 +1,6 @@
 import Example from '../components/cart_summary'
 import React from 'react'
-import Link from 'next/link.js'
+import Link from 'next/link'
 import { cartItemDetail, cartItem } from '../types/storeTypes'
 
 type propsType = {

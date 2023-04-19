@@ -116,7 +116,7 @@ export default function Example(props: propsType) {
                   type="postcode"
                   required
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={props.userOrder.postcode}
+                  placeholder={String(props.userOrder.postcode)}
                   onChange={(e) => props.setPostcode(Number(e.target.value))}
                 />
               </div>
@@ -130,7 +130,7 @@ export default function Example(props: propsType) {
                   name="phoneNumber"
                   type="phoneNumber"
                   className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder={props.userOrder.phoneNumber}
+                  placeholder={String(props.userOrder.phoneNumber)}
                   onChange={(e) => props.setPhoneNumber(Number(e.target.value))}
                 />
               </div>

@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { React, Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import Image from 'next/image'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
@@ -48,7 +48,7 @@ export default function Example () {
   )
   return (
     <Disclosure as="nav" className="bg-gray-800">
-      {({ open, close }) => (
+      {({ open }) => (
         <>
           {console.log(open)}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -183,7 +183,6 @@ export default function Example () {
                 <Link href={item.href} key={item.name}>
                 <Disclosure.Button
                   key={item.name}
-                  onClick={close}
                   as="a"
                   href={item.href}
                   className={classNames(
@@ -228,7 +227,6 @@ export default function Example () {
                   <Disclosure.Button
                   key={'login'}
                   as="a"
-                  onClick={close}
                   href={'/login'}
                   className={classNames(
                     currentPage === '/login' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',

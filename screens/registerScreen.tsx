@@ -1,4 +1,4 @@
-import Example from '../components/register.js'
+import Example from '../components/register'
 import React from 'react'
 import PropTypes from 'prop-types'
 function RegisterScreen (props) {

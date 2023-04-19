@@ -1,6 +1,6 @@
 import Example from '../components/order'
 import React from 'react'
-import { makeOrderItem } from '../types/storeTypes.jsx'
+import { makeOrderItem } from '../types/storeTypes'
 type propsType = {
   setName: React.Dispatch<React.SetStateAction<string>>,
   setAddress: React.Dispatch<React.SetStateAction<string>>

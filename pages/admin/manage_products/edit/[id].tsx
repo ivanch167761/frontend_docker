@@ -23,16 +23,16 @@ function DetailContainer () {
   const productData: ProductDetailtState = useSelector(selectProductDetail)
   const [show, setShow] = useState<boolean>(false)
   const [price, setPrice] = useState<number>(productData.product.price)
-  const [category, setCategory] = useState<string>(productData.product.category)
-  const [countInStock, setCountInStock] = useState<number>(productData.product.countInStock)
-  const [name, setName] = useState<string>(productData.product.name)
-  const [descriptoin, setDescription] = useState<string>(productData.product.description)
+  const [category_, setCategory] = useState<string>(productData.product.category)
+  const [countInStock_, setCountInStock] = useState<number>(productData.product.countInStock)
+  const [name_, setName] = useState<string>(productData.product.name)
+  const [description_, setDescription] = useState<string>(productData.product.description)
   const pproduct = productData.product
   const handleImageUpload = (e) => {
     const imageFile:File = e.target.files[0];
     console.log(imageFile)
     console.log(pproduct._id)
-    dispatch(uploadImage({product: pproduct, imageFile: imageFile}));
+    //dispatch(uploadImage({product: pproduct, imageFile: imageFile}));
   }
   const submitCanges: submitCangesType = (e) => {
     e.preventDefault()
@@ -41,18 +41,18 @@ function DetailContainer () {
   }
   useEffect(() => {
     dispatch(checkLoginStatus())
-  })
+  }, [dispatch])
   const changingProductDetails: ProductDetailtState = {
     product: {
       _id: productData.product._id,
-      category,
+      category: category_,
       user: productData.product.user,
-      name,
+      name: name_,
       image: productData.product.image,
       brand: productData.product.brand,
-      description: descriptoin,
-      price,
-      countInStock,
+      description: description_,
+      price: price,
+      countInStock:countInStock_,
       createdAt: productData.product.createdAt
     },
     available: productData.available,
