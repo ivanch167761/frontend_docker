@@ -45,7 +45,7 @@ export const EditProduct = (props: propsType) => {
               </svg>
             </button>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={/* props.submitChanges  */ () => console.log("submitted")} >
+          <form className="mt-8 space-y-6" onSubmit={props.submitChanges} >
             <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
               <div className='lg:w-1/3  bg-gray-50 '>
                 <Image
