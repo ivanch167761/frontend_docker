@@ -38,8 +38,8 @@ export const getProductList = createAsyncThunk<
   Product[],
   undefined,
   { rejectValue: string }
->("products/getProducts", async(_, { rejectWithValue }) => {
-  const response = await axios.get  (`https://${host}/api/products`)
+>("products/getProducts", async (_, { rejectWithValue }) => {
+  const response = await axios.get(`https://${host}/api/products`)
   if (!response) {
     return rejectWithValue('error')
   }
@@ -101,7 +101,7 @@ export const getUserOrders = createAsyncThunk<
   [orderByIdDetail],
   undefined,
   { rejectValue: string }
->('order/getUserOrder', async function (_, { rejectWithValue }) {
+>('order/getUserOrder', async function(_, { rejectWithValue }) {
   const user = JSON.parse(localStorage.getItem('user'))
   const config = {
     headers: {
@@ -123,7 +123,7 @@ export const getOrderItemDetail = createAsyncThunk<
   orderByIdDetail,
   number,
   { rejectValue: string }
->('order/getOrder', async function (id, { rejectWithValue }) {
+>('order/getOrder', async function(id, { rejectWithValue }) {
   const user = JSON.parse(localStorage.getItem('user'))
   const config = {
     headers: {
@@ -169,7 +169,7 @@ export const uploadImage = createAsyncThunk(
       formData.append('product_id', String(product._id));
       formData.append('image', imageFile);
 
-      const response = await axios.post<string>('/api/upload/', formData, {
+      const response = await axios.post<string>('/api/products/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -189,7 +189,7 @@ export const productListSlice = createSlice({
   name: 'productList',
   initialState: initialProductListState,
   reducers: {
-    setSearch (state, action: PayloadAction<string>) {
+    setSearch(state, action: PayloadAction<string>) {
       state.search = action.payload
       state.filteredProduct = state.productList.filter(({ name }) =>
         name.toLowerCase().includes(state.search.toLowerCase())
@@ -217,7 +217,7 @@ export const categoryProductListSlice = createSlice({
   name: 'categoryProductList',
   initialState: initialCategoryProductListState,
   reducers: {
-    setSearch (state, action: PayloadAction<string>) {
+    setSearch(state, action: PayloadAction<string>) {
       state.search = action.payload
       state.filteredProduct = state.productList.filter(({ name }) =>
         name.toLowerCase().includes(state.search.toLowerCase())
@@ -245,7 +245,7 @@ export const categoryListSlice = createSlice({
   name: 'categoryList',
   initialState: initialCategoryListState,
   reducers: {
-    setCategorySearch (state, action: PayloadAction<string>) {
+    setCategorySearch(state, action: PayloadAction<string>) {
       state.search = action.payload
       state.filteredCategory = state.categoryList.filter(({ category }) =>
         category.toLowerCase().includes(state.search.toLowerCase())
@@ -277,11 +277,11 @@ export const addToCartSlice = createSlice({
   name: 'addToCart',
   initialState: initialCartItemsState,
   reducers: {
-    setCart (state, action: PayloadAction<string>) {
+    setCart(state, action: PayloadAction<string>) {
       const cartStateString = action.payload ? JSON.parse(action.payload) : []
       state.cartItemsList = cartStateString
     },
-    addToCart (state, action: PayloadAction<cartItem>) {
+    addToCart(state, action: PayloadAction<cartItem>) {
       const itemId = action.payload.product_ID
       const itemQty = action.payload.qty
       const existItem = state.cartItemsList.find(
@@ -342,7 +342,7 @@ export const orderDetailSlice = createSlice({
   name: 'orderDetail',
   initialState: initialOrderByIdState,
   reducers: {
-    setOrderId (state, action: PayloadAction<number>) {
+    setOrderId(state, action: PayloadAction<number>) {
       state.orderByIdDetail._id = action.payload
     }
   },
@@ -428,7 +428,7 @@ export const productDetailSlice = createSlice({
       state.error = null
       state.product = action.payload
     },
-    setQty (state, action: PayloadAction<number>) {
+    setQty(state, action: PayloadAction<number>) {
       if (action.payload < 0) {
         state.qty = 0
       } else if (action.payload > state.product.countInStock) {
@@ -892,7 +892,7 @@ export const selectCategoryList = (state: RootState) =>
 /** ********************* GET STORE **********************/
 /***
  ***/
-export default function getStore (incomingPreloadState?: RootState) {
+export default function getStore(incomingPreloadState?: RootState) {
   store = configureStore({
     reducer: {
       productList: productListSlice.reducer,
