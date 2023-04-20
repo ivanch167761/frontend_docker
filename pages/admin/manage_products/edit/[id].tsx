@@ -24,7 +24,6 @@ function DetailContainer() {
   */
 
   const productData: ProductDetailtState = useSelector(selectProductDetail)
-  const [show, setShow] = useState<boolean>(false)
   const [price, setPrice] = useState<number>(productData.product.price)
   const [category_, setCategory] = useState<string>(productData.product.category)
   const [countInStock_, setCountInStock] = useState<number>(productData.product.countInStock)
@@ -37,18 +36,10 @@ function DetailContainer() {
     console.log(pproduct._id)
     //dispatch(uploadImage({product: pproduct, imageFile: imageFile}));
   }
-  const submitCanges: submitCangesType = (e) => {
-    e.preventDefault()
-    dispatch(updateProduct(changingProductDetails.product))
-    /* router.push('/') */
-  }
-  useEffect(() => {
-    dispatch(checkLoginStatus())
-  }, [dispatch])
   const changingProductDetails: ProductDetailtState = {
     product: {
       _id: productData.product._id,
-      category: category_,
+      category: productData.product.category,
       user: productData.product.user,
       name: name_,
       image: productData.product.image,
@@ -63,9 +54,17 @@ function DetailContainer() {
     loading: productData.loading,
     qty: productData.qty
   }
+  const submitCanges: submitCangesType = (e) => {
+    e.preventDefault()
+    dispatch(updateProduct(changingProductDetails.product))
+    /* router.push('/') */
+  }
+  useEffect(() => {
+    dispatch(checkLoginStatus())
+  }, [dispatch])
   return (
     <EditProductScreen
-      productDetails={productData}
+      productDetails={changingProductDetails}
       handleChangePrice={setPrice}
       handleChangeCategory={setCategory}
       handleChangeCountInStock={setCountInStock}
