@@ -26,9 +26,9 @@ function DetailContainer() {
   const [name_, setName] = useState<string>(productData.product.name)
   const [description_, setDescription] = useState<string>(productData.product.description)
   const handleImageUpload = (e) => {
-    //const imageFile: File = e.target.files[0];
-    console.log(e)
-    //dispatch(uploadImage({product: pproduct, imageFile: imageFile}));
+    const imageFile: File = e.target.files[0];
+    console.log(imageFile)
+    //dispatch(uploadImage({product: product, imageFile: imageFile}));
   }
   const changingProductDetails: ProductDetailtState = {
     product: {
