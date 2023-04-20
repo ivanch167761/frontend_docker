@@ -25,10 +25,10 @@ function DetailContainer() {
   const [countInStock_, setCountInStock] = useState<number>(productData.product.countInStock)
   const [name_, setName] = useState<string>(productData.product.name)
   const [description_, setDescription] = useState<string>(productData.product.description)
-  const handleImageUpload = (e) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile: File = e.target.files[0];
     console.log(imageFile)
-    //dispatch(uploadImage({product: product, imageFile: imageFile}));
+    dispatch(uploadImage({ product: productData.product, imageFile: imageFile }));
   }
   const changingProductDetails: ProductDetailtState = {
     product: {
