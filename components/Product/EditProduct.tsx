@@ -45,14 +45,7 @@ export const EditProduct = (props: propsType) => {
               </svg>
             </button>
           </div>
-          <>
-            {props.productBeforeEdit.name}
-            {props.productBeforeEdit.description}
-            {props.productBeforeEdit.price}
-            {props.productBeforeEdit.category}
-          </>
-          {/*
-          <form className="mt-8 space-y-6" onSubmit={props.submitChanges} >
+          <form className="mt-8 space-y-6" onSubmit={/* props.submitChanges  */ () => console.log("submitted")} >
             <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
               <div className='lg:w-1/3  bg-gray-50 '>
                 <Image
@@ -65,12 +58,14 @@ export const EditProduct = (props: propsType) => {
                   objectFit='contain'
                 />
 
+                {/*
                   <input
                     className='text-base leading-normal text-gray-600 dark:text-white mt-2'
                     type='file'
                     value={props.productBeforeEdit.countInStock}
                     onChange={props.handleImage}
                   />
+                  */}
               </div>
               <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
                 <textarea
@@ -121,7 +116,6 @@ export const EditProduct = (props: propsType) => {
               </div>
             </div>
           </form>
-          */}
         </div>
       </div>
     </>
