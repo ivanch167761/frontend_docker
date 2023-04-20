@@ -19,27 +19,21 @@ function DetailContainer() {
     console.log('HHHHHH')
   }
 
-
-  /*
-  */
-
   const productData: ProductDetailtState = useSelector(selectProductDetail)
   const [price, setPrice] = useState<number>(productData.product.price)
   const [category_, setCategory] = useState<string>(productData.product.category)
   const [countInStock_, setCountInStock] = useState<number>(productData.product.countInStock)
   const [name_, setName] = useState<string>(productData.product.name)
   const [description_, setDescription] = useState<string>(productData.product.description)
-  const pproduct = productData.product
   const handleImageUpload = (e) => {
-    const imageFile: File = e.target.files[0];
-    console.log(imageFile)
-    console.log(pproduct._id)
+    //const imageFile: File = e.target.files[0];
+    console.log(e)
     //dispatch(uploadImage({product: pproduct, imageFile: imageFile}));
   }
   const changingProductDetails: ProductDetailtState = {
     product: {
       _id: productData.product._id,
-      category: productData.product.category,
+      category: category_,
       user: productData.product.user,
       name: name_,
       image: productData.product.image,
