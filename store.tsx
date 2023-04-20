@@ -169,7 +169,7 @@ export const uploadImage = createAsyncThunk(
       formData.append('product_id', String(product._id));
       formData.append('image', imageFile);
 
-      const response = await axios.post<string>('/api/products/upload', formData, {
+      const response = await axios.post<string>(`https://${host}/api/products/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
