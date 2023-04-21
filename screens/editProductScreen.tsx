@@ -5,6 +5,7 @@ import { ProductDetailtState } from '../types/storeTypes'
 
 type propsType = {
   productDetails: ProductDetailtState,
+  categoryNames: string[],
   handleChangeCountInStock: React.Dispatch<React.SetStateAction<number>>,
   handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
@@ -48,6 +49,7 @@ function ProductScreen(props: propsType) {
               </button>
               <EditProduct
                 productBeforeEdit={props.productDetails.product}
+                categoryNames={props.categoryNames}
                 handleChangeName={props.handleChangeName}
                 handleChangeDescription={props.handleChangeDescription}
                 handleChangePrice={props.handleChangePrice}

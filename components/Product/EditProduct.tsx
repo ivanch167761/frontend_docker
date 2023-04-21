@@ -6,6 +6,7 @@ import ChoiceBox from '../choice_box'
 
 type propsType = {
   productBeforeEdit: Product,
+  categoryNames: string[],
   handleChangeCountInStock: React.Dispatch<React.SetStateAction<number>>,
   handleChangePrice: React.Dispatch<React.SetStateAction<number>>,
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
@@ -84,7 +85,7 @@ export const EditProduct = (props: propsType) => {
                     onChange={(e) => props.handleChangeCountInStock(Number(e.target.value))}
                   />
                 </div>
-                <ChoiceBox inputChoices={['Teclados', 'Cars']} defaultChoice={props.productBeforeEdit.category} setChoice={props.handleChangeCategory} />
+                <ChoiceBox inputChoices={props.categoryNames} defaultChoice={props.productBeforeEdit.category} setChoice={props.handleChangeCategory} />
                 <div>
                   <h5>Price:</h5>
                   <input

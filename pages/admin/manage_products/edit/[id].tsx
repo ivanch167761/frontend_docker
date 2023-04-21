@@ -8,9 +8,11 @@ import getStore, {
   AppDispatch,
   updateProduct,
   uploadImage,
-  deleteProduct
+  deleteProduct,
+  getCategoryList,
+  selectCategoryList
 } from '../../../../store'
-import { ProductDetailtState } from '../../../../types/storeTypes'
+import { CategoryListState, ProductDetailtState } from '../../../../types/storeTypes'
 type submitCangesType = (e: React.FormEvent<HTMLFormElement>) => void;
 function DetailContainer() {
   const dispatch: AppDispatch = useDispatch()
@@ -20,6 +22,7 @@ function DetailContainer() {
   }
 
   const productData: ProductDetailtState = useSelector(selectProductDetail)
+  const categoryListData: CategoryListState = useSelector(selectCategoryList)
   const [price, setPrice] = useState<number>(productData.product.price)
   const [category_, setCategory] = useState<string>(productData.product.category)
   const [countInStock_, setCountInStock] = useState<number>(productData.product.countInStock)
@@ -27,9 +30,10 @@ function DetailContainer() {
   const [description_, setDescription] = useState<string>(productData.product.description)
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile: File = e.target.files[0];
-    console.log(imageFile)
     dispatch(uploadImage({ product: productData.product, imageFile: imageFile }));
   }
+  const categoryNames = categoryListData.categoryList.map((category) => category.category)
+  console.log(categoryNames)
   const changingProductDetails: ProductDetailtState = {
     product: {
       _id: productData.product._id,
@@ -59,6 +63,7 @@ function DetailContainer() {
   return (
     <EditProductScreen
       productDetails={changingProductDetails}
+      categoryNames={categoryNames}
       handleChangePrice={setPrice}
       handleChangeCategory={setCategory}
       handleChangeCountInStock={setCountInStock}
@@ -75,6 +80,7 @@ export async function getServerSideProps(context) {
   const { id } = context.query
   const store = getStore()
   await store.dispatch(getProductDetail(id))
+  await store.dispatch(getCategoryList())
   return {
     props: {
       initialState: store.getState()
