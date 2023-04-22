@@ -7,7 +7,6 @@ import Link from 'next/link'
 type propsType = {
   categories: CategoryListState
   createNewCategory: () => void
-  newCategoryData: Category
 }
 
 function CategoryScreen(props: propsType) {

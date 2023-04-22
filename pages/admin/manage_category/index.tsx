@@ -12,9 +12,11 @@ import getStore, {
 } from '../../../store'
 
 import CategoryScreen from '../../../screens/categoryAdminScreen'
+import { useRouter } from 'next/router'
 
 function CategoryContainer() {
   const dispatch: AppDispatch = useDispatch()
+  const router = useRouter()
   const search = useSelector(selectCategorySearch)
   const newCategoryData = useSelector(selectCategoryDetail)
   const categoryList = useSelector(selectCategoryList)
@@ -22,6 +24,9 @@ function CategoryContainer() {
   useEffect(() => {
     dispatch(checkLoginStatus())
   }, [dispatch])
+  useEffect(() => {
+    newCategoryData._id ? router.push(`/admin/manage_category/edit/${newCategoryData._id}`) : console.log('noCategory')
+  }, [newCategoryData._id, router])
   return (
     <>
       <div>
@@ -33,7 +38,7 @@ function CategoryContainer() {
           }}
         />
       </div>
-      <CategoryScreen categories={categoryList} createNewCategory={createNewCategory} newCategoryData={newCategoryData} />
+      <CategoryScreen categories={categoryList} createNewCategory={createNewCategory} />
     </>
   )
 }
