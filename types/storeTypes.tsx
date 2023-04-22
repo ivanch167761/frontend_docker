@@ -65,7 +65,7 @@ export type ProductDetailtState = {
   qty: number;
 };
 export type CategoryDetailtState = {
-  category: Category;
+  category: Category | null;
   error: string | null;
   loading: boolean;
 };
@@ -77,12 +77,7 @@ export const initialProductDetailState: ProductDetailtState = {
   qty: 1
 }
 export const initialCategoryDetailState: CategoryDetailtState = {
-  category: {
-    _id: 1,
-    category: 'category',
-    image: 'string',
-    description: 'string'
-  },
+  category: null,
   error: null,
   loading: false
 }
@@ -302,7 +297,7 @@ export interface ImageState {
 }
 
 export interface UploadImagePayload {
-  product: Product; 
+  product: Product;
   imageFile: File;
 }
 

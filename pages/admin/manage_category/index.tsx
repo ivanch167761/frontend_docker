@@ -26,8 +26,8 @@ function CategoryContainer() {
   }, [dispatch])
   useEffect(() => {
     console.log(newCategoryData)
-    newCategoryData._id ? router.push(`/admin/manage_category/edit/${newCategoryData._id}`) : console.log('noCategory')
-  }, [newCategoryData._id, router])
+    newCategoryData ? router.push(`/admin/manage_category/edit/${newCategoryData._id}`) : console.log('noCategory')
+  }, [newCategoryData, router])
   return (
     <>
       <div>
