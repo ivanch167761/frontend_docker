@@ -366,6 +366,11 @@ export const categoryDetailSlice = createSlice({
   name: 'CategoryDetail',
   initialState: initialCategoryDetailState,
   reducers: {
+    setCategory: (state, action: PayloadAction<Category>) => {
+      state.loading = false
+      state.error = null
+      state.category = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -704,6 +709,7 @@ export const createCategory =
           config
         )
         console.log(data)
+        dispatch(setCategory(data))
       } catch (error) {
         dispatch(setError(error.message))
       }
@@ -845,6 +851,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<
  ***/
 export const { setSearch } = productListSlice.actions
 export const { setCategorySearch } = categoryListSlice.actions
+export const { setCategory } = categoryDetailSlice.actions
 export const { setOrderId } = orderDetailSlice.actions
 export const { setQty, setProduct, setErrorProduct, setLoadingProduct } = productDetailSlice.actions
 export const { addToCart, setCart } = addToCartSlice.actions

@@ -7,7 +7,8 @@ import getStore, {
   AppDispatch,
   selectCategoryList,
   setCategorySearch,
-  createCategory
+  createCategory,
+  selectCategoryDetail
 } from '../../../store'
 
 import CategoryScreen from '../../../screens/categoryAdminScreen'
@@ -15,6 +16,7 @@ import CategoryScreen from '../../../screens/categoryAdminScreen'
 function CategoryContainer() {
   const dispatch: AppDispatch = useDispatch()
   const search = useSelector(selectCategorySearch)
+  const newCategoryData = useSelector(selectCategoryDetail)
   const categoryList = useSelector(selectCategoryList)
   const createNewCategory = () => dispatch(createCategory())
   useEffect(() => {
@@ -31,7 +33,7 @@ function CategoryContainer() {
           }}
         />
       </div>
-      <CategoryScreen categories={categoryList} createNewCategory={createNewCategory} />
+      <CategoryScreen categories={categoryList} createNewCategory={createNewCategory} newCategoryData={newCategoryData} />
     </>
   )
 }
