@@ -25,7 +25,12 @@ function CategoryContainer() {
     dispatch(checkLoginStatus())
   }, [dispatch])
   useEffect(() => {
-    console.log(newCategoryData)
+    console.log(newCategoryData._id)
+    console.log(newCategoryData._id)
+    console.log(newCategoryData._id)
+    console.log(newCategoryData._id)
+    console.log(newCategoryData._id)
+    console.log(newCategoryData._id)
     newCategoryData ? router.push(`/admin/manage_category/edit/${newCategoryData._id}`) : console.log('noCategory')
   }, [newCategoryData, router])
   return (
