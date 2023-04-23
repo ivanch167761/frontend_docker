@@ -31,8 +31,8 @@ function CategoryContainer() {
     console.log(newCategoryData._id)
     console.log(newCategoryData._id)
     console.log(newCategoryData._id)
-    newCategoryData ? router.push(`/admin/manage_category/edit/${newCategoryData._id}`) : console.log('noCategory')
-  }, [newCategoryData, router])
+    newCategoryData._id ? router.push(`/admin/manage_category/edit/${newCategoryData._id}`) : console.log('noCategory')
+  }, [newCategoryData.id, router])
   return (
     <>
       <div>
