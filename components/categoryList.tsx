@@ -23,7 +23,7 @@ export const CategoryListComp = (props: propsType) => {
           />
           <div className='p-8 sm:p-9 md:p-7 xl:p-9 text-center'>
             <h3>
-              <Link href={`category/products/${props.category._id}`}>
+              <Link href={`/category/products/${props.category._id}`}>
                 <button
                   className='
                         font-semibold
