@@ -11,7 +11,6 @@ type propsType = {
 
 function CategoryScreen(props: propsType) {
   const categories = props.categories
-  console.log(categories)
   return (
     <>
       {
