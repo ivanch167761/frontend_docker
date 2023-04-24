@@ -301,6 +301,10 @@ export interface UploadImagePayload {
   imageFile: File;
 }
 
+export interface UploadCategoryImagePayload {
+  category: Category;
+  imageFile: File;
+}
 export const initialUploadImageState: ImageState = {
   isLoading: false,
   isSuccess: false,

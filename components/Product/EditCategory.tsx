@@ -7,6 +7,7 @@ type propsType = {
   categoryBeforeEdit: Category,
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
   handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
+  handleImageUpload: React.ChangeEventHandler<HTMLInputElement>,
   submitChanges: (e: React.FormEvent<HTMLFormElement>) => void,
 }
 
@@ -40,6 +41,11 @@ export const EditCategory = (props: propsType) => {
               </svg>
             </button>
           </div>
+          <input
+            className='text-base leading-normal text-gray-600 dark:text-white mt-2'
+            type='file'
+            onChange={props.handleImageUpload}
+          />
           <form className="mt-8 space-y-6" onSubmit={props.submitChanges} >
             <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
               <div className='lg:w-1/3  bg-gray-50 '>

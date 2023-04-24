@@ -8,6 +8,7 @@ type propsType = {
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
   handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
   delCategory: () => void,
+  handleImageUpload: React.ChangeEventHandler<HTMLInputElement>,
   submitChanges: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
@@ -46,6 +47,7 @@ function CategoryScreen(props: propsType) {
                 categoryBeforeEdit={props.categoryDetails.category}
                 handleChangeDescription={props.handleChangeDescription}
                 handleChangeCategory={props.handleChangeCategory}
+                handleImageUpload={props.handleImageUpload}
                 submitChanges={props.submitChanges}
               />
             </div>

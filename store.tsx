@@ -25,7 +25,8 @@ import {
   initialCategoryDetailState,
   initialCategoryProductListState,
   initialUploadImageState,
-  UploadImagePayload
+  UploadImagePayload,
+  UploadCategoryImagePayload
 } from './types/storeTypes'
 import axios from 'axios'
 
@@ -182,6 +183,26 @@ export const uploadImage = createAsyncThunk(
   }
 );
 
+export const uploadCategoryImage = createAsyncThunk(
+  'image/uploadImage',
+  async ({ category, imageFile }: UploadCategoryImagePayload, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append('category_id', String(category._id));
+      formData.append('image', imageFile);
+
+      const response = await axios.post<string>(`https://${host}/api/category/upload/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data ?? 'Failed to upload image');
+    }
+  }
+);
 /** ******************** GET ACTIONS END ********************/
 
 /** ********************* SEARCH REDUCER **********************/
@@ -818,13 +839,31 @@ const imageSlice = createSlice({
         state.isError = false;
         state.errorMessage = '';
       })
+      .addCase(uploadCategoryImage.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = '';
+      })
       .addCase(uploadImage.fulfilled, (state, action: PayloadAction<string>) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
         state.data = action.payload;
       })
+      .addCase(uploadCategoryImage.fulfilled, (state, action: PayloadAction<string>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.data = action.payload;
+      })
       .addCase(uploadImage.rejected, (state, action: PayloadAction<string | undefined, string, any, any>) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.errorMessage = action.payload ?? 'Failed to upload image';
+      })
+      .addCase(uploadCategoryImage.rejected, (state, action: PayloadAction<string | undefined, string, any, any>) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

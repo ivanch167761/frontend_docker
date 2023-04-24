@@ -7,6 +7,7 @@ import getStore, {
   checkLoginStatus,
   AppDispatch,
   updateCategory,
+  uploadCategoryImage,
   deleteCategory
 
 } from '../../../../store'
@@ -29,6 +30,10 @@ function DetailContainer() {
   useEffect(() => {
     dispatch(checkLoginStatus())
   })
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imageFile: File = e.target.files[0];
+    dispatch(uploadCategoryImage({ category: categoryData.category, imageFile: imageFile }));
+  }
   const changingCategoryDetails: CategoryDetailtState = {
     category: {
       _id: categoryData.category._id,
@@ -44,6 +49,7 @@ function DetailContainer() {
       categoryDetails={changingCategoryDetails}
       handleChangeCategory={setCategory}
       handleChangeDescription={setDescription}
+      handleImageUpload={handleImageUpload}
       delCategory={delCategory}
       submitChanges={submitCanges}
     />
