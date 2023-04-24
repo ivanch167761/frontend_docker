@@ -191,7 +191,7 @@ export const uploadCategoryImage = createAsyncThunk(
       formData.append('category_id', String(category._id));
       formData.append('image', imageFile);
 
-      const response = await axios.post<string>(`https://${host}/api/category/upload/`, formData, {
+      const response = await axios.post<string>(`https://${host}/api/categories/upload/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
