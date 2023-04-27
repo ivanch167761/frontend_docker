@@ -2,7 +2,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import Image from 'next/image'
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { LogoutIcon, LoginIcon, UserIcon, BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { PlusSmIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -42,7 +42,8 @@ export default function Example () {
                         'px-3 py-2 rounded-md text-sm font-medium'
                       )}
                     >
-                      {'LOGIN'}
+                    
+                    <LoginIcon className="h-6 w-6" />
                     </a>
                     </Link>
   )
@@ -128,17 +129,8 @@ export default function Example () {
                     <div>
                       <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
-                        <Image 
-                        className="h-8 w-8 rounded-full" 
-                        src={'https://cdn-icons-png.flaticon.com/512/219/219969.png'} 
-                        alt="" 
-                        priority
-                        width='100%'
-                        height='100%'
-                        layout='responsive'
-                        objectFit='contain'
 
-                      />
+                    <UserIcon className="h-6 w-6" aria-hidden="true" />
                       </Menu.Button>
                     </div>
                     <Transition
