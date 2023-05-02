@@ -184,14 +184,14 @@ export const uploadImage = createAsyncThunk(
 );
 
 export const uploadCategoryImage = createAsyncThunk(
-  'image/uploadImage',
+  'image/uploadCategoryImage',
   async ({ category, imageFile }: UploadCategoryImagePayload, thunkAPI) => {
     try {
       const formData = new FormData();
       formData.append('_id', String(category._id));
       formData.append('image', imageFile);
 
-      const response = await axios.post<string>(`https://${host}/api/category/upload/`, formData, {
+      const response = await axios.post<string>(`https://${host}/api/categories/upload/`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -839,19 +839,7 @@ const imageSlice = createSlice({
         state.isError = false;
         state.errorMessage = '';
       })
-      .addCase(uploadCategoryImage.pending, (state) => {
-        state.isLoading = true;
-        state.isSuccess = false;
-        state.isError = false;
-        state.errorMessage = '';
-      })
       .addCase(uploadImage.fulfilled, (state, action: PayloadAction<string>) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isError = false;
-        state.data = action.payload;
-      })
-      .addCase(uploadCategoryImage.fulfilled, (state, action: PayloadAction<string>) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.isError = false;
@@ -862,6 +850,27 @@ const imageSlice = createSlice({
         state.isSuccess = false;
         state.isError = true;
         state.errorMessage = action.payload ?? 'Failed to upload image';
+      })
+  },
+});
+
+const categoryImageSlice = createSlice({
+  name: 'categoryImage',
+  initialState: initialUploadImageState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(uploadCategoryImage.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = '';
+      })
+      .addCase(uploadCategoryImage.fulfilled, (state, action: PayloadAction<string>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.data = action.payload;
       })
       .addCase(uploadCategoryImage.rejected, (state, action: PayloadAction<string | undefined, string, any, any>) => {
         state.isLoading = false;
@@ -951,6 +960,7 @@ export default function getStore(incomingPreloadState?: RootState) {
       categoryProduct: categoryProductListSlice.reducer,
       categoryList: categoryListSlice.reducer,
       categoryDetail: categoryDetailSlice.reducer,
+      categoryImage: categoryImageSlice.reducer,
       image: imageSlice.reducer
     },
     preloadedState: incomingPreloadState
