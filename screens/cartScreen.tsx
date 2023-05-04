@@ -3,12 +3,14 @@ import React from 'react'
 import Link from 'next/link'
 import { cartItemDetail, cartItem } from '../types/storeTypes'
 
+import { useRouter } from 'next/router'
 type propsType = {
   cartData: cartItemDetail[],
   cartPrice: number,
   setChangeCart: React.Dispatch<React.SetStateAction<cartItem>>
 }
 function CartScreen (props: propsType) {
+  const router = useRouter()
   return (
     <>
     <div className="bg-white">
@@ -24,9 +26,18 @@ function CartScreen (props: propsType) {
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-               Make your order
+               Оформить заказ
               </button>
             </Link>
+              <button
+                onClick={()=>{
+              router.back()
+              router.back()
+            }}
+                className="mt-3 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-300 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+               вернуться назад
+              </button>
       </div>
     </div>
     </>

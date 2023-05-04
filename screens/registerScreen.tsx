@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 function RegisterScreen (props) {
   return (
     <>
-      <Example setName={props.setName} setEmail={props.setEmail} setPassword={props.setPassword} submitHandler={props.submitHandler} redirectAfterLogin={'/'} />
+      <Example setName={props.setName} setEmail={props.setEmail} setPassword={props.setPassword} setConfirmPassword={props.setConfirmPassword} submitHandler={props.submitHandler}/>
     </>
   )
 }
@@ -15,5 +15,5 @@ RegisterScreen.propTypes = {
   setEmail: PropTypes.func,
   setName: PropTypes.func,
   setPassword: PropTypes.func,
-  redirectAfterLogin: PropTypes.string
+  setConfirmPassword: PropTypes.func,
 }

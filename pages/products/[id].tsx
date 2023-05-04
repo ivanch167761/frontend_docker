@@ -13,8 +13,10 @@ import getStore, {
 
 } from '../../store'
 
+import { useRouter } from 'next/router'
 function DetailContainer() {
   const dispatch: AppDispatch = useDispatch()
+  const router = useRouter()
   useEffect(() => {
     // Perform localStorage action
     const cartStorage = localStorage.getItem('cartItemsList')
@@ -23,7 +25,10 @@ function DetailContainer() {
   }, [dispatch])
   const qtyUp = () => dispatch(setQty(qtyProduct + 1))
   const qtyDown = () => dispatch(setQty(qtyProduct - 1))
-  const toCart = () => dispatch(addToCart({ product_ID: productData.product._id, qty: qtyProduct }))
+  const toCart = () => {
+    dispatch(addToCart({ product_ID: productData.product._id, qty: qtyProduct }))
+    router.push('/cart') 
+  }
   const qtyProduct = useSelector(selectProductQty)
   const productData = useSelector(selectProductDetail)
   useEffect(() => {

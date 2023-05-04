@@ -923,6 +923,7 @@ export const selectProductDetail = (state: RootState) => state.product
 export const selectCategoryDetail = (state: RootState) => state.categoryDetail
 export const selectUserDetail = (state: RootState) => state.login.user
 export const selectError = (state: RootState) => state.login.error
+export const selectLoading = (state: RootState) => state.login.loading
 export const selectOrderDetail = (state: RootState) =>
   state.orderById.orderByIdDetail
 export const selectUserOrders = (state: RootState) =>

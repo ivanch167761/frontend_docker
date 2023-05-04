@@ -1,3 +1,5 @@
+const { hostname } = require('os')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -6,6 +8,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '**.digitaloceanspaces.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'tailwindui.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn-icons-png.flaticon.com'
       }
     ]
   },

@@ -80,25 +80,27 @@ export const Product = ({ productImg, productImgAlt, productTitle, productText, 
                       : 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
                   }
                 >
-                  {productCountInStok > 0 ? 'Add To Cart' : 'OUT OF STOCK'}
+                  {productCountInStok > 0 ? 'добавить в корзину' : 'нет в наличии'}
                 </button>
                 {/* </Link> */}
 
-                <button className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '>
+                {/*<button className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '>
                   View Details
                 </button>
+                */}
               </div>
               <div className='mt-6'>
-                <button className='text-xl underline text-gray-800 dark:text-white dark:hover:text-gray-200 capitalize hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800'>
+                {/*<button className='text-xl underline text-gray-800 dark:text-white dark:hover:text-gray-200 capitalize hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800'>
                   add to wishlist
                 </button>
+                */}
               </div>
               <div className='pt-10'>
                 <button
                   className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
                   onClick={() => router.back()}
                 >
-                  Go Back
+                  ВЕРНУТЬСЯ НАЗАД
                 </button>
               </div>
             </div>

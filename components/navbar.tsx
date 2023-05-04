@@ -10,9 +10,9 @@ import { selectUserDetail } from '../store'
 import { useSelector } from 'react-redux'
 
 const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '/logout' }
+  { name: 'Настройки пользователя', href: '/profile' },
+  { name: 'Заказы пользователя', href: '/myorders' },
+  { name: 'Выйти', href: '/logout' }
 ]
 
 function classNames (...classes) {
@@ -29,22 +29,22 @@ export default function Example () {
   }, [router.events])
   const user = useSelector(selectUserDetail)
   const navigation = [
-    { name: 'Наш ассортимент', href: '/', current: false },
-    { name: 'Dashboard_2', href: '/', current: true },
-    { name: 'Team', href: '#', current: false },
+    { name: 'Ассортимент товара', href: '/product_list', current: false },
+    { name: 'Категории', href: '/category', current: true },
+    //{ name: 'Team', href: '#', current: false },
     { name: 'Корзина', href: '/cart', current: false }
   ]
   const loginBTN = (
                           <Link href={'/login'} key={'login'}>
-                    <a
+                    <button
                       className={classNames(
                         currentPage === '/login' ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'px-3 py-2 rounded-md text-sm font-medium'
+                        'px-8 py-2 rounded-md text-sm font-medium'
                       )}
                     >
                     
-                    <LoginIcon className="h-6 w-6" />
-                    </a>
+                    <LoginIcon className="h-6 w-6" />Войти 
+                    </button>
                     </Link>
   )
   return (
@@ -52,7 +52,7 @@ export default function Example () {
       {({ open }) => (
         <>
           {console.log(open)}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-18">
             <div className="flex justify-between h-16">
               <div className="flex">
                 <div className="-ml-2 mr-2 flex items-center md:hidden">
@@ -105,24 +105,7 @@ export default function Example () {
                 </div>
               </div>
               <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <button
-                    type="button"
-                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
-                  >
-                    <PlusSmIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-                    <span>New Job</span>
-                  </button>
-                </div>
                 <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
-                  <button
-                    type="button"
-                    className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                  >
-                    <span className="sr-only">View notifications</span>
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
-
                   {/* Profile dropdown */}
                   { user
                     ? <Menu as="div" className="ml-3 relative">

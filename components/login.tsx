@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Link from 'next/link'
 /*
   This example requires Tailwind CSS v2.0+
   This example requires some changes to your config:
@@ -14,8 +15,7 @@ import PropTypes from 'prop-types'
   }
   ```
 */
-export default function Example ({ setEmail, setPassword, submitHandler, redirectAfterLogin }) {
-  console.log(redirectAfterLogin)
+export default function Example ({ setEmail, setPassword, submitHandler }) {
   return (
     <>
             {/*
@@ -40,7 +40,7 @@ export default function Example ({ setEmail, setPassword, submitHandler, redirec
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="email-address" className="sr-only">
-                  Email address
+                  Адрес электронной почты
                 </label>
                 <input
                   id="email-address"
@@ -49,13 +49,13 @@ export default function Example ({ setEmail, setPassword, submitHandler, redirec
                   autoComplete="email"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
+                  placeholder="Адрес электронной почты"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
                 <label htmlFor="password" className="sr-only">
-                  Password
+                  Пароль
                 </label>
                 <input
                   id="password"
@@ -64,7 +64,7 @@ export default function Example ({ setEmail, setPassword, submitHandler, redirec
                   autoComplete="current-password"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
+                  placeholder="Пароль"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
@@ -96,8 +96,17 @@ export default function Example ({ setEmail, setPassword, submitHandler, redirec
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Sign in
+                Войти
               </button>
+<p className='py-2'/>
+            <Link href='/register'>
+              <button
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+               Зарегистрироваться 
+              </button>
+            </Link>
             </div>
           </form>
         </div>

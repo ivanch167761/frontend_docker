@@ -23,6 +23,7 @@ interface MyFormProps extends React.FormHTMLAttributes<HTMLFormElement> {
 const setPrice = ()=>55.55
 
 export default function Example(props: propsType) {
+{/*
   const children = <>
               <input type="hidden" name="terminalkey" value="TinkoffBankTest" />
               <input type="hidden" name="frame" value="true" />
@@ -36,6 +37,7 @@ export default function Example(props: propsType) {
               <input type="submit" value="Оплатить" />
 
   </>
+    */}
   const products = props.cartData
   useEffect(() => {
     const script = document.createElement('script')
@@ -53,7 +55,7 @@ export default function Example(props: propsType) {
       console.log('no pay loaded')
     }
     e.preventDefault(); console.log(e.target); window.pay(e.target) }
-
+/*
 function MyForm(props: MyFormProps) {
   return (
     <form {...props}>
@@ -61,6 +63,7 @@ function MyForm(props: MyFormProps) {
     </form>
   );
 }
+  */
   return (
     <div className="mt-10 border-t border-gray-200">
       <h2 className="sr-only">Your order</h2>
@@ -112,7 +115,7 @@ function MyForm(props: MyFormProps) {
               </div>
             </div>
             <Script />
-            {MyForm({children:children, allow:"payment", name:"TinkoffPayForm", onSubmit:handleSubmit})}
+            {/*{MyForm({children:children, allow:"payment", name:"TinkoffPayForm", onSubmit:handleSubmit})}*/}
           </div>
         ))
         : (<div> Cart is empty </div>)

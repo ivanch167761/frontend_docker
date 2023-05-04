@@ -29,14 +29,14 @@ export type ProductListState = {
 export const initialProductListState: ProductListState = {
   productList: null,
   filteredProduct: [],
-  search: 'SEARCH',
+  search: 'ПОИСК ПО РАЗДЕЛУ',
   loading: false,
   error: null
 }
 export const initialCategoryProductListState: ProductListState = {
   productList: null,
   filteredProduct: [],
-  search: 'SEARCH PRODUCT IN CATEGORY',
+  search: 'ПОИСК ПРОДУКТА В ДАННОЙ КАТЕГОРИИ',
   loading: false,
   error: null
 }
@@ -50,7 +50,7 @@ export type CategoryListState = {
 export const initialCategoryListState: CategoryListState = {
   categoryList: null,
   filteredCategory: [],
-  search: 'SEARCH',
+  search: 'ПОИСК ПО РАЗДЕЛУ',
   loading: false,
   error: null
 }
