@@ -23,7 +23,7 @@ export default function Example() {
           name="search"
           id="search"
           className="bg-blue-100 border-red-500 ring-red-500 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm px-4 rounded-full"
-          placeholder="Jane Doe"
+          placeholder="Jane Doaaae"
         />
       </div>
     </div>
