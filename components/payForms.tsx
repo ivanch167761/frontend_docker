@@ -17,7 +17,7 @@ export const children = (order: orderByIdDetail) => {
    <input type="hidden" name="frame" value="true" />
    <input type="hidden" name='amount' value={`${order.totalPrice}`} />
    <input type="hidden" name="language" value="ru" />
-   <input type="hidden" name="order" value={order._id+48} />
+   <input type="hidden" name="order" value={order._id+98} />
    <input type="hidden" name="description" value={new Date().toLocaleString()} />
    <input type="hidden" name="name" value={`${order.user.name}`} />
    <input type="hidden" name="email" value={`${order.user.email}`} />
