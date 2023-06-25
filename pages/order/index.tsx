@@ -68,7 +68,7 @@ function ProfileContainer() {
 
 
 
-  const submitHandler: SubmitHandlerType = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault()
     dispatch(setUserOrder(name, address, city, country, postcode, phoneNumber, comment, 'PayPal', shippingOption))
   }
