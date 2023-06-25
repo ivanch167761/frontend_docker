@@ -15,11 +15,15 @@ export default function Example(props: propsType) {
     document.body.appendChild(script)
   }, [])
 
-  function showAddress(addr: shippingAddressType): string {
+  function showAddress(addr: shippingAddressType): any {
     if (typeof addr === 'boolean') {
-      return 'No address provided'
+      return <>Shipping addres was not provided</>
     }
-    return `${addr.address}, ${addr.city}, ${addr.country}, ${addr.postalCode}`
+    return (<>
+      <div>Shipping Address: {addr.address}, {addr.city}, {addr.country}, {addr.postalCode}</div>
+      <div>Phone Number: {addr.phoneNumber}</div>
+      <div>Aditional Comment: {addr.comment}</div>
+    </>)
   }
   return (
     <>
@@ -67,8 +71,13 @@ export default function Example(props: propsType) {
         <h3 className="mt-20">Shipping Price: {orderDetails.shippingPrice} $</h3>
         <h3 className="mt-2">Tax Price: {orderDetails.taxPrice} $</h3>
         <h3 className="mt-2">Total Price: {orderDetails.totalPrice} $</h3>
+        <h3 className="mt-20">{showAddress(orderDetails.shippingAddress)}</h3>
 
-        <h3 className="mt-20">Shipping Address: {showAddress(orderDetails.shippingAddress)}</h3>
+
+        <h3 className="mt-2">Paid at: {orderDetails.isPaid?orderDetails.paidAt:`Not paid yet`}</h3>
+        <h3 className="mt-2">Delivered at: {orderDetails.isDelivered?orderDetails.deliveredAt:'Not delivered yet'} </h3>
+        <h3 className="mt-2">Tracking Number: {orderDetails.trackingNumber?orderDetails.trackingNumber:'No tracking number available'}</h3>
+
       </div>
     </>
   )

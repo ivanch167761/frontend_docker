@@ -9,16 +9,12 @@ type propsType = {
   setPhoneNumber: React.Dispatch<React.SetStateAction<number | null>>
   setComment: React.Dispatch<React.SetStateAction<string>>
   setShippingOption: React.Dispatch<React.SetStateAction<string>>
-  setPayment: React.Dispatch<React.SetStateAction<string>>
   submitHandler: (e: React.FormEvent<HTMLFormElement>) => void
-  userOrder: makeOrderItem
+  userOrder: makeOrderItem,
+  tax: number,
+  totalPrice: number,
+  shippingPrice: number
 }
-
-const paymentMethods = [
-  { id: 'PayPal', title: 'PayPal' },
-  { id: 'transfer', title: 'Bank Transfer' },
-  { id: 'creditCard', title: 'Credit Card' }
-]
 
 const shippingMethods = [
   { id: 'standard', title: 'Standard' },
@@ -39,7 +35,7 @@ export default function Example(props: propsType) {
       */}
       <div className="min-h-full flex items-right justify-left py-12 px-16 sm:px-6 lg:px-16">
         <div className="max-w-md w-full space-y-8">
-          <form className="mt-8 space-y-6" onSubmit={props.submitHandler} >
+          <form className="mt-8 space-y-6" onSubmit={props.submitHandler} ref={props.ref}>
             <label className="text-base font-medium text-gray-900">Shipping Details</label>
             <p className="text-sm leading-5 text-gray-500">Where do you prefer to receiv your order?</p>
             <div className="rounded-md shadow-sm -space-y-px">
@@ -154,30 +150,6 @@ export default function Example(props: propsType) {
             </div>
 
             <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label className="text-base font-medium text-gray-900">Payment method</label>
-                <p className="text-sm leading-5 text-gray-500">How do you prefer to pay?</p>
-                <fieldset className="mt-4 pb-8">
-                  <legend className="sr-only">Payment method</legend>
-                  <div className="space-y-4">
-                    {paymentMethods.map((paymentMethod) => (
-                      <div key={paymentMethod.id} className="flex items-center">
-                        <input
-                          id={paymentMethod.id}
-                          name="payment-method"
-                          type="radio"
-                          onChange={(e) => props.setPayment(e.target.id)}
-                          defaultChecked={paymentMethod.id === 'PayPal'}
-                          className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-                        />
-                        <label htmlFor={paymentMethod.id} className="ml-3 block text-sm font-medium text-gray-700">
-                          {paymentMethod.title}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </fieldset>
-              </div>
 
               <div>
                 <label className="text-base font-medium text-gray-900 py-8">Shipping Method</label>
@@ -207,13 +179,25 @@ export default function Example(props: propsType) {
 
             <div className="flex items-center justify-between">
             </div>
+            <div className='border-2 border-blue-500 border-spacing-2 border-dotted'>
+              <div className='m-3'>
 
+              цена товара: {props.totalPrice.toFixed()}<br/>
+              цена доставки: {props.shippingPrice.toFixed(2)}<br/>
+              налог: {((props.totalPrice+props.shippingPrice)*props.tax/100).toFixed(2)}<br/>
+              <h3 className='font-bold'>итого: {((props.totalPrice+props.shippingPrice)*
+                props.tax/100+props.shippingPrice+
+                props.totalPrice).toFixed(2)}</h3>
+              </div>
+            </div>
             <div>
               <button
                 type="submit"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Update user profile
+                перейти к оплате {((props.totalPrice+props.shippingPrice)*
+                props.tax/100+props.shippingPrice+
+                props.totalPrice).toFixed(2)}
               </button>
             </div>
           </form>

@@ -1,26 +1,52 @@
-
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 import errorMessage from '../../components/errorMessage'
 import getStore, {
   checkLoginStatus,
   setUserOrder,
   selectError,
+  selectOrderDetail,
   selectMakeOrder,
-  AppDispatch
+  getCartProductsDetail,
+  setCart,
+  selectCartTotalPrice,
+  AppDispatch,
 } from '../../store'
-
+import { cartItem } from '../../types/storeTypes'
 import OrderScreen from '../../screens/orderScreen'
-type SubmitHandlerType = (e: React.FormEvent<HTMLFormElement>) => void;
 
 function ProfileContainer() {
-  const dispatch: AppDispatch = useDispatch()
-
-  const [show, setShow] = useState<boolean>(false)
   const loginError = useSelector(selectError)
   const order = useSelector(selectMakeOrder)
+  const order_id = useSelector(selectOrderDetail)
+  const cartTotalPrice = useSelector(selectCartTotalPrice)
+  const tax = 25
+  const dispatch: AppDispatch = useDispatch()
+  const router = useRouter()
+
+  useEffect(() => {
+    // Perform localStorage action
+    const cartStorage = localStorage.getItem('cartItemsList')
+    const cartStorageString: cartItem[] = cartStorage ? JSON.parse(cartStorage) : []
+    const setCartDetails = async (cartStorage: cartItem[]) => await dispatch(getCartProductsDetail(cartStorage))
+    const setInitialCart = () => dispatch(setCart(cartStorage))
+    setInitialCart()
+    setCartDetails(cartStorageString)
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(checkLoginStatus())
+  }, [dispatch])
+  useEffect(()=>{
+    if (order_id._id > 0){
+    router.push(`/payment/${order_id._id}`)} else {
+    console.log('loading...')
+    }
+      }), [order_id]
+  // useState
+  const [show, setShow] = useState<boolean>(false)
   const [address, setAddress] = useState<string>('')
-  const [payment, setPayment] = useState<string>('PayPal')
   const [shippingOption, setShippingOption] = useState<string>('standard')
   const [city, setCity] = useState<string>('')
   const [country, setCountry] = useState<string>('')
@@ -28,18 +54,31 @@ function ProfileContainer() {
   const [phoneNumber, setPhoneNumber] = useState<number | null>(null)
   const [comment, setComment] = useState<string>('')
   const [name, setName] = useState<string>('')
+
+  const shippingPrice = useCallback(() => {
+    switch (shippingOption){
+      case 'dhl':
+        return 250
+      case 'dhlExpress':
+        return 500
+      default:
+        return 0
+      }
+  },[shippingOption])
+
+
+
   const submitHandler: SubmitHandlerType = (e) => {
     e.preventDefault()
-    dispatch(setUserOrder(name, address, city, country, postcode, phoneNumber, comment, payment, shippingOption))
-    /* router.push('/') */
+    dispatch(setUserOrder(name, address, city, country, postcode, phoneNumber, comment, 'PayPal', shippingOption))
   }
-  useEffect(() => {
-    dispatch(checkLoginStatus())
-  }, [dispatch])
 
   useEffect(() => {
     loginError ? setShow(true) : console.log('')
   }, [loginError])
+  
+
+
   return (
     <>
       <OrderScreen
@@ -51,9 +90,12 @@ function ProfileContainer() {
         setPostcode={setPostcode}
         setPhoneNumber={setPhoneNumber}
         setComment={setComment}
-        setPayment={setPayment}
         setShippingOption={setShippingOption}
-        submitHandler={submitHandler} />
+        submitHandler={submitHandler}
+        shippingPrice={shippingPrice()}
+        totalPrice={cartTotalPrice}
+        tax={tax}
+        />
       {errorMessage('пользователь с таким адресом электронной почты уже зарегестрирован', show, setShow)}
     </>
   )

@@ -795,12 +795,23 @@ export const setUserOrder =
           }
         }
         dispatch(setOrder(orderItem))
+        const shippingPriceSw = () => {
+          switch(orderItem.shippingOption){
+            case 'dhl':
+              return 250
+            case 'dhlExpress':
+              return 500
+            default:
+              return 0            
+        }
+      }
         const { data } = await axios.post(
           `https://${host}/api/orders/add/`,
           {
             paymentMethod: orderItem.payment,
+            shippingMethod: orderItem.shippingOption,
             itemsPrice: 200,
-            shippingPrice: 20,
+            shippingPrice: shippingPriceSw(),
             taxPrice: 0.21,
             totalPrice: 9999,
             orderItems: cartItemsList,
@@ -808,13 +819,14 @@ export const setUserOrder =
               address: orderItem.address,
               city: orderItem.city,
               postalcode: orderItem.postcode,
+              phone: orderItem.phoneNumber,
+              comment: orderItem.comment,
               country: orderItem.country,
-              shippingPrice: 0.25
             }
           },
           config
         )
-        localStorage.setItem('responseOrder', JSON.stringify(data))
+        dispatch(getOrderItemDetail(data._id))
         localStorage.removeItem('cartItemsList')
         dispatch(setCart(''))
       } catch (error) {
@@ -822,6 +834,75 @@ export const setUserOrder =
       }
     }
 
+export const setIsPaid =
+  (orderId: number) =>
+    async (dispatch: AppDispatch) => {
+      const user = JSON.parse(localStorage.getItem('user'))
+      try {
+        const config = {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+        const { data } = await axios.put(
+          `https://${host}/api/orders/${orderId}/pay/`,
+          '',
+          config
+        )
+        dispatch(getOrderItemDetail(data._id))
+      } catch (error) {
+    
+      console.log(error)
+    }
+
+    }
+export const setIsDelivered =
+  (orderId: number) =>
+    async (dispatch: AppDispatch) => {
+      const user = JSON.parse(localStorage.getItem('user'))
+      try {
+        const config = {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+        const { data } = await axios.put(
+          `https://${host}/api/orders/${orderId}/delivered/`,
+          '',
+          config
+        )
+        dispatch(getOrderItemDetail(data._id))
+      } catch (error) {
+    
+      console.log(error)
+    }
+
+    }
+export const setTracking =
+  (orderId: number, trackingNumber: string) =>
+    async (dispatch: AppDispatch) => {
+      const user = JSON.parse(localStorage.getItem('user'))
+      try {
+        const config = {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+        const { data } = await axios.put(
+          `https://${host}/api/orders/${orderId}/tracking/`,
+        {'trackingNumber': trackingNumber},
+          config
+        )
+        dispatch(getOrderItemDetail(data._id))
+      } catch (error) {
+    
+      console.log(error)
+    }
+
+    }
 /* **********************************  END SET USER ORDER  ************************ */
 
 

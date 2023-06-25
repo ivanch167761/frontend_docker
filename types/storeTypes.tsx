@@ -195,7 +195,8 @@ export type shippingAddressType =
     city: string;
     postalCode: string;
     country: string;
-    shippingPrice: string;
+    phoneNumber: string,
+    comment: string,
     order: number;
   }
   | boolean;
@@ -222,9 +223,11 @@ export interface orderByIdDetail {
     isAdmin: boolean;
   };
   paymentMethod: string;
+  shippingMethod: string;
   taxPrice: string;
   shippingPrice: string;
   totalPrice: string;
+  trackingNumber: string;
   isPaid: boolean;
   paidAt: null;
   isDelivered: boolean;
@@ -254,10 +257,12 @@ export const initialOrderByIdDetail: orderByIdDetail = {
     isAdmin: false
   },
   paymentMethod: '',
+  shippingMethod: '',
   taxPrice: '',
   shippingPrice: '',
   totalPrice: '',
   isPaid: false,
+  trackingNumber: '',
   paidAt: null,
   isDelivered: false,
   deliveredAt: null,

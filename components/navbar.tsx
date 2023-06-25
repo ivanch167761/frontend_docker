@@ -113,7 +113,7 @@ export default function Example () {
                       <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">Open user menu</span>
 
-                    <UserIcon className="h-6 w-6" aria-hidden="true" />
+                    <UserIcon className="h-6 w-6 bg-red-700" aria-hidden="true" />
                       </Menu.Button>
                     </div>
                     <Transition

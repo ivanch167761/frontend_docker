@@ -14,7 +14,7 @@ function OrderDetailContainer() {
   useEffect(() => {
     dispatch(checkLoginStatus())
     dispatch(getOrderItemDetail(orderDetail._id))
-  })
+  },  [dispatch, orderDetail._id])
   return (<OrderDetailScreen detail={orderDetail as orderByIdDetail} />)
 }
 

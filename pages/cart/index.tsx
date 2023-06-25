@@ -33,7 +33,7 @@ function CartContainer() {
   const cartTotalPrice = useSelector(selectCartTotalPrice)
 
   return (
-    <CartScreen cartData={cartDataDetails} cartPrice={cartTotalPrice} setChangeCart={setChangeCart} />
+    <CartScreen cartData={cartDataDetails} cartPrice={cartTotalPrice.toFixed(2)} setChangeCart={setChangeCart} />
   )
 }
 

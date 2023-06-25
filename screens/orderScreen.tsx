@@ -10,18 +10,19 @@ type propsType = {
   setPhoneNumber: React.Dispatch<React.SetStateAction<number | null>>
   setComment: React.Dispatch<React.SetStateAction<string>>
   setShippingOption: React.Dispatch<React.SetStateAction<string>>
-  setPayment: React.Dispatch<React.SetStateAction<string>>
   submitHandler: (e: React.FormEvent<HTMLFormElement>) => void
-  userOrder: makeOrderItem
+  userOrder: makeOrderItem,
+  totalPrice: number,
+  tax:number,
+  shippingPrice: number
 }
 
 function OrderScreen(props: propsType) {
   console.log('in make order')
-  console.log(props.userOrder)
   return (
     <>
       {
-        <Example setName={props.setName} setAddress={props.setAddress} setCity={props.setCity} setCountry={props.setCountry} setPostcode={props.setPostcode} setPhoneNumber={props.setPhoneNumber} setComment={props.setComment} setPayment={props.setPayment} setShippingOption={props.setShippingOption} submitHandler={props.submitHandler} userOrder={props.userOrder} />
+        <Example setName={props.setName} setAddress={props.setAddress} setCity={props.setCity} setCountry={props.setCountry} setPostcode={props.setPostcode} setPhoneNumber={props.setPhoneNumber} setComment={props.setComment} setPayment={props.setPayment} setShippingOption={props.setShippingOption} submitHandler={props.submitHandler} userOrder={props.userOrder} tax={props.tax} shippingPrice={props.shippingPrice} totalPrice={props.totalPrice} ref={props.ref}/>
       }
     </>
   )

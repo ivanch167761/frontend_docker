@@ -114,7 +114,6 @@ function MyForm(props: MyFormProps) {
                 </dl>
               </div>
             </div>
-            <Script />
             {/*{MyForm({children:children, allow:"payment", name:"TinkoffPayForm", onSubmit:handleSubmit})}*/}
           </div>
         ))

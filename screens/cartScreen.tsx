@@ -20,7 +20,7 @@ function CartScreen (props: propsType) {
         </div>
 
                         <Example cartData={props.cartData} setChangeCart={props.setChangeCart} />
-                        <div>Total price: {props.cartPrice}</div>
+                        <div className='bg-gray-100 my-4 text-3xl text-green-800'>Total price: {props.cartPrice}</div>
             <Link href='/order' className='py-20'>
               <button
                 type="submit"
