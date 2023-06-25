@@ -5,20 +5,20 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.digitaloceanspaces.com'
+        hostname: '**.digitaloceanspaces.com',
       },
       {
         protocol: 'https',
-        hostname: 'tailwindui.com'
+        hostname: 'tailwindui.com',
       },
       {
         protocol: 'https',
-        hostname: 'cdn-icons-png.flaticon.com'
-      }
-    ]
+        hostname: 'cdn-icons-png.flaticon.com',
+      },
+    ],
   },
   swcMinify: true,
-  output: 'standalone'
+  output: 'standalone',
 }
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 module.exports = nextConfig
