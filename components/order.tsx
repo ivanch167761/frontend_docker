@@ -35,7 +35,7 @@ export default function Example(props: propsType) {
       */}
       <div className="min-h-full flex items-right justify-left py-12 px-16 sm:px-6 lg:px-16">
         <div className="max-w-md w-full space-y-8">
-          <form className="mt-8 space-y-6" onSubmit={props.submitHandler} ref={props.ref}>
+          <form className="mt-8 space-y-6" onSubmit={props.submitHandler} >
             <label className="text-base font-medium text-gray-900">Shipping Details</label>
             <p className="text-sm leading-5 text-gray-500">Where do you prefer to receiv your order?</p>
             <div className="rounded-md shadow-sm -space-y-px">
