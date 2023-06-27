@@ -1,4 +1,6 @@
 import React from 'react'
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Product } from '../../types/storeTypes'
@@ -12,6 +14,8 @@ type propsType = {
   handleChangeDescription: React.Dispatch<React.SetStateAction<string>>,
   handleChangeName: React.Dispatch<React.SetStateAction<string>>,
   handleImage: React.ChangeEventHandler<HTMLInputElement>,
+  handleSecondImage: React.ChangeEventHandler<HTMLInputElement>,
+  handleThirdImage: React.ChangeEventHandler<HTMLInputElement>,
   handleChangeCategory: React.Dispatch<React.SetStateAction<string>>,
   submitChanges: (e: React.FormEvent<HTMLFormElement>) => void,
 }
@@ -51,18 +55,25 @@ export const EditProduct = (props: propsType) => {
             type='file'
             onChange={props.handleImage}
           />
+          <input
+            className='text-base leading-normal text-gray-600 dark:text-white mt-2'
+            type='file'
+            onChange={props.handleSecondImage}
+          />
+          <input
+            className='text-base leading-normal text-gray-600 dark:text-white mt-2'
+            type='file'
+            onChange={props.handleThirdImage}
+          />
           <form className="mt-8 space-y-6" onSubmit={props.submitChanges} >
             <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
               <div className='lg:w-1/3  bg-gray-50 '>
-                <Image
-                  src={props.productBeforeEdit.image}
-                  alt={props.productBeforeEdit.name}
-                  priority
-                  width='100%'
-                  height='100%'
-                  layout='responsive'
-                  objectFit='contain'
-                />
+
+//
+//
+//
+//
+//
 
               </div>
               <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>

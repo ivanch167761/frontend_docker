@@ -10,7 +10,9 @@ import getStore, {
   uploadImage,
   deleteProduct,
   getCategoryList,
-  selectCategoryList
+  selectCategoryList,
+  uploadSecondImage,
+  uploadThirdImage
 } from '../../../../store'
 import { CategoryListState, ProductDetailtState } from '../../../../types/storeTypes'
 type submitCangesType = (e: React.FormEvent<HTMLFormElement>) => void;
@@ -31,6 +33,14 @@ function DetailContainer() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile: File = e.target.files[0];
     dispatch(uploadImage({ product: productData.product, imageFile: imageFile }));
+  }
+  const handleSecondImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imageFile: File = e.target.files[0];
+    dispatch(uploadSecondImage({ product: productData.product, imageFile: imageFile }));
+  }
+  const handleThirdImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const imageFile: File = e.target.files[0];
+    dispatch(uploadThirdImage({ product: productData.product, imageFile: imageFile }));
   }
   const categoryNames = categoryListData.categoryList.map((category) => category.category)
   console.log(categoryNames)
@@ -70,6 +80,8 @@ function DetailContainer() {
       handleChangeDescription={setDescription}
       handleChangeName={setName}
       handleImage={handleImageUpload}
+      handleSecondImage={handleSecondImageUpload}
+      handleThirdImage={handleThirdImageUpload}
       delProduct={delProduct}
       submitChanges={submitCanges}
     />

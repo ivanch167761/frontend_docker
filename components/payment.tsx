@@ -8,9 +8,9 @@ type propsType = {
 
 
 const paymentMethods = [
+  { id: 'creditCard', title: 'Credit Card' },
   { id: 'PayPal', title: 'PayPal' },
   { id: 'transfer', title: 'Bank Transfer' },
-  { id: 'creditCard', title: 'Credit Card' }
 ]
 
 export default function Example(props: propsType) {
@@ -30,7 +30,7 @@ export default function Example(props: propsType) {
                           name="payment-method"
                           type="radio"
                           onChange={(e) => props.setPayment(e.target.id)}
-                          defaultChecked={paymentMethod.id === 'PayPal'}
+                          defaultChecked={paymentMethod.id === 'creditCard'}
                           className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                         />
                         <label htmlFor={paymentMethod.id} className="ml-3 block text-sm font-medium text-gray-700">

@@ -1,11 +1,32 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-// import Link from 'next/link'
 import Image from 'next/image'
+// import Link from 'next/link'
 import { useRouter } from 'next/router'
+import React, { useState, useRef } from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import { FiMaximize, FiMinimize } from 'react-icons/fi';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-export const Product = ({ productImg, productImgAlt, productTitle, productText, productCountInStok, counter, addToCartHandler, qtyUp, qtyDown }) => {
+
+export const Product = ({ productImg, productImgSec, productImgThird, productImgAlt, productTitle, productText, productCountInStok, counter, addToCartHandler, qtyUp, qtyDown }) => {
   const router = useRouter()
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const productImgs = [productImg, productImgSec, productImgThird]
+  const carouselRef = useRef(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const toggleFullScreen = () => {
+    setIsFullScreen((prevFullScreen) => !prevFullScreen);
+  };
+
+  const toggleAutoPlay = () => {
+    setIsAutoPlaying((prevAutoPlaying) => !prevAutoPlaying);
+  };
+
+  const handleImageClick = () => {
+    const nextIndex = (selectedIndex + 1) % productImgs.length;
+    setSelectedIndex(nextIndex);
+  };
   return (
     <>
       <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
@@ -35,17 +56,37 @@ export const Product = ({ productImg, productImgAlt, productTitle, productText, 
             </button>
           </div>
           <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
-            <div className='lg:w-1/3  bg-gray-50 '>
-              <Image
-                src={productImg}
-                alt={productImg}
-                priority
-                width='100%'
-                height='100%'
-                layout='responsive'
-                objectFit='contain'
-              />
-            </div>
+            <div className='lg:w-1/3  bg-gray-50 select-none'>
+              <Carousel
+              ref={carouselRef}
+              showStatus={false}
+              showThumbs={false}
+              selectedItem={selectedIndex}
+              showIndicators={true}
+              showArrows={false}
+              onChange={() => {}}
+              autoPlay={isAutoPlaying}
+              swipeable
+              emulateTouch
+              onClickItem={handleImageClick}
+              interval={2000}
+              infiniteLoop
+            >
+              {productImgs.map((img, index) => (
+                <div key={index}>
+                <Image
+                  src={img}
+                  alt={'sss'}
+                  priority
+                  width='100%'
+                  height='100%'
+                  layout='responsive'
+                  objectFit='contain'
+                />
+                </div>
+              ))}
+            </Carousel>
+              </div>
             <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
               <h1 className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'>
                 {productTitle}
@@ -113,6 +154,8 @@ export const Product = ({ productImg, productImgAlt, productTitle, productText, 
 
 Product.propTypes = {
   productImg: PropTypes.string,
+  productImgSec: PropTypes.string,
+  productImgThird: PropTypes.string,
   productImgAlt: PropTypes.string,
   productTitle: PropTypes.string,
   productText: PropTypes.string,

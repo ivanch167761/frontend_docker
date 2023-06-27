@@ -4,6 +4,8 @@ export interface Product {
   user: string;
   name: string;
   image: string;
+  imageSecond: string;
+  imageThird: string;
   brand: string;
   description: string;
   price: number;
@@ -178,7 +180,7 @@ export const initialMakeOrderState: makeOrder = {
     postcode: null,
     phoneNumber: null,
     comment: '',
-    payment: 'PayPal',
+    payment: 'creditCard',
     shippingOption: 'standard'
   },
   error: null,

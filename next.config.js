@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    domains: ['external-content.duckduckgo.com'],
     remotePatterns: [
       {
         protocol: 'https',

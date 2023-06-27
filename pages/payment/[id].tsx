@@ -33,7 +33,7 @@ function PayPage(){
   const [showTransfer, setShowTransfer] = useState(false)
   const [showCard, setShowCard] = useState(false)
   const [payButton, setButton] = useState(<></>)
-  const [payment, setPayment] = useState<string>('PayPal')
+  const [payment, setPayment] = useState<string>('creditCard')
   const paypalMessage = 'В связи с нынешними обстоятельствами PayPal приостанавливает работу своего сервиса на территории Российской Федерации.'
   const [transferMessage, setTransferMessage] = useState<ReactNode>(<></>)
   useEffect(() => {

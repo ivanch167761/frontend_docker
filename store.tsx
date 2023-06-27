@@ -183,6 +183,48 @@ export const uploadImage = createAsyncThunk(
   }
 );
 
+export const uploadSecondImage = createAsyncThunk(
+  'image/uploadSecondImage',
+  async ({ product, imageFile }: UploadImagePayload, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append('product_id', String(product._id));
+      formData.append('imageSecond', imageFile);
+
+      const response = await axios.post<string>(`https://${host}/api/products/uploadSecond/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data ?? 'Failed to upload image');
+    }
+  }
+);
+
+export const uploadThirdImage = createAsyncThunk(
+  'image/uploadThirdImage',
+  async ({ product, imageFile }: UploadImagePayload, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append('product_id', String(product._id));
+      formData.append('imageThird', imageFile);
+
+      const response = await axios.post<string>(`https://${host}/api/products/uploadThird/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data ?? 'Failed to upload image');
+    }
+  }
+);
+
 export const uploadCategoryImage = createAsyncThunk(
   'image/uploadCategoryImage',
   async ({ category, imageFile }: UploadCategoryImagePayload, thunkAPI) => {
@@ -914,6 +956,42 @@ const imageSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(uploadSecondImage.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = '';
+      })
+      .addCase(uploadSecondImage.fulfilled, (state, action: PayloadAction<string>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.data = action.payload;
+      })
+      .addCase(uploadSecondImage.rejected, (state, action: PayloadAction<string | undefined, string, any, any>) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.errorMessage = action.payload ?? 'Failed to upload image';
+      })
+      .addCase(uploadThirdImage.pending, (state) => {
+        state.isLoading = true;
+        state.isSuccess = false;
+        state.isError = false;
+        state.errorMessage = '';
+      })
+      .addCase(uploadThirdImage.fulfilled, (state, action: PayloadAction<string>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.data = action.payload;
+      })
+      .addCase(uploadThirdImage.rejected, (state, action: PayloadAction<string | undefined, string, any, any>) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.errorMessage = action.payload ?? 'Failed to upload image';
+      })
       .addCase(uploadImage.pending, (state) => {
         state.isLoading = true;
         state.isSuccess = false;

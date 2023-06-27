@@ -23,6 +23,8 @@ function ProductScreen(props: propsType) {
             <div>
               <Product
                 productImg={productDetail.product.image}
+                productImgSec={productDetail.product.imageSecond}
+                productImgThird={productDetail.product.imageThird}
                 productText={productDetail.product.description}
                 productTitle={productDetail.product.name}
                 productCountInStok={productDetail.product.countInStock}
