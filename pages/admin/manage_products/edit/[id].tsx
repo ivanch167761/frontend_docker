@@ -51,6 +51,8 @@ function DetailContainer() {
       user: productData.product.user,
       name: name_,
       image: productData.product.image,
+      imageSecond: productData.product.imageSecond,
+      imageThird: productData.product.imageThird,
       brand: productData.product.brand,
       description: description_,
       price: price,
