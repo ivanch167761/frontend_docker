@@ -29,7 +29,7 @@ import axios from "axios";
 export const getProductList = createAsyncThunk(
   'products/getProducts',
   async () => {
-    const host = 'https://backend.deepintersection.com'
+    const host = 'https://backend.tkaniles.com'
     const response = await axios.get(`${host}/api/products`)
     return await response.data
   }
@@ -38,7 +38,7 @@ export const getProductList = createAsyncThunk(
 export const getProductDetail = createAsyncThunk(
   'products/getDetail',
   async (id: number) => {
-    const host = 'https://backend.deepintersection.com'
+    const host = 'https://backend.tkaniles.com'
     const response = await axios.get(`${host}/api/products/${id}`)
     return await response.data
   }
@@ -150,7 +150,7 @@ export const productListSlice = createSlice({
  ***/
 
 export const getCartProductsDetail = createAsyncThunk('urlData/get', async (cartItemsList:cartItem[]) => {
-  const host = 'https://backend.deepintersection.com'
+  const host = 'https://backend.tkaniles.com'
   const requests = cartItemsList.map(async (cartItem) =>
     await axios.get(`${host}/api/products/${cartItem.product_ID}`))
   const getData = () => Promise.all(requests).then(responseArray => responseArray.map(response => response.data))
@@ -353,7 +353,7 @@ export const login =
 
 export const login = (email: string, password: string) => async (dispatch: any) => {
   dispatch(setLoading())
-  const host = 'https://backend.deepintersection.com'
+  const host = 'https://backend.tkaniles.com'
   try {
     const config = {
       headers: {
@@ -384,7 +384,7 @@ export const checkLoginStatus = () => (dispatch: any) => {
 
 export const register = (name: string, email: string, password: string) => async (dispatch: any) => {
   dispatch(setLoading())
-  const host = 'https://backend.deepintersection.com'
+  const host = 'https://backend.tkaniles.com'
   try {
     const config = {
       headers: {
@@ -409,7 +409,7 @@ export const updateUserProfile = (name: string, email: string, password: string)
   email ? user.email = email : console.log("email wasn't change")
   password ? user.password = password : console.log("password wasn't change")
   dispatch(setLoading())
-  const host = 'https://backend.deepintersection.com'
+  const host = 'https://backend.tkaniles.com'
   try {
     const config = {
       headers: {
