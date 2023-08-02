@@ -31,7 +31,7 @@ import {
 import axios from 'axios'
 
 // const host = 'localhost:8000'
-const host = 'backend.deepintersection.com'
+const host = 'backend.tkaniles.com'
 let store = null
 export type AppDispatch = typeof store.dispatch
 /** ********************* GET ACTIONS **********************/
