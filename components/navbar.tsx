@@ -165,7 +165,7 @@ export default function Example () {
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                 >
-                  aaaa{item.name}
+                  {item.name}
                 </Disclosure.Button>
 
                   </Link>
@@ -208,7 +208,7 @@ export default function Example () {
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                 >
-                  {'LOGIN_D'}
+                  {'Войти'}
                 </Disclosure.Button>
                 </Link>
                 }
