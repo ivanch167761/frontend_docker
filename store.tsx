@@ -327,7 +327,7 @@ export const categoryListSlice = createSlice({
       })
       .addCase(getCategoryList.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })
