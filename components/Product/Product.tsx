@@ -1,34 +1,77 @@
-import PropTypes from 'prop-types'
 import Image from 'next/image'
 // import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { Product } from '../../types/storeTypes'
 import React, { useState, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
+type propsType = {
+  product: Product,
+  qtyUp:  any,
+  qtyDown: any,
+  counter: number,
+  addToCartHandler: any
 
-export const Product = ({ productImg, productImgSec, productImgThird, productImgAlt, productTitle, productText, productCountInStok, counter, addToCartHandler, qtyUp, qtyDown }) => {
+}
+
+export const ProductComponent = (props: propsType) => {
   const router = useRouter()
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
-  const productImgs = [productImg, productImgSec, productImgThird]
+  const productImgs = [props.product.image, props.product.imageSecond, props.product.imageThird]
   const carouselRef = useRef(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const toggleFullScreen = () => {
     setIsFullScreen((prevFullScreen) => !prevFullScreen);
   };
 
-  const toggleAutoPlay = () => {
-    setIsAutoPlaying((prevAutoPlaying) => !prevAutoPlaying);
+  const handleSwipeStart = (event: React.TouchEvent) => {
+    const touch = event.touches[0] || event.changedTouches[0];
+    carouselRef.current?.setStartPosition(touch.clientX, touch.clientY);
   };
+
+  const handleSwipeMove = (event: React.TouchEvent) => {
+    if (carouselRef.current?.state.startX !== null && carouselRef.current?.state.startY !== null) {
+      const touch = event.touches[0] || event.changedTouches[0];
+      const deltaX = touch.clientX - carouselRef.current?.state.startX;
+      const deltaY = touch.clientY - carouselRef.current?.state.startY;
+
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        // If the swipe is more vertical, allow the page to scroll
+        carouselRef.current.setStartPosition(null, null);
+      }
+    }
+  };
+
+  const handleSwipeEnd = () => {
+    if (!isAutoPlaying) {
+      setIsAutoPlaying(true);
+    }
+  };
+
+
+
+
+
+
+
+
 
   const handleImageClick = () => {
     const nextIndex = (selectedIndex + 1) % productImgs.length;
     setSelectedIndex(nextIndex);
   };
+
+
+
+
+
+
   return (
     <>
+
       <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
         <div
           id='viewerBox'
@@ -56,6 +99,12 @@ export const Product = ({ productImg, productImgSec, productImgThird, productImg
             </button>
           </div>
           <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
+       <div
+        onTouchStart={handleSwipeStart}
+        onTouchMove={handleSwipeMove}
+        onTouchEnd={handleSwipeEnd}
+        className="2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4"
+       >
             <div className='lg:w-1/3  bg-gray-50 select-none'>
               <Carousel
               ref={carouselRef}
@@ -76,7 +125,7 @@ export const Product = ({ productImg, productImgSec, productImgThird, productImg
                 <div key={index}>
                 <Image
                   src={img}
-                  alt={'sss'}
+                  alt={'aaa'}
                   priority
                   width='100%'
                   height='100%'
@@ -86,27 +135,40 @@ export const Product = ({ productImg, productImgSec, productImgThird, productImg
                 </div>
               ))}
             </Carousel>
+								{productImgs.length > 1 && (
+								  <div className="flex justify-center mt-4">
+									<button
+									  className="bg-white text-gray-500 rounded-full p-2 hover:bg-gray-200"
+									  onClick={toggleFullScreen}
+									>
+									  {isFullScreen ? <FiMinimize /> : <FiMaximize />}
+									</button>
+								  </div>
+								)}
+
+
+              </div>
               </div>
             <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
               <h1 className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'>
-                {productTitle}
+                {props.product.name}
               </h1>
               <p className='text-base leading-normal text-gray-600 dark:text-white mt-2'>
-                {productText}
+                {props.product.description}
               </p>
               <div className='flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 mt-20 md:mt-15'>
                 <div className='lg:w-1/6 py-4'>
                   <button
-                    onClick={qtyUp}
+                    onClick={props.qtyUp}
                     className=' bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-l cursor-pointer outline-none'
                   >
                     +
                   </button>
                   <span className='outline-none text-center bg-gray-300 inline-block w-10 font-semibold hover:text-black items-center text-gray-700'>
-                    {counter}
+                    {props.counter}
                   </span>
                   <button
-                    onClick={qtyDown}
+                    onClick={props.qtyDown}
                     className='bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-r cursor-pointer'
                   >
                     -
@@ -114,14 +176,14 @@ export const Product = ({ productImg, productImgSec, productImgThird, productImg
                 </div>
                 {/* <Link href={'/cart'} className='w-full'> */}
                 <button
-                  onClick={addToCartHandler}
+                  onClick={props.addToCartHandler}
                   className={
-                    productCountInStok === 0
+                    props.product.countInStock === 0
                       ? 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-100 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
                       : 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
                   }
                 >
-                  {productCountInStok > 0 ? 'добавить в корзину' : 'нет в наличии'}
+                  {props.product.countInStock > 0 ? 'добавить в корзину' : 'нет в наличии'}
                 </button>
                 {/* </Link> */}
 
@@ -152,17 +214,4 @@ export const Product = ({ productImg, productImgSec, productImgThird, productImg
   )
 }
 
-Product.propTypes = {
-  productImg: PropTypes.string,
-  productImgSec: PropTypes.string,
-  productImgThird: PropTypes.string,
-  productImgAlt: PropTypes.string,
-  productTitle: PropTypes.string,
-  productText: PropTypes.string,
-  productCountInStok: PropTypes.number,
-  counter: PropTypes.number,
-  addToCartHandler: PropTypes.func,
-  qtyUp: PropTypes.func,
-  qtyDown: PropTypes.func
-}
-export default Product
+export default ProductComponent

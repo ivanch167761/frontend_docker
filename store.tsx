@@ -271,7 +271,7 @@ export const productListSlice = createSlice({
       })
       .addCase(getProductList.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })
@@ -299,7 +299,7 @@ export const categoryProductListSlice = createSlice({
       })
       .addCase(getCategoryProductList.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })
@@ -394,7 +394,7 @@ export const addToCartSlice = createSlice({
       })
       .addCase(getCartProductsDetail.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })
@@ -420,7 +420,7 @@ export const orderDetailSlice = createSlice({
       })
       .addCase(getOrderItemDetail.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })
@@ -431,7 +431,7 @@ export const categoryDetailSlice = createSlice({
   reducers: {
     setCategory: (state, action: PayloadAction<Category>) => {
       state.loading = false
-      state.error = null
+      state.error = ''
       state.category = action.payload
     },
   },
@@ -446,7 +446,7 @@ export const categoryDetailSlice = createSlice({
       })
       .addCase(getCategoryDetail.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })
@@ -472,7 +472,7 @@ export const userOrdersSlice = createSlice({
       })
       .addCase(getUserOrders.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })
@@ -485,11 +485,11 @@ export const productDetailSlice = createSlice({
   reducers: {
     setLoadingProduct: (state) => {
       state.loading = true
-      state.error = null
+      state.error = ''
     },
     setErrorProduct: (state, action: PayloadAction<string>) => {
       state.loading = false
-      state.error = action.payload
+      state.error = ''
     },
     setProduct: (state, action: PayloadAction<Product>) => {
       state.loading = false
@@ -517,7 +517,7 @@ export const productDetailSlice = createSlice({
       })
       .addCase(getProductDetail.rejected, (state, { payload }) => {
         state.loading = false
-        state.error = payload
+        state.error = ''
       })
   }
 })

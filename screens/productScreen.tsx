@@ -1,5 +1,5 @@
 import React from 'react'
-import Product from '../components/Product/Product'
+import ProductComponent from '../components/Product/Product'
 import { ProductDetailtState } from '../types/storeTypes'
 
 type propsType = {
@@ -12,22 +12,16 @@ type propsType = {
 }
 
 function ProductScreen(props: propsType) {
-  const productDetail = props.productDetails
   return (
     <>
-      {productDetail.loading
+      {props.productDetails.loading
         ? (<h2> loading</h2>)
-        : productDetail.error
+        : props.productDetails.error
           ? (<h3>error</h3>)
           : (
             <div>
-              <Product
-                productImg={productDetail.product.image}
-                productImgSec={productDetail.product.imageSecond}
-                productImgThird={productDetail.product.imageThird}
-                productText={productDetail.product.description}
-                productTitle={productDetail.product.name}
-                productCountInStok={productDetail.product.countInStock}
+              <ProductComponent
+                product={props.productDetails.product}
                 counter={props.counter}
                 addToCartHandler={props.addToCart}
                 qtyDown={props.qtyDown}
