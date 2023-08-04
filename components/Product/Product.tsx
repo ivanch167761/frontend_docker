@@ -103,9 +103,8 @@ export const ProductComponent = (props: propsType) => {
         onTouchStart={handleSwipeStart}
         onTouchMove={handleSwipeMove}
         onTouchEnd={handleSwipeEnd}
-        className="2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4"
        >
-            <div className='lg:w-1/3  bg-gray-50 select-none'>
+            <div className='bg-gray-50 select-none'>
               <Carousel
               ref={carouselRef}
               showStatus={false}
@@ -135,18 +134,6 @@ export const ProductComponent = (props: propsType) => {
                 </div>
               ))}
             </Carousel>
-								{productImgs.length > 1 && (
-								  <div className="flex justify-center mt-4">
-									<button
-									  className="bg-white text-gray-500 rounded-full p-2 hover:bg-gray-200"
-									  onClick={toggleFullScreen}
-									>
-									  {isFullScreen ? <FiMinimize /> : <FiMaximize />}
-									</button>
-								  </div>
-								)}
-
-
               </div>
               </div>
             <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
