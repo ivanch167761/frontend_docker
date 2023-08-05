@@ -4,6 +4,7 @@ import { Product } from '../../types/storeTypes'
 import React, { useState, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { FiMaximize, FiMinimize } from 'react-icons/fi';
 
 type propsType = {
   product: Product,
@@ -23,10 +24,16 @@ export const ProductComponent = (props: propsType) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
 
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const handleImageClick = () => {
     const nextIndex = (selectedIndex + 1) % productImgs.length;
     setSelectedIndex(nextIndex);
   };
+
+  const toggleFullScreen = () => {
+    setIsFullScreen((prevFullScreen) => !prevFullScreen);
+  };
+
 
 
   const handleSwipeStart = (event: React.TouchEvent) => {
@@ -39,11 +46,9 @@ export const ProductComponent = (props: propsType) => {
       const touch = event.touches[0] || event.changedTouches[0];
       const deltaY = touch.clientY - startYRef.current;
 
-        console.log('sweep')
       if (Math.abs(deltaY) > 10) {
         // If the swipe is more vertical, prevent the carousel swipe
         event.stopPropagation();
-        console.log('no sweep')
       }
     }
   };
@@ -55,11 +60,13 @@ export const ProductComponent = (props: propsType) => {
     }
   };
 
-
-
-
   return (
     <>
+      <style jsx global>{`
+        .no-select {
+          user-select: none;
+        }
+      `}</style>
 
       <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
         <div
@@ -88,42 +95,52 @@ export const ProductComponent = (props: propsType) => {
             </button>
           </div>
           <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-stretch justify-center lg:space-x-8'>
-       <div
+       
+
+      <div
         onTouchStart={handleSwipeStart}
         onTouchMove={handleSwipeMove}
         onTouchEnd={handleSwipeEnd}
-        className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 bg-gray-50 select-none"
-       >
-              <Carousel
+        className="2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4"
+      >
+        <div className="lg:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900">
+          <div className="mt-3 md:mt-4 lg:mt-0">
+            <Carousel
               ref={carouselRef}
-              showStatus={false}
               showThumbs={false}
-              selectedItem={selectedIndex}
-              showIndicators={true}
+              showStatus={false}
               showArrows={false}
-              onChange={() => {}}
               autoPlay={isAutoPlaying}
+              interval={3000}
+              infiniteLoop
               swipeable
               emulateTouch
-              onClickItem={handleImageClick}
-              interval={2000}
-              infiniteLoop
+              className="no-select" // Apply the 'no-select' class
             >
               {productImgs.map((img, index) => (
                 <div key={index}>
-                <Image
-                  src={img}
-                  alt={'aaa'}
-                  priority
-                  width='100%'
-                  height='100%'
-                  layout='responsive'
-                  objectFit='contain'
-                />
+                  <img src={img} alt={"aaa"} />
                 </div>
               ))}
             </Carousel>
+            {productImgs.length > 1 && (
+              <div className="flex justify-center mt-4">
+                <button
+                  className="bg-white text-gray-500 rounded-full p-2 hover:bg-gray-200"
+                  onClick={toggleFullScreen}
+                >
+                  {isFullScreen ? <FiMinimize /> : <FiMaximize />}
+                </button>
               </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+
+
+
+
 
 
             <div className='w-full md:w-1/2 lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
