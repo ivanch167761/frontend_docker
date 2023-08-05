@@ -64,8 +64,17 @@ function PayPage(){
               </div>
               </div>
         </>)
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault(); window.pay(e.target)} 
+
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  if (typeof window.pay === 'function') {
+    window.pay(e.target);
+  } else {
+    console.error('Payment function not available on window object.');
+  }
+};
+
+
     setButton(
       <div>
           <p className='py-4'>Произвести оплату с помощью кредитной карты.</p>
