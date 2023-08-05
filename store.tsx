@@ -30,7 +30,7 @@ import {
 } from './types/storeTypes'
 import axios from 'axios'
 
-// const host = 'localhost:8000'
+//const host = 'localhost:8000'
 const host = 'backend.tkaniles.com'
 let store = null
 export type AppDispatch = typeof store.dispatch

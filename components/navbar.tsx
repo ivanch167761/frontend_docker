@@ -1,4 +1,4 @@
-/* This example requires Tailwind CSS v2.0+ */
+import CategoryListComp from '../components/categoryList'
 import React, { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import Image from 'next/image'
@@ -8,6 +8,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { selectUserDetail } from '../store'
 import { useSelector } from 'react-redux'
+
+
 
 const userNavigation = [
   { name: 'Настройки пользователя', href: '/profile' },
@@ -49,9 +51,14 @@ export default function Example () {
   )
   return (
     <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
+      {({ open, close }) => (
         <>
           {console.log(open)}
+          <div className="py-10 header-bg bg-cover bg-center h-32">
+            <div className="h-full bg-green-900 bg-opacity-0 flex items-center justify-center">
+              <h1 className="bg-indigo-400 p-10 bg-opacity-30 text-yellow-500 text-4xl font-bold">Ткани Лес</h1>
+            </div>
+          </div>
           <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-18">
             <div className="flex justify-between h-16">
               <div className="flex">
@@ -66,28 +73,6 @@ export default function Example () {
                       <MenuIcon className="block h-6 w-6" aria-hidden="true" />
                         )}
                   </Disclosure.Button>
-                </div>
-                <div className="flex-shrink-0 flex items-center">
-                  <Image
-                    className="block lg:hidden h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                    alt="Workflow"
-                    priority
-                    width='100%'
-                    height='100%'
-                    layout='responsive'
-                    objectFit='contain'
-                  />
-                  <Image
-                    className="hidden lg:block h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                    alt="Workflow"
-                    priority
-                    width='100%'
-                    height='100%'
-                    layout='responsive'
-                    objectFit='contain'
-                  />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                   {navigation.map((item) => (
@@ -151,8 +136,8 @@ export default function Example () {
               </div>
             </div>
           </div>
-
           <Disclosure.Panel className="md:hidden">
+          <div onClick={()=>close()}> 
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {navigation.map((item) => (
                 <Link href={item.href} key={item.name}>
@@ -161,7 +146,7 @@ export default function Example () {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    currentPage === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    currentPage === item.href ? 'bg-red-900 text-white' : 'text-gray-300 hover:bg-green-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                 >
@@ -171,32 +156,24 @@ export default function Example () {
                   </Link>
               ))}
             </div>
+            </div>
             <div className="pt-4 pb-3 border-t border-gray-700">
                 </div>
                   <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 {user
                   ? <div className="flex-shrink-0">
                   <Image
-                  className="h-10 w-10 rounded-full" 
+                  className="h-1 w-1 rounded-full" 
                   src={'https://cdn-icons-png.flaticon.com/512/219/219969.png'}
                   alt="" 
                   priority
-                  width='100%'
-                  height='100%'
-                  layout='responsive'
-                  objectFit='contain'
+                  width='50%'
+                  height='50%'
                   />
                     <div className="ml-3">
                   <div className="text-base font-medium text-white">{user.name}</div>
                   <div className="text-sm font-medium text-gray-400">{user.email}</div>
                 </div>
-                <button
-                  type="button"
-                  className="ml-auto flex-shrink-0 bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
               </div>
                   : <Link href='/login'>
                   <Disclosure.Button
@@ -208,7 +185,7 @@ export default function Example () {
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                 >
-                  {'Войти'}
+                  {'войти'}
                 </Disclosure.Button>
                 </Link>
                 }

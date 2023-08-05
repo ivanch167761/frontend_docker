@@ -10,7 +10,7 @@ type propsType = {
 export const CategoryListComp = (props: propsType) => {
   return (
     <>
-      <div className='w-full md:w-1/2 xl:w-1/4 px-4 '>
+      <div className='w-full '>
         <div className='bg-white rounded-lg overflow-hidden mb-10 border border-slate-500'>
           <Image
             src={props.category.image}

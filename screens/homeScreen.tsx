@@ -1,7 +1,5 @@
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import ProductList from '../components/productList'
-import { ProductListState } from '../types/storeTypes'
 import { Product, CategoryDetailtState } from '../types/storeTypes'
 import React from 'react'
 
@@ -15,7 +13,6 @@ type propsType = {
 
 
 function HomeScreen (props: propsType) {
-  const router = useRouter()
   const productList = props.productList
   return (
     <>
@@ -48,12 +45,6 @@ function HomeScreen (props: propsType) {
                 {props.categoryData.category.description}
               </p>
               <div className='pt-10'>
-                <button
-                  className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white dark:text-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
-                  onClick={() => router.back()}
-                >
-                  Go Back
-                </button>
               </div>
             </div>
           </div>

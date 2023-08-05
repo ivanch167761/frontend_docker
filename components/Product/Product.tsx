@@ -1,10 +1,8 @@
 import Image from 'next/image'
-// import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Product } from '../../types/storeTypes'
 import React, { useState, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import { FiMaximize, FiMinimize } from 'react-icons/fi';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 type propsType = {
@@ -18,45 +16,11 @@ type propsType = {
 
 export const ProductComponent = (props: propsType) => {
   const router = useRouter()
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const productImgs = [props.product.image, props.product.imageSecond, props.product.imageThird]
-  const carouselRef = useRef(null);
+  const carouselRef = useRef<Carousel>(null);
+  const startYRef = useRef<number>(0);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const toggleFullScreen = () => {
-    setIsFullScreen((prevFullScreen) => !prevFullScreen);
-  };
-
-  const handleSwipeStart = (event: React.TouchEvent) => {
-    const touch = event.touches[0] || event.changedTouches[0];
-    carouselRef.current?.setStartPosition(touch.clientX, touch.clientY);
-  };
-
-  const handleSwipeMove = (event: React.TouchEvent) => {
-    if (carouselRef.current?.state.startX !== null && carouselRef.current?.state.startY !== null) {
-      const touch = event.touches[0] || event.changedTouches[0];
-      const deltaX = touch.clientX - carouselRef.current?.state.startX;
-      const deltaY = touch.clientY - carouselRef.current?.state.startY;
-
-      if (Math.abs(deltaY) > Math.abs(deltaX)) {
-        // If the swipe is more vertical, allow the page to scroll
-        carouselRef.current.setStartPosition(null, null);
-      }
-    }
-  };
-
-  const handleSwipeEnd = () => {
-    if (!isAutoPlaying) {
-      setIsAutoPlaying(true);
-    }
-  };
-
-
-
-
-
-
-
 
 
   const handleImageClick = () => {
@@ -65,6 +29,29 @@ export const ProductComponent = (props: propsType) => {
   };
 
 
+  const handleSwipeStart = (event: React.TouchEvent) => {
+    const touch = event.touches[0] || event.changedTouches[0];
+    startYRef.current = touch.clientY;
+  };
+
+  const handleSwipeMove = (event: React.TouchEvent) => {
+    if (carouselRef.current && startYRef.current !== null) {
+      const touch = event.touches[0] || event.changedTouches[0];
+      const deltaY = touch.clientY - startYRef.current;
+
+      if (Math.abs(deltaY) > 10) {
+        // If the swipe is more vertical, prevent the carousel swipe
+        event.stopPropagation();
+      }
+    }
+  };
+
+  const handleSwipeEnd = () => {
+    startYRef.current = null;
+    if (!isAutoPlaying) {
+      setIsAutoPlaying(true);
+    }
+  };
 
 
 
@@ -98,13 +85,13 @@ export const ProductComponent = (props: propsType) => {
               </svg>
             </button>
           </div>
-          <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
+          <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-stretch justify-center lg:space-x-8'>
        <div
         onTouchStart={handleSwipeStart}
         onTouchMove={handleSwipeMove}
         onTouchEnd={handleSwipeEnd}
+        className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 bg-gray-50 select-none"
        >
-            <div className='bg-gray-50 select-none'>
               <Carousel
               ref={carouselRef}
               showStatus={false}
@@ -135,65 +122,59 @@ export const ProductComponent = (props: propsType) => {
               ))}
             </Carousel>
               </div>
-              </div>
-            <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
+
+
+            <div className='w-full md:w-1/2 lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
               <h1 className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'>
                 {props.product.name}
               </h1>
               <p className='text-base leading-normal text-gray-600 dark:text-white mt-2'>
                 {props.product.description}
               </p>
-              <div className='flex items-center flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 mt-20 md:mt-15'>
-                <div className='lg:w-1/6 py-4'>
-                  <button
-                    onClick={props.qtyUp}
-                    className=' bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-l cursor-pointer outline-none'
-                  >
-                    +
-                  </button>
-                  <span className='outline-none text-center bg-gray-300 inline-block w-10 font-semibold hover:text-black items-center text-gray-700'>
-                    {props.counter}
-                  </span>
-                  <button
-                    onClick={props.qtyDown}
-                    className='bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-10 rounded-r cursor-pointer'
-                  >
-                    -
-                  </button>
-                </div>
-                {/* <Link href={'/cart'} className='w-full'> */}
+              <div className='flex items-center justify-center mt-4'>
+                <button
+                  onClick={props.qtyDown}
+                  className='bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-10 w-10 rounded-l cursor-pointer outline-none'
+                >
+                  -
+                </button>
+                <span className='text-center pt-2 bg-gray-300 inline-block w-10 h-10 font-semibold text-gray-700'>
+                  {props.counter}
+                </span>
+                <button
+                  onClick={props.qtyUp}
+                  className='bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-10 w-10 rounded-r cursor-pointer'
+                >
+                  +
+                </button>
+              </div>
+              <div className='mt-4'>
                 <button
                   onClick={props.addToCartHandler}
                   className={
                     props.product.countInStock === 0
-                      ? 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-100 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
-                      : 'w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
+                      ? 'w-full border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-100 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
+                      : 'w-full border border-gray-800 text-base font-medium leading-none text-white uppercase py-4 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200'
                   }
                 >
                   {props.product.countInStock > 0 ? 'добавить в корзину' : 'нет в наличии'}
                 </button>
-                {/* </Link> */}
-
-                {/*<button className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '>
-                  View Details
-                </button>
-                */}
               </div>
               <div className='mt-6'>
-                {/*<button className='text-xl underline text-gray-800 dark:text-white dark:hover:text-gray-200 capitalize hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800'>
-                  add to wishlist
-                </button>
-                */}
+                {/* ... (rest of the code) */}
               </div>
               <div className='pt-10'>
                 <button
-                  className='w-full lg:w-1/6 border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800 '
+                  className='w-full border border-gray-800 text-base font-medium leading-none text-gray-800 dark:text-white uppercase py-4 bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-transparent dark:border-white focus:ring-gray-800 hover:bg-gray-800 hover:text-white dark:hover:bg-gray-800'
                   onClick={() => router.back()}
                 >
                   ВЕРНУТЬСЯ НАЗАД
                 </button>
               </div>
             </div>
+
+
+
           </div>
         </div>
       </div>
