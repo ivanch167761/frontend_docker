@@ -39,9 +39,11 @@ export const ProductComponent = (props: propsType) => {
       const touch = event.touches[0] || event.changedTouches[0];
       const deltaY = touch.clientY - startYRef.current;
 
+        console.log('sweep')
       if (Math.abs(deltaY) > 10) {
         // If the swipe is more vertical, prevent the carousel swipe
         event.stopPropagation();
+        console.log('no sweep')
       }
     }
   };
