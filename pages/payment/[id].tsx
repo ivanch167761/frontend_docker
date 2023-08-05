@@ -17,7 +17,11 @@ import getStore, {
 import { children, MyForm } from '../../components/payForms'
 import PaymentScreen from '../../screens/paymentScreen'
 import { set } from 'immer/dist/internal'
-
+declare global {
+  interface Window {
+    pay: (target: EventTarget) => void;
+  }
+}
 type OrderDetail = ReturnType<typeof selectOrderDetail>;
 type SubmitHandlerType = (e: React.FormEvent<HTMLFormElement>) => void;
 interface MyFormProps extends React.FormHTMLAttributes<HTMLFormElement> {
