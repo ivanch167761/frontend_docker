@@ -48,7 +48,7 @@ export const ProductComponent = (props: propsType) => {
 
       if (Math.abs(deltaY) > 10) {
         // If the swipe is more vertical, prevent the carousel swipe
-        event.stopPropagation();
+        event.preventDefault();
       }
     }
   };
