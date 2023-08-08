@@ -21,22 +21,6 @@ export const ProductComponent = (props: propsType) => {
   const productImgs = [props.product.image, props.product.imageSecond, props.product.imageThird]
   const carouselRef = useRef<Carousel>(null);
 
-  // Track whether the user is interacting with the carousel
-  const [isCarouselInteracting, setCarouselInteracting] = useState(true);
-
-  const handleCarouselDrag = (down: boolean, my: number) => {
-    if (down && Math.abs(my) > 5 && !isCarouselInteracting) {
-      setCarouselInteracting(true);
-      console.log(isCarouselInteracting)
-    }
-  };
-
-  const handleCarouselDragEnd = () => {
-    if (isCarouselInteracting) {
-      setCarouselInteracting(false);
-      console.log(isCarouselInteracting)
-    }
-  };
 
   return (
     <>
@@ -80,11 +64,6 @@ export const ProductComponent = (props: propsType) => {
      <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
        <div className='lg:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900'>
       <div className='mt-3 md:mt-4 lg:mt-0'>
-      <div
-        onTouchStart={(e) => handleCarouselDrag(true, e.touches[0].clientY)}
-        onTouchMove={(e) => handleCarouselDrag(true, e.touches[0].clientY)}
-        onTouchEnd={() => handleCarouselDragEnd()}
-      >
             <Carousel
               ref={carouselRef}
               showThumbs={false}
@@ -93,8 +72,10 @@ export const ProductComponent = (props: propsType) => {
               autoPlay={true}
               interval={3000}
               infiniteLoop
-              swipeable={isCarouselInteracting} 
+              swipeable={true} 
               emulateTouch={true} 
+              preventMovementUntilSwipeScrollTolerance={true}
+              swipeScrollTolerance={50}
               className="no-select"
             >
               {productImgs.map((img, index) => (
@@ -103,7 +84,6 @@ export const ProductComponent = (props: propsType) => {
                 </div>
               ))}
             </Carousel>
-          </div>
           </div>
         </div>
       </div>
