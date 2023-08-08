@@ -1,7 +1,8 @@
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { Product } from '../../types/storeTypes'
-import React, { useState, useRef } from 'react';
+import { useGesture } from 'react-use-gesture';
+import { useRouter } from 'next/router'; // Make sure to import useRouter
+import React, { useState, useEffect, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { FiMaximize, FiMinimize } from 'react-icons/fi';
@@ -17,46 +18,23 @@ type propsType = {
 
 export const ProductComponent = (props: propsType) => {
   const router = useRouter()
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const productImgs = [props.product.image, props.product.imageSecond, props.product.imageThird]
   const carouselRef = useRef<Carousel>(null);
-  const startYRef = useRef<number>(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // Track whether the user is interacting with the carousel
+  const [isCarouselInteracting, setCarouselInteracting] = useState(true);
 
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const handleImageClick = () => {
-    const nextIndex = (selectedIndex + 1) % productImgs.length;
-    setSelectedIndex(nextIndex);
-  };
-
-  const toggleFullScreen = () => {
-    setIsFullScreen((prevFullScreen) => !prevFullScreen);
-  };
-
-
-
-  const handleSwipeStart = (event: React.TouchEvent) => {
-    const touch = event.touches[0] || event.changedTouches[0];
-    startYRef.current = touch.clientY;
-  };
-
-  const handleSwipeMove = (event: React.TouchEvent) => {
-    if (carouselRef.current && startYRef.current !== null) {
-      const touch = event.touches[0] || event.changedTouches[0];
-      const deltaY = touch.clientY - startYRef.current;
-
-      if (Math.abs(deltaY) > 10) {
-        // If the swipe is more vertical, prevent the carousel swipe
-        event.preventDefault();
-      }
+  const handleCarouselDrag = (down: boolean, my: number) => {
+    if (down && Math.abs(my) > 5 && !isCarouselInteracting) {
+      setCarouselInteracting(true);
+      console.log(isCarouselInteracting)
     }
   };
 
-  const handleSwipeEnd = () => {
-    startYRef.current = null;
-    if (!isAutoPlaying) {
-      setIsAutoPlaying(true);
+  const handleCarouselDragEnd = () => {
+    if (isCarouselInteracting) {
+      setCarouselInteracting(false);
+      console.log(isCarouselInteracting)
     }
   };
 
@@ -94,28 +72,30 @@ export const ProductComponent = (props: propsType) => {
               </svg>
             </button>
           </div>
-          <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-stretch justify-center lg:space-x-8'>
-       
 
+
+
+
+   <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-stretch justify-center lg:space-x-8'>
+     <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
+       <div className='lg:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900'>
+      <div className='mt-3 md:mt-4 lg:mt-0'>
       <div
-        onTouchStart={handleSwipeStart}
-        onTouchMove={handleSwipeMove}
-        onTouchEnd={handleSwipeEnd}
-        className="2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4"
+        onTouchStart={(e) => handleCarouselDrag(true, e.touches[0].clientY)}
+        onTouchMove={(e) => handleCarouselDrag(true, e.touches[0].clientY)}
+        onTouchEnd={() => handleCarouselDragEnd()}
       >
-        <div className="lg:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900">
-          <div className="mt-3 md:mt-4 lg:mt-0">
             <Carousel
               ref={carouselRef}
               showThumbs={false}
               showStatus={false}
               showArrows={false}
-              autoPlay={isAutoPlaying}
+              autoPlay={true}
               interval={3000}
               infiniteLoop
-              swipeable
-              emulateTouch
-              className="no-select" // Apply the 'no-select' class
+              swipeable={isCarouselInteracting} 
+              emulateTouch={true} 
+              className="no-select"
             >
               {productImgs.map((img, index) => (
                 <div key={index}>
@@ -123,16 +103,7 @@ export const ProductComponent = (props: propsType) => {
                 </div>
               ))}
             </Carousel>
-            {productImgs.length > 1 && (
-              <div className="flex justify-center mt-4">
-                <button
-                  className="bg-white text-gray-500 rounded-full p-2 hover:bg-gray-200"
-                  onClick={toggleFullScreen}
-                >
-                  {isFullScreen ? <FiMinimize /> : <FiMaximize />}
-                </button>
-              </div>
-            )}
+          </div>
           </div>
         </div>
       </div>
