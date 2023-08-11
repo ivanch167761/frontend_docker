@@ -1,10 +1,13 @@
 import React from 'react'
+import { useRef } from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Product } from '../../types/storeTypes'
 import ChoiceBox from '../choice_box'
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 type propsType = {
   productBeforeEdit: Product,
@@ -22,6 +25,8 @@ type propsType = {
 
 export const EditProduct = (props: propsType) => {
   const router = useRouter()
+  const productImgs = [props.productBeforeEdit.image, props.productBeforeEdit.imageSecond, props.productBeforeEdit.imageThird]
+  const carouselRef = useRef<Carousel>(null);
   return (
     <>
       <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
@@ -68,12 +73,31 @@ export const EditProduct = (props: propsType) => {
           <form className="mt-8 space-y-6" onSubmit={props.submitChanges} >
             <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
               <div className='lg:w-1/3  bg-gray-50 '>
+            <Carousel
+              ref={carouselRef}
+              showThumbs={false}
+              showStatus={false}
+              showArrows={false}
+              autoPlay={true}
+              interval={3000}
+              infiniteLoop
+              swipeable={true} 
+              emulateTouch={true} 
+              preventMovementUntilSwipeScrollTolerance={true}
+              swipeScrollTolerance={50}
+              className="no-select"
+            >
+              {productImgs.map((img, index) => (
+                <div key={index}>
+                  <img src={img} alt={"aaa"} />
+                </div>
+              ))}
+            </Carousel>
 
-//
-//
-//
-//
-//
+
+
+
+
 
               </div>
               <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>

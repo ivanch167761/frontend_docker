@@ -1,11 +1,9 @@
 import Image from 'next/image'
 import { Product } from '../../types/storeTypes'
-import { useGesture } from 'react-use-gesture';
 import { useRouter } from 'next/router'; // Make sure to import useRouter
 import React, { useState, useEffect, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { FiMaximize, FiMinimize } from 'react-icons/fi';
 
 type propsType = {
   product: Product,
@@ -79,8 +77,8 @@ export const ProductComponent = (props: propsType) => {
               className="no-select"
             >
               {productImgs.map((img, index) => (
-                <div key={index}>
-                  <img src={img} alt={"aaa"} />
+                <div key={index} style={{ position: 'relative', width: '100%', paddingTop: '75%' }}>
+                  <Image src={img} alt={"aaa"} layout="fill" objectFit="cover" />
                 </div>
               ))}
             </Carousel>
@@ -118,6 +116,9 @@ export const ProductComponent = (props: propsType) => {
                   +
                 </button>
               </div>
+              <div className='mt-6 w-full border border-gray-800 font-medium text-yellow-500 py-4 bg-gray-500 text-center'>
+                  Цена:   {props.product.price} RUB                  
+              </div>
               <div className='mt-4'>
                 <button
                   onClick={props.addToCartHandler}
@@ -129,9 +130,6 @@ export const ProductComponent = (props: propsType) => {
                 >
                   {props.product.countInStock > 0 ? 'добавить в корзину' : 'нет в наличии'}
                 </button>
-              </div>
-              <div className='mt-6'>
-                {/* ... (rest of the code) */}
               </div>
               <div className='pt-10'>
                 <button

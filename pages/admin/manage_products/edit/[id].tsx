@@ -42,8 +42,7 @@ function DetailContainer() {
     const imageFile: File = e.target.files[0];
     dispatch(uploadThirdImage({ product: productData.product, imageFile: imageFile }));
   }
-  const categoryNames = categoryListData.categoryList.map((category) => category.category)
-  console.log(categoryNames)
+  const categoryNames = categoryListData.categoryList.filter(category => category._id !== 1).map((category) => category.category)
   const changingProductDetails: ProductDetailtState = {
     product: {
       _id: productData.product._id,

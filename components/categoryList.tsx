@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Category } from '../types/storeTypes'
 
+
 type propsType = {
   category: Category
 }
@@ -46,7 +47,7 @@ export const CategoryListComp = (props: propsType) => {
               <p className='text-base text-body-color leading-relaxed h-48   overflow-clip'>
                 {props.category.description}
               </p>
-              <Link href={`category/products/${props.category._id}`}>
+              <Link href={`/category/products/${props.category._id}`}>
                 <button
                   className='
                      inline-block
