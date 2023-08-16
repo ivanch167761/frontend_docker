@@ -6,6 +6,7 @@ import getStore, {
   checkLoginStatus,
   setUserOrder,
   selectError,
+  selectUserDetail,
   selectOrderDetail,
   selectMakeOrder,
   getCartProductsDetail,
@@ -18,6 +19,7 @@ import OrderScreen from '../../screens/orderScreen'
 
 function ProfileContainer() {
   const loginError = useSelector(selectError)
+  const user = useSelector(selectUserDetail)
   const order = useSelector(selectMakeOrder)
   const order_id = useSelector(selectOrderDetail)
   const cartTotalPrice = useSelector(selectCartTotalPrice)
@@ -39,11 +41,11 @@ function ProfileContainer() {
     dispatch(checkLoginStatus())
   }, [dispatch])
   useEffect(()=>{
+    cartTotalPrice > 0 ? (user ? console.log('aaaaa', user) : router.push('/login')) : console.log('loading')
     if (order_id._id > 0){
     router.push(`/payment/${order_id._id}`)} else {
-    console.log('loading...')
     }
-      }), [order_id]
+      }), [order_id, user, cartTotalPrice]
   // useState
   const [show, setShow] = useState<boolean>(false)
   const [address, setAddress] = useState<string>('')

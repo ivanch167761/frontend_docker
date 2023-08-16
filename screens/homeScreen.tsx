@@ -25,8 +25,9 @@ function HomeScreen (props: propsType) {
           id='viewerBox'
           className='lg:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900'
         >
-          <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-strech justify-center lg:space-x-8'>
-            <div className='lg:w-1/12  bg-gray-50 '>
+          <div className='flex flex-col justify-center lg:space-x-8'>
+          <div className='mt-3 md:mt-4 lg:mt-0 flex flex-row  justify-center lg:space-x-8'>
+            <div className='w-1/4 lg:w-1/6  bg-gray-50 '>
               <Image
                 src={props.categoryData.category.image}
                 alt={props.categoryData.category.category}
@@ -37,16 +38,18 @@ function HomeScreen (props: propsType) {
                 objectFit='contain'
               />
             </div>
-            <div className='lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
-              <h1 className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'>
+              <div className='w-3/4'>
+              <h1 className='m-2 text-2xl font-semibold text-gray-800 dark:text-white'>
                 {props.categoryData.category.category}
               </h1>
-              <p className='text-base leading-normal text-gray-600 dark:text-white mt-2'>
+              <p className='hidden lg:block md:block leading-normal text-gray-600 dark:text-white mt-2'>
                 {props.categoryData.category.description}
               </p>
-              <div className='pt-10'>
               </div>
-            </div>
+              </div>
+              <p className='lg:hidden md:hidden leading-normal text-gray-600 dark:text-white mt-2'>
+                {props.categoryData.category.description}
+              </p>
           </div>
         </div>
 
@@ -64,7 +67,7 @@ function HomeScreen (props: propsType) {
                           productListTitle={product.name}
                           productListImg={product.image}
                           productListDesctiption={product.description}
-                          productListBtn={product.price + '$'}
+                          productListBtn={product.price + '₽'}
                           productLink={`/products/${product._id}`}
                         />
                       ))}

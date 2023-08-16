@@ -20,13 +20,16 @@ function categoryContainer() {
   }, [])
   return (
     <>
-      <div>
+      <div className="m-3">
         <input
           type='text'
           value={search}
           onChange={(e) => {
             { dispatch(setCategorySearch(e.target.value)) }
           }}
+          name="search"
+          id="search"
+          className="bg-blue-100 ring-4 ring-pink-200 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm px-4 rounded-full"
         />
       </div>
       <CategoryScreen categories={categoryList} />

@@ -123,13 +123,10 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   return(
   
   <>
-      HOLA
       <PaymentScreen totalPrice={orderDetail.totalPrice} setPayment={setPayment}/>
-      <div className="flex justify-center items-center">
-      {userMessage(payButton, showCard)}
-      {userMessage(transferMessage, showTransfer)}
-      {userMessage(paypalMessage, showPaypal)}
-      </div>
+      {transferPayMessage(payButton, showCard, setShowCard)}
+      {transferPayMessage(transferMessage, showTransfer, setShowTransfer)}
+      {transferPayMessage(paypalMessage, showPaypal, setShowPaypal)}
   </>
 
   )

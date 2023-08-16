@@ -28,10 +28,10 @@ export const ProductComponent = (props: propsType) => {
         }
       `}</style>
 
-      <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
+      <div className='2xl:container 2xl:mx-auto md:my-16 my-9 md:px-12 px-4'>
         <div
           id='viewerBox'
-          className='lg:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900'
+          className='xl:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900'
         >
           <div className='flex justify-end'>
             <button
@@ -59,8 +59,8 @@ export const ProductComponent = (props: propsType) => {
 
 
    <div className='mt-3 md:mt-4 lg:mt-0 flex flex-col lg:flex-row items-stretch justify-center lg:space-x-8'>
-     <div className='2xl:container 2xl:mx-auto md:py-12 lg:px-20 md:px-6 py-9 px-4'>
-       <div className='lg:p-10 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900'>
+     <div className='w-full lg:w-1/2 2xl:mx-auto md:py-0 xl:px-6 px-4'>
+       <div className='lg:p-7 md:p-6 p-4 bg-gray-100 border-green-400 border dark:bg-gray-900'>
       <div className='mt-3 md:mt-4 lg:mt-0'>
             <Carousel
               ref={carouselRef}
@@ -92,7 +92,7 @@ export const ProductComponent = (props: propsType) => {
 
 
 
-            <div className='w-full md:w-1/2 lg:w-2/3 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 pb-8 lg:pb-0'>
+            <div className='w-full lg:w-1/2 flex flex-col justify-center mt-7 md:mt-8 lg:mt-0 xl:px-6 px-4 pb-8 lg:pb-0'>
               <h1 className='text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white'>
                 {props.product.name}
               </h1>
@@ -117,7 +117,7 @@ export const ProductComponent = (props: propsType) => {
                 </button>
               </div>
               <div className='mt-6 w-full border border-gray-800 font-medium text-yellow-500 py-4 bg-gray-500 text-center'>
-                  Цена:   {props.product.price} RUB                  
+                  Цена:{props.product.price} 	₽
               </div>
               <div className='mt-4'>
                 <button
